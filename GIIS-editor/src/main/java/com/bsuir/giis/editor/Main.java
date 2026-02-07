@@ -28,7 +28,7 @@ public class Main {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        Canvas regularCanvas = new Canvas(bounds.width-100,bounds.height-100);
+        Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100);
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode);
 
         BottomToolbar bottom=new BottomToolbar(regularCanvas.getCoordinates());
