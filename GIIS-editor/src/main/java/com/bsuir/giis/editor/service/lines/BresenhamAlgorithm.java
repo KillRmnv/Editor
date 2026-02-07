@@ -1,6 +1,7 @@
 package com.bsuir.giis.editor.service.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
+import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.view.Canvas;
 
 public class BresenhamAlgorithm implements StraightLineAlgorithm {

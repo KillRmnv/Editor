@@ -1,4 +1,4 @@
-package com.bsuir.giis.editor.service.lines;
+package com.bsuir.giis.editor.model.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;

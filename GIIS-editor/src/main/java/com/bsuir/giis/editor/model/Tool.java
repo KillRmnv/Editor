@@ -1,0 +1,4 @@
+package com.bsuir.giis.editor.model;
+
+public interface Tool {
+}

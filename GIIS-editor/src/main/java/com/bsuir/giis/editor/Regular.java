@@ -1,4 +1,4 @@
-package com.bsuir.giis.editor.userTools;
+package com.bsuir.giis.editor;
 
 public class Regular implements Mode{
 }
