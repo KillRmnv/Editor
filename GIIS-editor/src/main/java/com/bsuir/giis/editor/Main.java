@@ -26,16 +26,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        JFrame debugFrame = new JFrame();
-        debugFrame.setVisible(false);
-        debugFrame.setSize(400, 400);
-        JPanel logsPanel = new JPanel(new BorderLayout());
-        JTextArea textArea= new Debug().getTextArea();
-        textArea.setEditable(true);
-        logsPanel.add(textArea, BorderLayout.CENTER);
-        debugFrame.add(logsPanel, BorderLayout.CENTER);
-
-
+        JFrame debugFrame = getDebugFrame();
 
 
         PreviousStep previousStep=new PreviousStep(new PenStep());
@@ -61,5 +52,22 @@ public class Main {
         frame.add(mainPanel);
         frame.setVisible(true);
 
+    }
+
+    private static JFrame getDebugFrame() {
+        JFrame debugFrame = new JFrame();
+        debugFrame.setVisible(false);
+        debugFrame.setSize(400, 400);
+
+        JPanel logsPanel = new JPanel(new BorderLayout());
+        JTextArea textArea = new Debug().getTextArea();
+        textArea.setEditable(true);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        logsPanel.add(scrollPane, BorderLayout.CENTER);
+        debugFrame.add(logsPanel, BorderLayout.CENTER);
+        return debugFrame;
     }
 }

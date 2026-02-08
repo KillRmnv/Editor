@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Canvas extends JPanel {
 
-    private int pixelSize = 1;
+    private int pixelSize = 8;
     private int width;
     private int height;
     private JLabel coordinates;
