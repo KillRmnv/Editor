@@ -2,11 +2,12 @@ package com.bsuir.giis.editor.service.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
+import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.view.Canvas;
 
 public class BresenhamAlgorithm implements StraightLineAlgorithm {
     @Override
-    public void draw(Canvas canvas, AlgorithmParameters parameters) {
+    public void draw(Canvas canvas, AlgorithmParameters parameters, Mode mode) {
         LinesParameters linesParameters = (LinesParameters) parameters;
 
         int x1 = linesParameters.getStartPoint().getX();

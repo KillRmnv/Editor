@@ -1,10 +1,9 @@
 package com.bsuir.giis.editor.controllers;
 
-import com.bsuir.giis.editor.Mode;
 import com.bsuir.giis.editor.controllers.handlers.Handler;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.controllers.handlers.StraightLineHandler;
-import com.bsuir.giis.editor.model.Tool;
+import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.PreviousStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
 import com.bsuir.giis.editor.view.Canvas;
@@ -16,10 +15,10 @@ import java.util.Set;
 public class CanvasController extends MouseAdapter {
     private Canvas canvas;
     private ToolContainer tool;
-    private Mode mode;
+    private ModeContainer mode;
     private Set<Handler> handlerSet;
 
-    public CanvasController(Canvas canvas, ToolContainer tool, Mode mode, PreviousStep previousStep) {
+    public CanvasController(Canvas canvas, ToolContainer tool, ModeContainer mode, PreviousStep previousStep) {
         this.canvas = canvas;
         this.tool = tool;
         this.mode = mode;

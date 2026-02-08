@@ -1,12 +1,13 @@
 package com.bsuir.giis.editor.controllers.handlers;
 
-import com.bsuir.giis.editor.Mode;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Pen;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
+import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
+import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.PreviousStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -23,7 +24,7 @@ public class PenHandler implements Handler {
     }
 
     @Override
-    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, Mode mode) {
+    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         if (tool.getTool() instanceof Pen) {
             canvas.paintPixel(mouseEvent.getX(), mouseEvent.getY());
             PenStep step = (PenStep) previousStep.getStep();
@@ -33,17 +34,18 @@ public class PenHandler implements Handler {
     }
 
     @Override
-    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, Mode mode) {
+    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
 
     }
 
     @Override
-    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, Mode mode) {
+    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         if (tool.getTool() instanceof Pen) {
             PenStep step = (PenStep) previousStep.getStep();
             StraightLineAlgorithm lineDrawer = new Antialiasing();
             AlgorithmParameters parameters = new LinesParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
-            lineDrawer.draw(canvas, parameters);
+            Thread.ofVirtual().start(()-> lineDrawer.draw(canvas, parameters,new Regular()));
+
 
             step.setX(mouseEvent.getX());
             step.setY(mouseEvent.getY());

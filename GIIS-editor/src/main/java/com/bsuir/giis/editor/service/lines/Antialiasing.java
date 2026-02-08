@@ -2,61 +2,83 @@ package com.bsuir.giis.editor.service.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
+import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.view.Canvas;
-//TODO:something off
+
 public class Antialiasing implements StraightLineAlgorithm {
 
     @Override
-    public void draw(Canvas canvas, AlgorithmParameters parameters) {
+    public void draw(Canvas canvas, AlgorithmParameters parameters, Mode mode) {
         LinesParameters linesParameters = (LinesParameters) parameters;
 
-        int x1 = linesParameters.getStartPoint().getX();
-        int y1 = linesParameters.getStartPoint().getY();
-        int x2 = linesParameters.getEndPoint().getX();
-        int y2 = linesParameters.getEndPoint().getY();
+        int pixelSize = 1;
 
-        boolean steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
+        int x0 = linesParameters.getStartPoint().getX() / pixelSize;
+        int y0 = linesParameters.getStartPoint().getY() / pixelSize;
+        int x1 = linesParameters.getEndPoint().getX() / pixelSize;
+        int y1 = linesParameters.getEndPoint().getY() / pixelSize;
 
-        // Если наклон слишком крутой, отражаем координаты относительно y=x
+        boolean steep = absolute(y1 - y0) > absolute(x1 - x0);
+
         if (steep) {
-            int temp = x1;
-            x1 = y1;
-            y1 = temp;
-            temp = x2;
-            x2 = y2;
-            y2 = temp;
+            int temp = x0; x0 = y0; y0 = temp;
+            temp = x1; x1 = y1; y1 = temp;
         }
-        if (x1 > x2) {
-            int temp = x1;
-            x1 = x2;
-            x2 = temp;
-            temp = y1;
-            y1 = y2;
-            y2 = temp;
+        if (x0 > x1) {
+            int temp = x0; x0 = x1; x1 = temp;
+            temp = y0; y0 = y1; y1 = temp;
         }
 
-        drawPixel(canvas, x1, y1, 1.0, steep);
-        drawPixel(canvas, x2, y2, 1.0, steep);
+        float dx = x1 - x0;
+        float dy = y1 - y0;
+        float gradient = dy / dx;
 
-        double dx = x2 - x1;
-        double dy = y2 - y1;
-        double gradient = (dx == 0) ? 1.0 : dy / dx;
+        if (dx == 0.0f) {
+            gradient = 1.0f;
+        }
 
-        double intery = y1 + gradient;
+        float intersectY = y0 + gradient;
 
-        for (int x = x1 + 1; x < x2; x++) {
-            // Рисуем две точки по обе стороны от идеальной прямой
-            drawPixel(canvas, x, (int) intery, 1 - (intery - (int) intery), steep);
-            drawPixel(canvas, x, (int) intery + 1, intery - (int) intery, steep);
-            intery += gradient;
+        drawPoint(canvas, steep, x0, y0, 1.0f, pixelSize);
+        drawPoint(canvas, steep, x1, y1, 1.0f, pixelSize);
+
+        if (steep) {
+            for (int x = x0 + 1; x < x1; x++) {
+                drawPoint(canvas, true, x, iPartOfNumber(intersectY), rfPartOfNumber(intersectY), pixelSize);
+                drawPoint(canvas, true, x, iPartOfNumber(intersectY) + 1, fPartOfNumber(intersectY), pixelSize);
+                intersectY += gradient;
+            }
+        } else {
+            for (int x = x0 + 1; x < x1; x++) {
+                drawPoint(canvas, false, x, iPartOfNumber(intersectY), rfPartOfNumber(intersectY), pixelSize);
+                drawPoint(canvas, false, x, iPartOfNumber(intersectY) + 1, fPartOfNumber(intersectY), pixelSize);
+                intersectY += gradient;
+            }
         }
     }
 
-    private void drawPixel(Canvas canvas, int x, int y, double brightness, boolean steep) {
-        if (steep) {
-            canvas.paintPixel(y, x, (int)brightness);
-        } else {
-            canvas.paintPixel(x, y, (int)brightness);
-        }
+
+    private void drawPoint(Canvas canvas, boolean steep, int x, int y, float brightness, int pixelSize) {
+        int drawX = steep ? y : x;
+        int drawY = steep ? x : y;
+
+        canvas.paintPixel(drawX * pixelSize, drawY * pixelSize, (int)(brightness * 255));
+    }
+
+    public float absolute(float x) {
+        return (x < 0) ? -x : x;
+    }
+
+    public int iPartOfNumber(float x) {
+        return (int) x;
+    }
+
+    public float fPartOfNumber(float x) {
+        if (x > 0) return x - iPartOfNumber(x);
+        else return x - (iPartOfNumber(x) + 1);
+    }
+
+    public float rfPartOfNumber(float x) {
+        return 1 - fPartOfNumber(x);
     }
 }

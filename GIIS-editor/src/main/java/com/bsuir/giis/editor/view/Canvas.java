@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Canvas extends JPanel {
 
-    private final int pixelSize = 1;
+    private int pixelSize = 1;
     private int width;
     private int height;
     private JLabel coordinates;
@@ -18,7 +18,7 @@ public class Canvas extends JPanel {
     public Canvas(int width, int height) {
         this.height = height;
         this.width = width;
-        canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2 = canvasImage.createGraphics();
         g2.setColor(Color.WHITE);
@@ -57,7 +57,6 @@ public class Canvas extends JPanel {
 
             brightness = Math.max(0, Math.min(255, brightness));
 
-            // Создаём цвет с альфой
             Color c = new Color(0, 0, 0, brightness);
             canvasImage.setRGB(px, py,c.getRGB());
             repaint(
@@ -81,4 +80,7 @@ public class Canvas extends JPanel {
         );
     }
 
+    public int getPixelSize() {
+        return pixelSize;
+    }
 }

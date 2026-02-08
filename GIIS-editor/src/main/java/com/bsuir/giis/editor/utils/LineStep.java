@@ -44,5 +44,8 @@ public class LineStep implements Step{
     public Point getEndPoint(){
         return new Point(endX, endY);
     }
-
+    @Override
+    public String toString(){
+        return " start x:"+startX +" end x:"+endX+" start y:"+startY+" end y:"+endY+'\n';
+    }
 }

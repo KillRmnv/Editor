@@ -3,10 +3,23 @@ package com.bsuir.giis.editor.utils;
 public class PenStep implements Step{
     private int x;
     private int y;
+    private int brightness;
+
     public PenStep() {}
     public PenStep(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+    public PenStep(int x, int y, int brightness) {
+        this.x = x;
+        this.y = y;
+        this.brightness = brightness;
+    }
+    public int getBrightness(){
+        return brightness;
+    }
+    public void setBrightness(int brightness){
+        this.brightness = brightness;
     }
     public int getX() {
         return x;
@@ -19,5 +32,9 @@ public class PenStep implements Step{
     }
     public void setY(int y) {
         this.y = y;
+    }
+    @Override
+    public String toString(){
+        return "x:"+x+" y:"+y+" brightness:"+brightness+'\n';
     }
 }

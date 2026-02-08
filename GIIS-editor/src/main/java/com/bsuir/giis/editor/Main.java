@@ -4,7 +4,9 @@ import com.bsuir.giis.editor.controllers.BottomPanelController;
 import com.bsuir.giis.editor.controllers.CanvasController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.model.Pen;
-import com.bsuir.giis.editor.model.Tool;
+import com.bsuir.giis.editor.service.flow.Debug;
+import com.bsuir.giis.editor.service.flow.Regular;
+import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.PreviousStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -23,9 +25,23 @@ public class Main {
         frame.setSize(bounds.width-20, bounds.height-20);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+        JFrame debugFrame = new JFrame();
+        debugFrame.setVisible(false);
+        debugFrame.setSize(400, 400);
+        JPanel logsPanel = new JPanel(new BorderLayout());
+        JTextArea textArea= new Debug().getTextArea();
+        textArea.setEditable(true);
+        logsPanel.add(textArea, BorderLayout.CENTER);
+        debugFrame.add(logsPanel, BorderLayout.CENTER);
+
+
+
+
         PreviousStep previousStep=new PreviousStep(new PenStep());
         ToolContainer tool =new ToolContainer(new Pen());
-        Mode mode=new Regular();
+
+        ModeContainer mode=new ModeContainer(new Regular());
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -33,7 +49,7 @@ public class Main {
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode,previousStep);
 
         BottomToolbar bottom=new BottomToolbar(regularCanvas.getCoordinates());
-        BottomPanelController bottomPanelController=new BottomPanelController(bottom);
+        BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame);
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool,previousStep);
