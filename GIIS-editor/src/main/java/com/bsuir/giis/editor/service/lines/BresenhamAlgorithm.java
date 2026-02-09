@@ -4,11 +4,14 @@ import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.PenStep;
+import com.bsuir.giis.editor.view.BaseLayer;
 import com.bsuir.giis.editor.view.Canvas;
+
+import java.awt.*;
 
 public class BresenhamAlgorithm implements StraightLineAlgorithm {
     @Override
-    public void draw(Canvas canvas, AlgorithmParameters parameters, Mode mode) {
+    public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         LinesParameters linesParameters = (LinesParameters) parameters;
 
         int pixelSize = canvas.getPixelSize();
@@ -28,7 +31,8 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
         int err = dx - dy;
 
         while (true) {
-            canvas.paintPixel(x1 * pixelSize, y1 * pixelSize);
+
+            canvas.paintPixel(x1 * pixelSize, y1 * pixelSize,Color.BLACK);
             mode.onStep(new PenStep(x1,y1,255),"Bresenham Algorithm: ");
 
             if (x1 == x2 && y1 == y2) {

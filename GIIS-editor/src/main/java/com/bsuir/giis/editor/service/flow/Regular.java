@@ -6,6 +6,7 @@ public class Regular implements Mode{
 
     @Override
     public void onStep(Step step,String logLine) {
+
         //pass
     }
 

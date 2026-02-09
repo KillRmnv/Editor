@@ -2,28 +2,38 @@ package com.bsuir.giis.editor.view;
 
 import javax.swing.*;
 import java.awt.*;
-//TODO:change buttons to menus
-public class TopToolbar {
-    private JPanel upperPanel;
-    private JButton lineButton;
-    private JButton penButton;
-    private JMenuBar fileMenuBar;
+
+//TODO:add layers
+public final class TopToolbar {
+    private final JPanel upperPanel;
+    private final JMenu lineMenu;
+    private final JButton penButton;
+    private final JMenu fileMenu;
 
     public TopToolbar() {
 
         upperPanel = new JPanel(new BorderLayout());
         JPanel icons = new JPanel(new GridLayout());
-        JButton lineButton = new JButton("Line");
+
+
+        //don't touch order of menu items
+        lineMenu = new JMenu("Line");
+        lineMenu.add(new JMenuItem("Antialias"));
+        lineMenu.add(new JMenuItem("CDA"));
+        lineMenu.add(new JMenuItem("Bresenham"));
+
         JButton pen = new JButton("Pen");
-        this.lineButton = lineButton;
         this.penButton = pen;
         upperPanel.add(icons, BorderLayout.WEST);
-        icons.add(lineButton);
         icons.add(pen);
+        icons.add(lineMenu);
         JMenuBar menuBar = new JMenuBar();
         upperPanel.add(menuBar, BorderLayout.NORTH);
-        JMenu fileMenu = new JMenu("File");
-        this.fileMenuBar = menuBar;
+
+        fileMenu = new JMenu("File");
+        fileMenu.add(new JMenuItem("Open"));
+        fileMenu.add(new JMenuItem("Save"));
+
         menuBar.add(fileMenu);
 
     }
@@ -32,16 +42,16 @@ public class TopToolbar {
         return upperPanel;
     }
 
-    public JButton getLineButton() {
-        return lineButton;
+    public JMenu getLineMenu() {
+        return lineMenu;
     }
 
     public JButton getPenButton() {
         return penButton;
     }
 
-    public JMenuBar getFileMenuBar() {
-        return fileMenuBar;
+    public JMenu getFileMenuBar() {
+        return fileMenu;
     }
 
 

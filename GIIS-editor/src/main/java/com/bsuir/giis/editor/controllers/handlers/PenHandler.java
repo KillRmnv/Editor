@@ -13,6 +13,7 @@ import com.bsuir.giis.editor.utils.PreviousStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
 import com.bsuir.giis.editor.view.Canvas;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 //TODO:might add check for instance
 
@@ -26,7 +27,7 @@ public class PenHandler implements Handler {
     @Override
     public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         if (tool.getTool() instanceof Pen) {
-            canvas.paintPixel(mouseEvent.getX(), mouseEvent.getY());
+            canvas.getLayer2D().paintPixel(mouseEvent.getX(), mouseEvent.getY(), Color.BLACK);
             PenStep step = (PenStep) previousStep.getStep();
             step.setX(mouseEvent.getX());
             step.setY(mouseEvent.getY());
@@ -44,7 +45,7 @@ public class PenHandler implements Handler {
             PenStep step = (PenStep) previousStep.getStep();
             StraightLineAlgorithm lineDrawer = new Antialiasing();
             AlgorithmParameters parameters = new LinesParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
-            Thread.ofVirtual().start(()-> lineDrawer.draw(canvas, parameters,new Regular()));
+            Thread.ofVirtual().start(()-> lineDrawer.draw(canvas.getLayer2D(), parameters,new Regular()));
 
 
             step.setX(mouseEvent.getX());

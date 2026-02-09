@@ -3,6 +3,9 @@ package com.bsuir.giis.editor.controllers;
 import com.bsuir.giis.editor.model.Pen;
 import com.bsuir.giis.editor.model.Tool;
 import com.bsuir.giis.editor.model.lines.Line;
+import com.bsuir.giis.editor.service.lines.Antialiasing;
+import com.bsuir.giis.editor.service.lines.BresenhamAlgorithm;
+import com.bsuir.giis.editor.service.lines.CDAAlgorithm;
 import com.bsuir.giis.editor.utils.LineStep;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.PreviousStep;
@@ -30,15 +33,32 @@ public class TopPanelController {
             }
         });
 
-        topToolbar.getLineButton().addMouseListener(new MouseAdapter() {
+        lineMenuConfiguration(topToolbar, previousStep);
+
+    }
+
+    private void lineMenuConfiguration(TopToolbar topToolbar, PreviousStep previousStep) {
+        topToolbar.getLineMenu().getItem(0).addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                selectedTool.setTool(new Line());
+                selectedTool.setTool(new Line(new Antialiasing()));
                 previousStep.setStep(new LineStep());
             }
         });
-
-
+        topToolbar.getLineMenu().getItem(1).addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                selectedTool.setTool(new Line(new CDAAlgorithm()));
+                previousStep.setStep(new LineStep());
+            }
+        });
+        topToolbar.getLineMenu().getItem(2).addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                selectedTool.setTool(new Line(new BresenhamAlgorithm()));
+                previousStep.setStep(new LineStep());
+            }
+        });
     }
 
 }

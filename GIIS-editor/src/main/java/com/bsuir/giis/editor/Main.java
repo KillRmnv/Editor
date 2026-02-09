@@ -16,7 +16,6 @@ import com.bsuir.giis.editor.view.TopToolbar;
 
 import javax.swing.*;
 import java.awt.*;
-
 public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("GIIS Editor");
@@ -25,22 +24,23 @@ public class Main {
         frame.setSize(bounds.width-20, bounds.height-20);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         JFrame debugFrame = getDebugFrame();
-
 
         PreviousStep previousStep=new PreviousStep(new PenStep());
         ToolContainer tool =new ToolContainer(new Pen());
-
         ModeContainer mode=new ModeContainer(new Regular());
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100);
+        BottomToolbar bottom=new BottomToolbar();
+        Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100,bottom.getCoordinates(),bottom.getField());
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode,previousStep);
+        BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas);
 
-        BottomToolbar bottom=new BottomToolbar(regularCanvas.getCoordinates());
-        BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame);
+
+
+
+
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool,previousStep);

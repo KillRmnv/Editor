@@ -4,12 +4,15 @@ import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.PenStep;
+import com.bsuir.giis.editor.view.BaseLayer;
 import com.bsuir.giis.editor.view.Canvas;
+
+import java.awt.*;
 
 public class CDAAlgorithm implements StraightLineAlgorithm {
 
     @Override
-    public void draw(Canvas canvas, AlgorithmParameters parameters, Mode mode) {
+    public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         LinesParameters linesParameters = (LinesParameters) parameters;
 
         int pixelSize = canvas.getPixelSize();
@@ -27,7 +30,7 @@ public class CDAAlgorithm implements StraightLineAlgorithm {
 
         if (steps == 0) {
 
-            canvas.paintPixel(x1, y1);
+            canvas.paintPixel(x1, y1,Color.BLACK);
             return;
         }
 
@@ -38,7 +41,7 @@ public class CDAAlgorithm implements StraightLineAlgorithm {
         double y = y1;
 
         for (int i = 0; i <= steps; i++) {
-            canvas.paintPixel((int) Math.round(x)*pixelSize, (int) Math.round(y)*pixelSize);
+            canvas.paintPixel((int) Math.round(x)*pixelSize, (int) Math.round(y)*pixelSize, Color.BLACK);
             mode.onStep(new PenStep((int) Math.round(x), (int) Math.round(y),255),"CDA Algorithm: ");
             x += xIncrement;
             y += yIncrement;

@@ -1,8 +1,10 @@
 package com.bsuir.giis.editor.controllers.handlers;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
+import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.lines.Line;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
+import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.BresenhamAlgorithm;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.LineStep;
@@ -21,13 +23,15 @@ public class StraightLineHandler implements Handler{
     @Override
     public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         if(tool.getTool() instanceof Line){
+            Line line = (Line) tool.getTool();
             LineStep step = (LineStep) previousStep.getStep();
             step.setPoint(mouseEvent.getX(), mouseEvent.getY());
 
             if(step.isReady()){
-                StraightLineAlgorithm lineDrawer = new BresenhamAlgorithm();
+                StraightLineAlgorithm lineDrawer = line.getStraightLineAlgorithm();
                 AlgorithmParameters parameters = new LinesParameters(step.getStartPoint(), step.getEndPoint());
-                Thread.ofVirtual().start(()->lineDrawer.draw(canvas, parameters,mode.getMode()));
+                canvas.getLayer2DMoveable().cleanLayer();
+                Thread.ofVirtual().start(()->lineDrawer.draw(canvas.getLayer2D(), parameters,mode.getMode()));
                 step.clean();
             }
         }
@@ -36,8 +40,15 @@ public class StraightLineHandler implements Handler{
     @Override
     public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         if(tool.getTool() instanceof Line){
+            Line line = (Line) tool.getTool();
             LineStep step = (LineStep) previousStep.getStep();
+            if(step.isStarted()){
+                canvas.getLayer2DMoveable().cleanLayer();
+                StraightLineAlgorithm lineDrawer = line.getStraightLineAlgorithm();
+                AlgorithmParameters parameters = new LinesParameters(step.getStartPoint(), new Point(mouseEvent.getX(), mouseEvent.getY()));
+                Thread.ofVirtual().start(()->lineDrawer.draw(canvas.getLayer2DMoveable(), parameters,new Regular()));
 
+            }
         }
     }
 
@@ -47,5 +58,6 @@ public class StraightLineHandler implements Handler{
 //            LineStep step = (LineStep) previousStep.getStep();
 //
 //        }
+        handleMove(canvas, mouseEvent, tool, mode);
     }
 }

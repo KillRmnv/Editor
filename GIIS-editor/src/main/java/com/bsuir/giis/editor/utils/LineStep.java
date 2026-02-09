@@ -38,6 +38,9 @@ public class LineStep implements Step{
     public boolean isReady(){
         return startX>=0 && endX>=0 && startY>=0 && endY>=0;
     }
+    public boolean isStarted(){
+        return startX>=0 && startY>=0 && endX<0 && endY<0;
+    }
     public Point getStartPoint(){
         return new Point(startX, startY);
     }

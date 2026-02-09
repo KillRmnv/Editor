@@ -4,12 +4,15 @@ import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.PenStep;
+import com.bsuir.giis.editor.view.BaseLayer;
 import com.bsuir.giis.editor.view.Canvas;
+
+import java.awt.*;
 
 public class Antialiasing implements StraightLineAlgorithm {
 
     @Override
-    public void draw(Canvas canvas, AlgorithmParameters parameters, Mode mode) {
+    public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         LinesParameters linesParameters = (LinesParameters) parameters;
 
         // 1. Получаем размер пикселя для корректной работы с сеткой
@@ -64,20 +67,20 @@ public class Antialiasing implements StraightLineAlgorithm {
         mode.onFinish();
     }
 
-    private void drawPixel(Canvas canvas, int x, int y, double brightness, boolean steep, int pixelSize) {
-        // 3. Масштабируем яркость из 0..1 в 0..255 (alpha канал)
+    private void drawPixel(BaseLayer canvas, int x, int y, double brightness, boolean steep, int pixelSize) {
         int alpha = (int) (brightness * 255);
 
         // 4. Переводим координаты обратно в "экранные" для корректной работы canvas.paintPixel,
         // так как внутри paintPixel происходит деление: px = inputX / pixelSize
         int screenX = x * pixelSize;
         int screenY = y * pixelSize;
-
+        Color color=new Color(0,0,0,alpha);
         if (steep) {
+
             // Если оси были перевернуты, возвращаем их на место при отрисовке
-            canvas.paintPixel(screenY, screenX, alpha);
+            canvas.paintPixel(screenY, screenX, color);
         } else {
-            canvas.paintPixel(screenX, screenY, alpha);
+            canvas.paintPixel(screenX, screenY, color);
         }
     }
 }

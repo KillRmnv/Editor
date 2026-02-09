@@ -4,20 +4,22 @@ import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.view.BottomToolbar;
+import com.bsuir.giis.editor.view.Canvas;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 
 public class BottomPanelController extends MouseAdapter {
-    public BottomPanelController(BottomToolbar bottomToolbar, ModeContainer mode, JFrame debugFrame) {
+    public BottomPanelController(BottomToolbar bottomToolbar, ModeContainer mode, JFrame debugFrame, Canvas canvas) {
         bottomToolbar.getDebugModeButton().addActionListener(e -> {
-
             mode.setMode(new Debug());
             bottomToolbar.getDebugModeButton().setSelected(true);
             bottomToolbar.getRegularModeButton().setSelected(false);
             bottomToolbar.getNextStepButton().setEnabled(true);
             bottomToolbar.getSkipButton().setEnabled(true);
             bottomToolbar.getDebugFrameButton().setEnabled(true);
+            canvas.getLayer2D().setPixelSizeFromField();
+            canvas.getLayer2DMoveable().setPixelSizeFromField();
 
         });
         bottomToolbar.getRegularModeButton().addActionListener(e -> {
@@ -28,6 +30,9 @@ public class BottomPanelController extends MouseAdapter {
             bottomToolbar.getSkipButton().setEnabled(false);
             bottomToolbar.getDebugFrameButton().setEnabled(false);
             debugFrame.setVisible(false);
+            canvas.getLayer2D().setDefaultPixelSize();
+            canvas.getLayer2DMoveable().setDefaultPixelSize();
+
         });
         bottomToolbar.getDebugFrameButton().addActionListener(e -> {
             if (debugFrame.isVisible()) {
