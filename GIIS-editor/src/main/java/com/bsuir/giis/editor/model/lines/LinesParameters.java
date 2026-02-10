@@ -2,7 +2,7 @@ package com.bsuir.giis.editor.model.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-
+//TODO:get rid of it
 public class LinesParameters implements AlgorithmParameters {
     private Point startPoint;
     private Point endPoint;

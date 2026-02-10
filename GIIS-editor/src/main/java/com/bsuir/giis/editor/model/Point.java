@@ -20,5 +20,8 @@ public class Point {
     public void setY(final int y) {
         this.y = y;
     }
+    public boolean isValid() {
+        return x >= 0 && y >= 0;
+    }
 }
 

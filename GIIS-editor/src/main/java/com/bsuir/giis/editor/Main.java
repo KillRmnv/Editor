@@ -3,13 +3,12 @@ package com.bsuir.giis.editor;
 import com.bsuir.giis.editor.controllers.BottomPanelController;
 import com.bsuir.giis.editor.controllers.CanvasController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
+import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
-import com.bsuir.giis.editor.utils.ModeContainer;
-import com.bsuir.giis.editor.utils.PenStep;
-import com.bsuir.giis.editor.utils.PreviousStep;
-import com.bsuir.giis.editor.utils.ToolContainer;
+import com.bsuir.giis.editor.utils.*;
+
 import com.bsuir.giis.editor.view.BottomToolbar;
 import com.bsuir.giis.editor.view.Canvas;
 import com.bsuir.giis.editor.view.TopToolbar;
@@ -26,24 +25,23 @@ public class Main {
 
         JFrame debugFrame = getDebugFrame();
 
-        PreviousStep previousStep=new PreviousStep(new PenStep());
+
         ToolContainer tool =new ToolContainer(new Pen());
+        tool.setHandler(new PenHandler(new PenStep()));
         ModeContainer mode=new ModeContainer(new Regular());
 
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         BottomToolbar bottom=new BottomToolbar();
         Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100,bottom.getCoordinates(),bottom.getField());
-        CanvasController canvasController = new CanvasController(regularCanvas,tool,mode,previousStep);
+        regularCanvas.getLayer2D().setDefaultPixelSize();
+        regularCanvas.getLayer2DMoveable().setDefaultPixelSize();
+        CanvasController canvasController = new CanvasController(regularCanvas,tool,mode);
         BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas);
 
-
-
-
-
-
         TopToolbar top=new TopToolbar();
-        TopPanelController topPanelController=new TopPanelController(top,tool,previousStep);
+        TopPanelController topPanelController=new TopPanelController(top,tool);
+
 
         mainPanel.add(regularCanvas, BorderLayout.CENTER);
         mainPanel.add(bottom.getBottom(), BorderLayout.SOUTH);

@@ -6,7 +6,7 @@ import com.bsuir.giis.editor.view.Canvas;
 
 import java.awt.event.MouseEvent;
 
-public interface Handler {
+public interface DrawableHandler {
     void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode);
 
     void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode);

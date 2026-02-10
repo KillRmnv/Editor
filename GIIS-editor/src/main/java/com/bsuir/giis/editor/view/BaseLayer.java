@@ -26,6 +26,12 @@ public class BaseLayer extends JPanel {
     public int getPixelSize() {
         return pixelSize;
     }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
     protected void setupCanvas(int width, int height) {
         canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = canvasImage.createGraphics();
