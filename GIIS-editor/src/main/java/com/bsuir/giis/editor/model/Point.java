@@ -4,8 +4,11 @@ public class Point {
     private int x;
     private int y;
     public Point(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+        if(x >= 0 && y >= 0) {
+            this.x = x;
+            this.y = y;
+        }else
+            throw new IllegalArgumentException("Point is invalid");
 
     }
     public int getX() {

@@ -5,15 +5,16 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
 
-public class BottomToolbar {
-    private JPanel bottom;
-    private JButton regularModeButton;
-    private JButton debugModeButton;
-    private JButton debugFrameButton;
-    private JButton nextStepButton;
-    private JButton skipButton;
-    private JFormattedTextField field;
-    private JLabel coordinates;
+public final class BottomToolbar {
+    private final JPanel bottom;
+    private final JButton regularModeButton;
+    private final JButton debugModeButton;
+    private final JButton debugFrameButton;
+    private final JButton nextStepButton;
+    private final JButton skipButton;
+    private final JFormattedTextField field;
+    private final JLabel coordinates;
+    private final JButton morphButton;
 
 
     public BottomToolbar() {
@@ -25,6 +26,7 @@ public class BottomToolbar {
         debugFrameButton = new JButton("Dlog");
         nextStepButton = new JButton("Next");
         skipButton = new JButton("Skip");
+        morphButton = new JButton("Morph");
 
 
         debugFrameButton.setEnabled(false);
@@ -38,7 +40,7 @@ public class BottomToolbar {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(true);
         JLabel iterationsLabel = new JLabel("Pixels:");
-         field =
+        field =
                 new JFormattedTextField(formatter);
         field.setColumns(2);
         field.setValue(8);
@@ -85,10 +87,16 @@ public class BottomToolbar {
     public JButton getSkipButton() {
         return skipButton;
     }
+
     public JFormattedTextField getField() {
         return field;
     }
+
     public JLabel getCoordinates() {
         return coordinates;
+    }
+
+    public JButton getMorphButton() {
+        return morphButton;
     }
 }

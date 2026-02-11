@@ -33,7 +33,7 @@ public class CurveEllipseHandler implements DrawableHandler {
             canvas.getLayer2DMoveable().cleanLayer();
 
             Thread.ofVirtual().start(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode()));
-
+            addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
             multiStep.clean();
         }
     }

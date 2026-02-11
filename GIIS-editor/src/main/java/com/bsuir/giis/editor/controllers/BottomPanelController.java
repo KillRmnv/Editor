@@ -9,7 +9,7 @@ import com.bsuir.giis.editor.view.Canvas;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 
-public class BottomPanelController  {
+public final class BottomPanelController  {
     public BottomPanelController(BottomToolbar bottomToolbar, ModeContainer mode, JFrame debugFrame, Canvas canvas) {
         bottomToolbar.getDebugModeButton().addActionListener(e -> {
             mode.setMode(new Debug());

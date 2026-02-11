@@ -11,7 +11,7 @@ public class Canvas extends JPanel {
     private BaseLayer layer3D;
     private TwoDimensionLayer layer2DMoveable;
     private BaseLayer layer3DMoveable;
-    private BaseLayer layer2DMorphable;
+    private TwoDimensionLayer layer2DMorphable;
 
 
     public Canvas(int width, int height, JLabel coordinates, JFormattedTextField pixelField) {

@@ -8,7 +8,7 @@ import com.bsuir.giis.editor.view.Canvas;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CanvasController extends MouseAdapter {
+public final class CanvasController extends MouseAdapter {
     private Canvas canvas;
     private ToolContainer tool;
     private ModeContainer mode;

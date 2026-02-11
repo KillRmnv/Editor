@@ -3,7 +3,7 @@ package com.bsuir.giis.editor.view;
 import javax.swing.*;
 
 public class TwoDimensionLayer extends BaseLayer {
-    private JFormattedTextField pixelSizeField;
+    protected JFormattedTextField pixelSizeField;
 
     public TwoDimensionLayer(int width, int height, JFormattedTextField pixelField) {
         super(width, height);

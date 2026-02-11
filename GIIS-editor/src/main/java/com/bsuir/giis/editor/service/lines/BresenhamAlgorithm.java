@@ -17,10 +17,10 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
         int pixelSize = canvas.getPixelSize();
 
         // 2. Нормализуем координаты: переводим из экранных координат в логические (индексы сетки)
-        int x1 = linesParameters.getStartPoint().getX() / pixelSize;
-        int y1 = linesParameters.getStartPoint().getY() / pixelSize;
-        int x2 = linesParameters.getEndPoint().getX() / pixelSize;
-        int y2 = linesParameters.getEndPoint().getY() / pixelSize;
+        int x1 = ((PenStep)linesParameters.getStartPoint()).getX() / pixelSize;
+        int y1 = ((PenStep)linesParameters.getStartPoint()).getY() / pixelSize;
+        int x2 = ((PenStep)linesParameters.getEndPoint()).getX() / pixelSize;
+        int y2 = ((PenStep)linesParameters.getEndPoint()).getY() / pixelSize;
 
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);

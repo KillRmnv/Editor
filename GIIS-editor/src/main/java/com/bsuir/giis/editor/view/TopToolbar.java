@@ -9,7 +9,7 @@ public final class TopToolbar {
     private final JButton penButton;
     private final JMenu fileMenu;
     private final JMenu curveMenu;
-
+    private final JMenu parameterCurvesMenu;
     public TopToolbar() {
 
         upperPanel = new JPanel(new BorderLayout());
@@ -19,6 +19,7 @@ public final class TopToolbar {
 
         curveMenu = getCurvesJMenu();
 
+        parameterCurvesMenu = getParameterCurvesJMenu();
         penButton = new JButton("Pen");
         upperPanel.add(icons, BorderLayout.WEST);
         icons.add(penButton);
@@ -60,6 +61,16 @@ public final class TopToolbar {
         lineMenu.add(new JMenuItem("Bresenham"));
         return lineMenu;
     }
+    private JMenu getParameterCurvesJMenu() {
+        final JMenu parameterCurvesMenu;
+        //don't touch order of menu items
+        parameterCurvesMenu = new JMenu("PCurves");
+        parameterCurvesMenu.add(new JMenuItem("Hermit"));
+        parameterCurvesMenu.add(new JMenuItem("Bezier"));
+        parameterCurvesMenu.add(new JMenuItem("B Spline"));
+        return parameterCurvesMenu;
+    }
+
 
     public JPanel getUpperPanel() {
         return upperPanel;
@@ -79,6 +90,9 @@ public final class TopToolbar {
 
     public JMenu getCurveMenu() {
         return curveMenu;
+    }
+    public JMenu getParameterCurvesMenu() {
+        return parameterCurvesMenu;
     }
 
 }

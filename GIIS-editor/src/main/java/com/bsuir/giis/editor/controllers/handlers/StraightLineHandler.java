@@ -27,6 +27,7 @@ public class StraightLineHandler implements DrawableHandler {
                 AlgorithmParameters parameters = new LinesParameters(first, second);
                 canvas.getLayer2DMoveable().cleanLayer();
                 Thread.ofVirtual().start(()-> ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2D(), parameters,mode.getMode()));
+                addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
                 step.clean();
             }
         }
