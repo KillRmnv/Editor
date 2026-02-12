@@ -2,7 +2,7 @@ package com.bsuir.giis.editor.service.curves;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.curves.CurvesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
@@ -15,10 +15,10 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        CurvesParameters curvesParameters = (CurvesParameters) parameters;
-        Point center = curvesParameters.getPoint1();
-        Point pX = curvesParameters.getPoint2();
-        Point pY = curvesParameters.getPoint3();
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point center = curvesParameters.getPoint(0);
+        Point pX = curvesParameters.getPoint(1);
+        Point pY = curvesParameters.getPoint(2);
 
         if (center == null || pX == null || pY == null) {
             return;

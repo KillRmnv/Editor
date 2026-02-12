@@ -3,7 +3,6 @@ package com.bsuir.giis.editor.controllers.handlers;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Pen;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
@@ -44,7 +43,7 @@ public class PenHandler implements DrawableHandler {
         if (tool.getTool() instanceof Pen) {
             PenStep step = (PenStep) Step;
             StraightLineAlgorithm lineDrawer = new Antialiasing();
-            AlgorithmParameters parameters = new LinesParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
+            AlgorithmParameters parameters = new PointShapeParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
             Thread.ofVirtual().start(()-> lineDrawer.draw(canvas.getLayer2D(), parameters,new Regular()));
 
 

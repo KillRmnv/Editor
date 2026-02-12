@@ -1,6 +1,5 @@
 package com.bsuir.giis.editor.model;
 
-
 public class PointArea {
 
     private final Point point;
@@ -13,22 +12,54 @@ public class PointArea {
     public PointArea(Point point, int pixelSize, int tolerance) {
         this.point = point;
 
-        int baseX = point.getX() * pixelSize;
-        int baseY = point.getY() * pixelSize;
+        int centerX = point.getX() * pixelSize + pixelSize / 2;
+        int centerY = point.getY() * pixelSize + pixelSize / 2;
 
-        this.minX = baseX - tolerance;
-        this.maxX = baseX + pixelSize + tolerance;
+        this.minX = centerX - tolerance;
+        this.maxX = centerX + tolerance;
 
-        this.minY = baseY - tolerance;
-        this.maxY = baseY + pixelSize + tolerance;
+        this.minY = centerY - tolerance;
+        this.maxY = centerY + tolerance;
     }
 
-    public boolean contains(int clickX, int clickY) {
-        return clickX >= minX && clickX <= maxX
-                && clickY >= minY && clickY <= maxY;
+    public boolean contains(int x, int y) {
+        return x >= minX && x <= maxX &&
+                y >= minY && y <= maxY;
     }
 
     public Point getPoint() {
         return point;
     }
+    public boolean strongIntersects(PointArea other) {
+        int overlapWidth = Math.min(this.maxX, other.maxX)
+                - Math.max(this.minX, other.minX);
+
+        int overlapHeight = Math.min(this.maxY, other.maxY)
+                - Math.max(this.minY, other.minY);
+
+        if (overlapWidth <= 0 || overlapHeight <= 0) {
+            return false;
+        }
+
+        int overlapArea = overlapWidth * overlapHeight;
+        int thisArea = (maxX - minX) * (maxY - minY);
+        int otherArea = (other.maxX - other.minX) * (other.maxY - other.minY);
+
+        return overlapArea >= thisArea / 2 &&
+                overlapArea >= otherArea / 2;
+    }
+    public int getMinX() {
+        return minX;
+    }
+    public int getMaxX() {
+        return maxX;
+    }
+    public int getMinY() {
+        return minY;
+    }
+    public int getMaxY() {
+        return maxY;
+    }
 }
+
+

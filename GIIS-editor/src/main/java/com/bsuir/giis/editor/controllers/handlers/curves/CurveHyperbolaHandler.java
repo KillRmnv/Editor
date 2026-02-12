@@ -25,10 +25,8 @@ public class CurveHyperbolaHandler implements DrawableHandler {
         MultiStep multiStep = (MultiStep) Step;
         multiStep.setStep(new PenStep(x, y));
 
-
-
         if (multiStep.isReady()) {
-            AlgorithmParameters parameters = new CurvesParameters(Step);
+            AlgorithmParameters parameters = new PointShapeParameters(Step);
 
             canvas.getLayer2DMoveable().cleanLayer();
 
@@ -57,7 +55,7 @@ public class CurveHyperbolaHandler implements DrawableHandler {
             int fakeB_Y = center.getY() + Math.abs(y - center.getY());
             copy.setStep(new PenStep(x, fakeB_Y));
 
-            AlgorithmParameters parameters = new CurvesParameters(copy);
+            AlgorithmParameters parameters = new PointShapeParameters(copy);
             Thread.ofVirtual().start(() ->
                     ((Drawable) tool.getTool())
                             .draw(canvas.getLayer2DMoveable(), parameters, new Regular())
@@ -69,7 +67,7 @@ public class CurveHyperbolaHandler implements DrawableHandler {
             MultiStep copy = multiStep.copy();
             copy.setStep(new PenStep(x, y));
 
-            AlgorithmParameters parameters = new CurvesParameters(copy);
+            AlgorithmParameters parameters = new PointShapeParameters(copy);
             Thread.ofVirtual().start(() ->
                     ((Drawable) tool.getTool())
                             .draw(canvas.getLayer2DMoveable(), parameters, new Regular())

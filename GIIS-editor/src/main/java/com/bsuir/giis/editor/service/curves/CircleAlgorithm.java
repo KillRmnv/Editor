@@ -2,7 +2,7 @@ package com.bsuir.giis.editor.service.curves;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.curves.CurvesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
@@ -14,9 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 public class CircleAlgorithm implements CurvesAlgorithm {
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        CurvesParameters curvesParameters = (CurvesParameters) parameters;
-        Point center = curvesParameters.getPoint1();
-        Point point = curvesParameters.getPoint2();
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point center = curvesParameters.getPoint(0);
+        Point point = curvesParameters.getPoint(1);
 
         if (center == null || point == null) {
             return;

@@ -2,7 +2,6 @@ package com.bsuir.giis.editor.controllers.handlers;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.lines.LinesParameters;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.*;
@@ -24,7 +23,7 @@ public class StraightLineHandler implements DrawableHandler {
             if(step.isReady()){
                 Point first= ((PenStep)step.getStep(0)).getPoint();
                 Point second= ((PenStep)step.getStep(1)).getPoint();
-                AlgorithmParameters parameters = new LinesParameters(first, second);
+                AlgorithmParameters parameters = new PointShapeParameters(first, second);
                 canvas.getLayer2DMoveable().cleanLayer();
                 Thread.ofVirtual().start(()-> ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2D(), parameters,mode.getMode()));
                 addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
@@ -40,7 +39,7 @@ public class StraightLineHandler implements DrawableHandler {
             if(step.getStep(0).isReady()){
                 canvas.getLayer2DMoveable().cleanLayer();
                 Point first= ((PenStep)step.getStep(0)).getPoint();
-                AlgorithmParameters parameters = new LinesParameters(first, new Point(mouseEvent.getX(), mouseEvent.getY()));
+                AlgorithmParameters parameters = new PointShapeParameters(first, new Point(mouseEvent.getX(), mouseEvent.getY()));
                 Thread.ofVirtual().start(()-> ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2DMoveable(), parameters,new Regular()));
 
             }

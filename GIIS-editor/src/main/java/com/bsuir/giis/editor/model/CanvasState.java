@@ -2,18 +2,20 @@ package com.bsuir.giis.editor.model;
 
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
 public class CanvasState {
+
     private final int width;
     private final int height;
+
     private volatile BufferedImage canvasImage;
-    private Map<PointArea, List<MorphableShape<?>>> layersMap;
+
+    private Map<Point, List<MorphableShape<?>>> layersMap;
+
     private List<Shape<?>> shapes;
 
     public CanvasState(int width, int height) {
@@ -31,7 +33,6 @@ public class CanvasState {
     public void setupCanvas(boolean isTransparentLayer) {
         canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = canvasImage.createGraphics();
-        layersMap = new HashMap<>();
 
         if (isTransparentLayer) {
             g2.setComposite(AlphaComposite.Clear);
@@ -41,49 +42,90 @@ public class CanvasState {
             g2.setColor(Color.WHITE);
             g2.fillRect(0, 0, width, height);
         }
+
         g2.dispose();
+        layersMap.clear();
     }
 
-    public void addMorphShape(Point point, MorphableShape<?> shape, HitTestPolicy hitTestPolicy, int pixelSize) {
-        PointArea area = hitTestPolicy.createPointArea(point, pixelSize);
-        if (!layersMap.containsKey(area)) {
-            List<MorphableShape<?>> shapeList = new ArrayList<>();
-            shapeList.add(shape);
-            layersMap.put(area, shapeList);
-        } else {
-            layersMap.get(area).add(shape);
+    public List<MorphableShape<?>> getMorphShapesInArea(PointArea area, int pixelSize) {
+        List<MorphableShape<?>> result = new ArrayList<>();
+
+        // 1. Переводим пиксельные границы PointArea обратно в логические координаты сетки
+        // Используем Math.max(0, ...), чтобы не выйти за границы холста
+        int startGridX = Math.max(0, area.getMinX() / pixelSize);
+        int endGridX = Math.min(width - 1, area.getMaxX() / pixelSize);
+
+        int startGridY = Math.max(0, area.getMinY() / pixelSize);
+        int endGridY = Math.min(height - 1, area.getMaxY() / pixelSize);
+
+        // 2. Итерируемся только по тем точкам, которые потенциально попадают в область
+        for (int gx = startGridX; gx <= endGridX; gx++) {
+            for (int gy = startGridY; gy <= endGridY; gy++) {
+                // Создаем временный объект точки для поиска в Map
+                // (Предполагаю, что у твоего Point переопределены equals и hashCode)
+                Point targetPoint = new Point(gx, gy);
+
+                List<MorphableShape<?>> shapesAtPoint = layersMap.get(targetPoint);
+                if (shapesAtPoint != null) {
+                    // Добавляем все найденные формы в результирующий список
+                    result.addAll(shapesAtPoint);
+
+                }
+            }
+        }
+
+        // Если нужно исключить дубликаты (одна форма может занимать несколько точек)
+        // можно обернуть в LinkedHashSet и вернуть список
+        return new ArrayList<>(new LinkedHashSet<>(result));
+    }
+    public void addMorphShape(Point point, MorphableShape<?> shape) {
+        layersMap
+                .computeIfAbsent(point, p -> new ArrayList<>())
+                .add(shape);
+    }
+
+
+
+    public Optional<MorphableShape<?>> getMorphShape(Point point, int index) {
+        List<MorphableShape<?>> list = layersMap.get(point);
+        if (list == null || list.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(list.get(index % list.size()));
+    }
+
+    public void removeMorphShape(Point point, int index) {
+        List<MorphableShape<?>> list = layersMap.get(point);
+        if (list != null && !list.isEmpty()) {
+            list.remove(index % list.size());
+            if (list.isEmpty()) {
+                layersMap.remove(point);
+            }
         }
     }
 
-    public List<MorphableShape<?>> getMorphShapes(Point point, HitTestPolicy hitTestPolicy, int pixelSize) {
-        PointArea area = hitTestPolicy.createPointArea(point, pixelSize);
-        return layersMap.get(area);
+
+
+
+    public void addShape(Shape<?> shape) {
+        shapes.add(shape);
     }
 
-    public Optional<MorphableShape<?>> getMorphShape(Point point, int tryCounter, HitTestPolicy hitTestPolicy, int pixelSize) {
-        PointArea area = hitTestPolicy.createPointArea(point, pixelSize);
-        if (!layersMap.containsKey(area)) {
-            List<MorphableShape<?>> morphShapes=layersMap.get(area);
-            return Optional.of(morphShapes.get(tryCounter%morphShapes.size()));
-        }
-        return Optional.empty();
+    public void removeShape(Shape<?> shape) {
+        shapes.remove(shape);
     }
 
-    public void removeMorphShape(Point point, int tryCounter, HitTestPolicy hitTestPolicy, int pixelSize) {
-        PointArea area = hitTestPolicy.createPointArea(point, pixelSize);
-        layersMap.get(area).remove(tryCounter);
+    public List<Shape<?>> getAllShapes() {
+        return new ArrayList<>(shapes);
     }
 
-    public Map<PointArea, List<MorphableShape<?>>> getLayersMap() {
-        return layersMap;
+    public void clearShapes() {
+        shapes.clear();
     }
+
 
     public BufferedImage getCanvasImage() {
         return canvasImage;
-    }
-
-    public void setCanvasImage(BufferedImage canvasImage) {
-        this.canvasImage = canvasImage;
     }
 
     public int getWidth() {
@@ -94,24 +136,11 @@ public class CanvasState {
         return height;
     }
 
+    public Map<Point, List<MorphableShape<?>>> getLayersMap() {
+        return layersMap;
+    }
+
     public void clear() {
         initialize();
-    }
-
-    // Методы для работы с обычными Shape
-    public void addShape(Shape<?> shape) {
-        shapes.add(shape);
-    }
-
-    public List<Shape<?>> getAllShapes() {
-        return new ArrayList<>(shapes);
-    }
-
-    public void removeShape(Shape<?> shape) {
-        shapes.remove(shape);
-    }
-
-    public void clearShapes() {
-        shapes.clear();
     }
 }

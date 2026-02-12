@@ -1,5 +1,8 @@
 package com.bsuir.giis.editor.model;
 
-public interface AlgorithmParameters {
+import java.util.List;
 
+public interface AlgorithmParameters {
+    List<Point> getStartEndPoint();
+    List<Point> getPoints();
 }

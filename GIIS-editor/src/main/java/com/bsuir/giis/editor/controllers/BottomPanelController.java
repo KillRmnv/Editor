@@ -1,8 +1,11 @@
 package com.bsuir.giis.editor.controllers;
 
+import com.bsuir.giis.editor.controllers.handlers.MorphHandler;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.ModeContainer;
+import com.bsuir.giis.editor.utils.MorphStep;
+import com.bsuir.giis.editor.utils.ToolContainer;
 import com.bsuir.giis.editor.view.BottomToolbar;
 import com.bsuir.giis.editor.view.Canvas;
 
@@ -10,7 +13,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 
 public final class BottomPanelController  {
-    public BottomPanelController(BottomToolbar bottomToolbar, ModeContainer mode, JFrame debugFrame, Canvas canvas) {
+    public BottomPanelController(BottomToolbar bottomToolbar, ModeContainer mode, JFrame debugFrame, Canvas canvas, ToolContainer tool) {
         bottomToolbar.getDebugModeButton().addActionListener(e -> {
             mode.setMode(new Debug());
             bottomToolbar.getDebugModeButton().setSelected(true);
@@ -48,6 +51,9 @@ public final class BottomPanelController  {
         bottomToolbar.getSkipButton().addActionListener(e -> {
             Debug debug = (Debug) mode.getMode();
             debug.skip();
+        });
+        bottomToolbar.getMorphButton().addActionListener(e -> {
+            tool.setHandler(new MorphHandler(canvas.getLayer2DMorphable(),new MorphStep()));
         });
     }
 }

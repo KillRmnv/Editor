@@ -37,7 +37,7 @@ public class Main {
         regularCanvas.getLayer2D().setDefaultPixelSize();
         regularCanvas.getLayer2DMoveable().setDefaultPixelSize();
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode);
-        BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas);
+        BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas,tool);
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool);

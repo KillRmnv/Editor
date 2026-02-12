@@ -2,7 +2,7 @@ package com.bsuir.giis.editor.service.curves;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.curves.CurvesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
@@ -15,9 +15,9 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        CurvesParameters curvesParameters = (CurvesParameters) parameters;
-        Point vertex = curvesParameters.getPoint1();
-        Point endPoint = curvesParameters.getPoint2();
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point vertex = curvesParameters.getPoint(0);
+        Point endPoint = curvesParameters.getPoint(1);
 
         if (vertex == null || endPoint == null) {
             return;

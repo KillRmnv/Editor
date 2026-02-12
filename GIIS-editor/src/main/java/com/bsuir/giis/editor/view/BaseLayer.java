@@ -1,12 +1,11 @@
 package com.bsuir.giis.editor.view;
 
-import com.bsuir.giis.editor.model.*;
+import com.bsuir.giis.editor.model.CanvasState;
+import com.bsuir.giis.editor.model.MorphableShape;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.Shape;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
-import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.service.flow.Regular;
-import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,27 +30,29 @@ public class BaseLayer extends JPanel {
         setupCanvas(width, height);
     }
 
-    public void addShape(Point point, MorphableShape<?> shape) {
-        state.addMorphShape(point, shape, hitTestPolicy, pixelSize);
+    public HitTestPolicy getHitTestPolicy() {
+        return hitTestPolicy;
     }
 
-    public List<MorphableShape<?>> getShapes(Point point) {
-        return  state.getMorphShapes(point, hitTestPolicy, pixelSize);
+    public void addShape(Point point, MorphableShape<?> shape) {
+        state.addMorphShape(point, shape);
     }
 
     public Optional<MorphableShape<?>> getShape(Point point, int tryCounter) {
-        return state.getMorphShape(point, tryCounter, hitTestPolicy, pixelSize);
+        return state.getMorphShape(point, tryCounter);
     }
+
 
     public void repaintShape(MorphableShape<?> shape) {
         renderer.renderShape(shape, this);
     }
+
     public void repaintShape(Shape<?> shape) {
         renderer.renderShape(shape, this);
     }
 
     public void repaintShapes(Point point, int tryCounter) {
-        state.removeMorphShape(point, tryCounter, hitTestPolicy, pixelSize);
+        state.removeMorphShape(point, tryCounter);
         repaint();
     }
 
@@ -97,7 +98,6 @@ public class BaseLayer extends JPanel {
     }
 
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -122,7 +122,6 @@ public class BaseLayer extends JPanel {
         return state;
     }
 
-    // Методы для работы с обычными Shape
     public void addShape(Shape<?> shape) {
         state.addShape(shape);
     }

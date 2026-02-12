@@ -2,7 +2,7 @@ package com.bsuir.giis.editor.service.curves;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.curves.CurvesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
@@ -14,11 +14,11 @@ public class EllipseAlgorithm implements CurvesAlgorithm {
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        CurvesParameters curvesParameters = (CurvesParameters) parameters;
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
 
-        Point pCenter = curvesParameters.getPoint1();
-        Point pX = curvesParameters.getPoint2(); // Точка для определения радиуса A
-        Point pY = curvesParameters.getPoint3(); // Точка для определения радиуса B
+        Point pCenter = curvesParameters.getPoint(0);
+        Point pX = curvesParameters.getPoint(1); // Точка для определения радиуса A
+        Point pY = curvesParameters.getPoint(2); // Точка для определения радиуса B
 
         if (pCenter == null || pX == null || pY == null) {
             return;

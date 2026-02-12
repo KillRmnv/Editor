@@ -2,7 +2,9 @@ package com.bsuir.giis.editor.service.flow;
 
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointArea;
-import com.bsuir.giis.editor.view.BaseLayer;
+
+import java.util.Optional;
+import java.util.Set;
 
 public class HitTestPolicy {
 
@@ -10,29 +12,20 @@ public class HitTestPolicy {
         return Math.max(3, pixelSize / 2);
     }
 
-    public PointArea createPointArea(Point point, int pixelSize) {
+    public Optional<Point> resolvePoint(
+            int clickX,
+            int clickY,
+            Set<Point> existingPoints,
+            int pixelSize
+    ) {
         int tolerance = calculateTolerance(pixelSize);
-        return new PointArea(point, pixelSize, tolerance);
-    }
 
-    public Point resolvePoint(int x, int y, BaseLayer layer) {
-        int px = x / layer.getPixelSize();
-        int py = y / layer.getPixelSize();
-
-        int tolerance = calculateTolerance(layer.getPixelSize());
-
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                Point candidate = new Point(px + dx, py + dy);
-                PointArea area =
-                        new PointArea(candidate, layer.getPixelSize(), tolerance);
-
-                if (area.contains(x, y)) {
-                    return candidate;
-                }
+        for (Point p : existingPoints) {
+            PointArea area = new PointArea(p, pixelSize, tolerance);
+            if (area.contains(clickX, clickY)) {
+                return Optional.of(p);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
-

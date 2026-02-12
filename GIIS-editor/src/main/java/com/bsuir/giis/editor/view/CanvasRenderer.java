@@ -2,7 +2,6 @@ package com.bsuir.giis.editor.view;
 
 import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.model.MorphableShape;
-import com.bsuir.giis.editor.model.PointArea;
 import com.bsuir.giis.editor.model.Shape;
 import com.bsuir.giis.editor.service.flow.Mode;
 import org.w3c.dom.css.RGBColor;

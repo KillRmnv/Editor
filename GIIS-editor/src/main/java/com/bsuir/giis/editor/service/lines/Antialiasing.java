@@ -1,11 +1,10 @@
 package com.bsuir.giis.editor.service.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
-import com.bsuir.giis.editor.model.lines.LinesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.view.BaseLayer;
-import com.bsuir.giis.editor.view.Canvas;
 
 import java.awt.*;
 
@@ -13,17 +12,17 @@ public class Antialiasing implements StraightLineAlgorithm {
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        LinesParameters linesParameters = (LinesParameters) parameters;
+        PointShapeParameters linesParameters = (PointShapeParameters) parameters;
 
         // 1. Получаем размер пикселя для корректной работы с сеткой
         // Предполагается, что у Canvas есть геттер. Если нет — добавьте: public int getPixelSize() { return pixelSize; }
         int pixelSize = canvas.getPixelSize();
 
         // 2. Нормализуем координаты: переводим из экранных в логические (индексы сетки)
-        int x1 = ((PenStep)linesParameters.getStartPoint()).getX() / pixelSize;
-        int y1 = ((PenStep)linesParameters.getStartPoint()).getY() / pixelSize;
-        int x2 = ((PenStep)linesParameters.getEndPoint()).getX() / pixelSize;
-        int y2 = ((PenStep)linesParameters.getEndPoint()).getY() / pixelSize;
+        int x1 = (linesParameters.getPoint(0)).getX() / pixelSize;
+        int y1 = (linesParameters.getPoint(0)).getY() / pixelSize;
+        int x2 = (linesParameters.getPoint(1)).getX() / pixelSize;
+        int y2 = (linesParameters.getPoint(1)).getY() / pixelSize;
 
         // Определяем "крутизну" линии
         boolean steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
@@ -82,5 +81,10 @@ public class Antialiasing implements StraightLineAlgorithm {
         } else {
             canvas.paintPixel(screenX, screenY, color);
         }
+    }
+
+    @Override
+    public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
+
     }
 }
