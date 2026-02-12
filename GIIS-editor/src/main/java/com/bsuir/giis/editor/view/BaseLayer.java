@@ -76,6 +76,9 @@ public class BaseLayer extends JPanel {
 
     @Override
     public void repaint() {
+        if (renderer == null || state == null) {
+            return;
+        }
         super.repaint();
         renderer.renderAll(state, this);
     }

@@ -3,7 +3,7 @@ package com.bsuir.giis.editor.controllers.handlers.curves;
 import com.bsuir.giis.editor.controllers.handlers.DrawableHandler;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Drawable;
-import com.bsuir.giis.editor.model.curves.CurvesParameters;
+import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.*;
 import com.bsuir.giis.editor.view.Canvas;
