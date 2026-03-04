@@ -31,7 +31,21 @@ public class CanvasState {
         layersMap = new HashMap<>();
         shapes = new ArrayList<>();
     }
+    public void setupWithStateSave(boolean isTransparentLayer){
+        canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = canvasImage.createGraphics();
 
+        if (isTransparentLayer) {
+            g2.setComposite(AlphaComposite.Clear);
+            g2.fillRect(0, 0, width, height);
+            g2.setComposite(AlphaComposite.SrcOver);
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, width, height);
+        }
+
+        g2.dispose();
+    }
     public void setupCanvas(boolean isTransparentLayer) {
         canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = canvasImage.createGraphics();
@@ -93,12 +107,27 @@ public class CanvasState {
         List<MorphableShape<?>> list = layersMap.get(point);
         if (list != null && !list.isEmpty()) {
             list.remove(index % list.size());
+            layersMap.put(point, list);
             if (list.isEmpty()) {
                 layersMap.remove(point);
             }
         }
     }
-
+    public void removeMorphShape(Point point,MorphableShape toRemove) {
+        List<MorphableShape<?>> list = layersMap.get(point);
+        if (list != null && !list.isEmpty()) {
+            for(MorphableShape<?> shape : list) {
+                if (shape.equals( toRemove)) {
+                    list.remove(toRemove);
+                    break;
+                }
+            }
+            layersMap.put(point, list);
+            if (list.isEmpty()) {
+                layersMap.remove(point);
+            }
+        }
+    }
 
 
 

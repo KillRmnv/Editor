@@ -97,4 +97,9 @@ public class ParametersCurveHandler implements DrawableHandler {
     public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         //pass
     }
+
+    @Override
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+
+    }
 }

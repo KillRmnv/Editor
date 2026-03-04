@@ -51,10 +51,7 @@ public class BaseLayer extends JPanel {
         renderer.renderShape(shape, this);
     }
 
-    public void repaintShapes(Point point, int tryCounter) {
-        state.removeMorphShape(point, tryCounter);
-        repaint();
-    }
+
 
     @Override
     public void setOpaque(boolean isOpaque) {
@@ -72,6 +69,19 @@ public class BaseLayer extends JPanel {
 
     public int getLayerHeight() {
         return height;
+    }
+
+    public void repaintAll(){
+        state.setupWithStateSave(isTransparentLayer);
+        int displayWidth = width * (pixelSize > 0 ? pixelSize : 1);
+        int displayHeight = height * (pixelSize > 0 ? pixelSize : 1);
+        setPreferredSize(new Dimension(displayWidth, displayHeight));
+
+        if (!isTransparentLayer) {
+            setBackground(Color.WHITE);
+        }
+        super.repaint();
+        renderer.renderAll(state, this);
     }
 
     @Override

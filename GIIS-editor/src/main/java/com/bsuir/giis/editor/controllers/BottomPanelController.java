@@ -32,6 +32,7 @@ public final class BottomPanelController {
                 bottomToolbar.getNextStepButton().setEnabled(true);
                 bottomToolbar.getSkipButton().setEnabled(true);
                 bottomToolbar.getDebugFrameButton().setEnabled(true);
+                canvas.getLayer2DMorphable().setDefaultPixelSize();
 
             });
         bottomToolbar
@@ -48,6 +49,7 @@ public final class BottomPanelController {
                     canvas.getLayer2D().setDefaultPixelSize();
                     canvas.getLayer2DMoveable().setDefaultPixelSize();
                 }
+                canvas.getLayer2DMorphable().setDefaultPixelSize();
             });
         bottomToolbar
             .getDebugFrameButton()

@@ -13,5 +13,9 @@ public class MorphableShape<Draw extends Drawable&Morphable> extends Shape<Draw>
     public MorphableShape(final AlgorithmParameters parameters, final Color color, Draw drawable) {
         super(drawable, parameters, color);
     }
+    public MorphableShape( MorphableShape<Draw> drawable) {
+        super(drawable.getDrawable(),drawable.getParameters(), Color.BLACK);
+
+    }
 
 }

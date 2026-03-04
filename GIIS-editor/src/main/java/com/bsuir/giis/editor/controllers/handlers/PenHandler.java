@@ -53,4 +53,9 @@ public class PenHandler implements DrawableHandler {
 //        canvas.paintPixel(mouseEvent.getX(), mouseEvent.getY());
         }
     }
+
+    @Override
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+
+    }
 }

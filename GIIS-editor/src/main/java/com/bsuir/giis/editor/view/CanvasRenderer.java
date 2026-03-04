@@ -7,6 +7,8 @@ import com.bsuir.giis.editor.service.flow.Mode;
 import org.w3c.dom.css.RGBColor;
 
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CanvasRenderer {
     private final Mode mode;
@@ -16,27 +18,31 @@ public class CanvasRenderer {
     }
 
     public void renderAll(CanvasState state, BaseLayer layer) {
+        Set<Shape> shapes = new HashSet<>();
         for (var entry : state.getLayersMap().entrySet()) {
             for (MorphableShape<?> shape : entry.getValue()) {
-                shape.getDrawable().draw(layer, shape.getParameters(), mode);
+                if (shape.isVisible()&&!shapes.contains(shape)) {
+                    shape.getDrawable().draw(layer, shape.getParameters(), mode);
+                    shapes.add(shape);
+                }
             }
         }
         for (Shape<?> shape : state.getAllShapes()) {
-            shape.getDrawable().draw(layer, shape.getParameters(), mode);
+            if (shape.isVisible()&&!shapes.contains(shape)) {
+                shape.getDrawable().draw(layer, shape.getParameters(), mode);
+                shapes.add(shape);
+            }
         }
     }
 
     public void renderShape(MorphableShape<?> shape, BaseLayer layer) {
         shape.getDrawable().morph(layer, shape.getParameters(), mode);
     }
+
     public void renderShape(Shape<?> shape, BaseLayer layer) {
         shape.getDrawable().draw(layer, shape.getParameters(), mode);
     }
 
-    public void cleanCanvas(CanvasState state, BaseLayer layer, boolean isTransparentLayer) {
-        state.setupCanvas(isTransparentLayer);
-        repaintLayer(layer);
-    }
 
     public void paintPixel(BaseLayer layer, int x, int y, Color color) {
         int pixelSize = layer.getPixelSize();
@@ -53,7 +59,8 @@ public class CanvasRenderer {
             );
         }
     }
-    public void paintPixel(BaseLayer layer,int x, int y, RGBColor color, int brightness) {
+
+    public void paintPixel(BaseLayer layer, int x, int y, RGBColor color, int brightness) {
         int pixelSize = layer.getPixelSize();
         int width = layer.getWidth();
         int height = layer.getHeight();
@@ -77,7 +84,5 @@ public class CanvasRenderer {
             );
         }
     }
-    private void repaintLayer(BaseLayer layer) {
-        layer.repaint();
-    }
+
 }

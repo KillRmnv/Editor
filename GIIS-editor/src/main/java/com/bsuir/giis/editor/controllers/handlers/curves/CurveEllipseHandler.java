@@ -83,4 +83,9 @@ public class CurveEllipseHandler implements DrawableHandler {
     public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
 
     }
+
+    @Override
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+
+    }
 }

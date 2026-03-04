@@ -51,4 +51,9 @@ public class StraightLineHandler implements DrawableHandler {
     public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
         handleMove(canvas, mouseEvent, tool, mode);
     }
+
+    @Override
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+
+    }
 }
