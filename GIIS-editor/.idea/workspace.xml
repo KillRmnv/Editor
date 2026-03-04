@@ -6,24 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e988ada3-b22d-4481-8c7b-fc47d43dd0aa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/BottomPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/BottomPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/PenHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/PenHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/StraightLineHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/StraightLineHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/MorphableShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/MorphableShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/flow/HitTestPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/flow/HitTestPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MorphStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MorphStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BaseLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BaseLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/CanvasRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/CanvasRenderer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -137,7 +120,7 @@
       <workItem from="1771510307373" duration="1400000" />
       <workItem from="1772304802643" duration="1000" />
       <workItem from="1772450348250" duration="15000" />
-      <workItem from="1772623625710" duration="35109000" />
+      <workItem from="1772623625710" duration="37988000" />
     </task>
     <servers />
   </component>
@@ -177,34 +160,9 @@
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java</url>
-          <line>116</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java</url>
-          <line>106</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="50" />
+          <line>85</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -13,11 +13,13 @@ import com.bsuir.giis.editor.view.TwoDimensionLayer;
 
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 //TODO:fix double click problem
 public class MorphHandler implements DrawableHandler {
     private int tryCounter = 0;
     private PointArea previousPoint;
     private Step Step;
+
 
 
     public MorphHandler(BaseLayer canvas, Step step) {
@@ -43,13 +45,16 @@ public class MorphHandler implements DrawableHandler {
                 for (var point : shape.getParameters().getPoints()) {
                     canvas.getLayer2DMorphable().addShape(point, shape);
                     canvas.getLayer2D().getState().removeMorphShape(point, shape);
-                    if (point.getX() == mouseEvent.getX() && point.getY() == mouseEvent.getY()) {
+                    if (previousPoint.contains(point.getX(), point.getY())) {
                         morphStep.setup(point, shape);
                         canvas.getLayer2DMorphable().cleanLayer();
                         canvas.getLayer2DMorphable().repaintShape(morphStep.getMorphableShape());
                     }
                     System.out.println("Remove 2D(previous): " + point.toString());
                 }
+//                Thread.ofVirtual().start(() -> {
+//                    canvas.getLayer2D().repaintAll();
+//                });
             }
         } else {
             tryCounter = 0;
@@ -84,8 +89,7 @@ public class MorphHandler implements DrawableHandler {
                 Thread.ofVirtual().start(() -> {
                     canvas.getLayer2D().repaintAll();
                 });
-            }
-//                canvas.getLayer2DMorphable().cleanLayer(); somehow it breaks everything
+            } else canvas.getLayer2DMorphable().cleanLayer();
         }
     }
 
