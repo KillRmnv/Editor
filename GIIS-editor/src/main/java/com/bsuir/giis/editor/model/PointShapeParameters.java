@@ -26,7 +26,6 @@ public class PointShapeParameters implements AlgorithmParameters {
                 }
             }
         } else if (step instanceof PenStep penStep) {
-            // Если вдруг пришел одиночный шаг
             this.controlPoints.add(penStep.getPoint());
         }
     }

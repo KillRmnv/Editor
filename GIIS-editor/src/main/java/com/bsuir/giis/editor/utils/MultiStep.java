@@ -12,7 +12,7 @@ public class MultiStep implements Step {
         return size;
     }
     public MultiStep(List<Step> steps,int stepIndex) {
-        this.steps = steps;
+        this.steps = new ArrayList<>(steps);
         this.size = steps.size();
         this.stepIndex = stepIndex;
     }

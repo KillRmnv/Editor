@@ -1,6 +1,8 @@
 package com.bsuir.giis.editor.model;
 
-import com.bsuir.giis.editor.service.flow.HitTestPolicy;
+
+import com.bsuir.giis.editor.model.shapes.MorphableShape;
+import com.bsuir.giis.editor.model.shapes.Shape;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -50,32 +52,25 @@ public class CanvasState {
     public List<MorphableShape<?>> getMorphShapesInArea(PointArea area, int pixelSize) {
         List<MorphableShape<?>> result = new ArrayList<>();
 
-        // 1. Переводим пиксельные границы PointArea обратно в логические координаты сетки
-        // Используем Math.max(0, ...), чтобы не выйти за границы холста
         int startGridX = Math.max(0, area.getMinX() / pixelSize);
         int endGridX = Math.min(width - 1, area.getMaxX() / pixelSize);
 
         int startGridY = Math.max(0, area.getMinY() / pixelSize);
         int endGridY = Math.min(height - 1, area.getMaxY() / pixelSize);
 
-        // 2. Итерируемся только по тем точкам, которые потенциально попадают в область
         for (int gx = startGridX; gx <= endGridX; gx++) {
             for (int gy = startGridY; gy <= endGridY; gy++) {
-                // Создаем временный объект точки для поиска в Map
-                // (Предполагаю, что у твоего Point переопределены equals и hashCode)
                 Point targetPoint = new Point(gx, gy);
 
                 List<MorphableShape<?>> shapesAtPoint = layersMap.get(targetPoint);
                 if (shapesAtPoint != null) {
-                    // Добавляем все найденные формы в результирующий список
+
                     result.addAll(shapesAtPoint);
 
                 }
             }
         }
 
-        // Если нужно исключить дубликаты (одна форма может занимать несколько точек)
-        // можно обернуть в LinkedHashSet и вернуть список
         return new ArrayList<>(new LinkedHashSet<>(result));
     }
     public void addMorphShape(Point point, MorphableShape<?> shape) {
@@ -86,12 +81,12 @@ public class CanvasState {
 
 
 
-    public Optional<MorphableShape<?>> getMorphShape(Point point, int index) {
+    public Optional<List<MorphableShape<?>>> getMorphShape(Point point) {
         List<MorphableShape<?>> list = layersMap.get(point);
         if (list == null || list.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(list.get(index % list.size()));
+        return Optional.of(list);
     }
 
     public void removeMorphShape(Point point, int index) {
@@ -107,11 +102,11 @@ public class CanvasState {
 
 
 
-    public void addShape(Shape<?> shape) {
+    public void addShape(com.bsuir.giis.editor.model.shapes.Shape<?> shape) {
         shapes.add(shape);
     }
 
-    public void removeShape(Shape<?> shape) {
+    public void removeShape(com.bsuir.giis.editor.model.shapes.Shape<?> shape) {
         shapes.remove(shape);
     }
 

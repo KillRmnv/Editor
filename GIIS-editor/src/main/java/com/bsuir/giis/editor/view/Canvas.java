@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class Canvas extends JPanel {
 
-
     private JLabel coordinates;
     private TwoDimensionLayer layer2D;
     private BaseLayer layer3D;
@@ -49,7 +48,7 @@ public class Canvas extends JPanel {
         return layer3DMoveable;
     }
 
-    public BaseLayer getLayer2DMorphable() {
+    public TwoDimensionLayer getLayer2DMorphable() {
         return layer2DMorphable;
     }
 

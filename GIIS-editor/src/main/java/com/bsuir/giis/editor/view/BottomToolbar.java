@@ -47,6 +47,7 @@ public final class BottomToolbar {
 
 
         JPanel bottomWestFlow = new JPanel(new FlowLayout());
+        bottomWestFlow.add(morphButton);
         bottomWestFlow.add(regularModeButton);
         bottomWestFlow.add(debugModeButton);
         bottomWestFlow.add(nextStepButton);

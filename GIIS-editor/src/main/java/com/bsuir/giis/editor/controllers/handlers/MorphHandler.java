@@ -1,9 +1,9 @@
 package com.bsuir.giis.editor.controllers.handlers;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
-import com.bsuir.giis.editor.model.MorphableShape;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointArea;
+import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.*;
 import com.bsuir.giis.editor.view.BaseLayer;
@@ -11,8 +11,8 @@ import com.bsuir.giis.editor.view.Canvas;
 import com.bsuir.giis.editor.view.TwoDimensionLayer;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MorphHandler implements DrawableHandler {
     private int tryCounter = 0;
@@ -30,12 +30,10 @@ public class MorphHandler implements DrawableHandler {
         int tolerance = canvas.getLayer2DMorphable().getHitTestPolicy().calculateTolerance(canvas.getLayer2DMorphable().getPixelSize());
         MorphStep morphStep = (MorphStep) Step;
         TwoDimensionLayer layer = canvas.getLayer2D();
-
         var morphs = canvas.getLayer2DMorphable().getState().getLayersMap();
         if (previousPoint.strongIntersects(new PointArea(
                 new Point(mouseEvent.getX(), mouseEvent.getY()), canvas.getLayer2D().getPixelSize(), tolerance))) {
             boolean someChanges = false;
-            morphs = canvas.getLayer2DMorphable().getState().getLayersMap();
             if (!morphs.isEmpty()) {
                 for (var point : morphs.keySet()) {
                     MorphableShape<?> shape = morphs.get(point).getFirst();
@@ -81,14 +79,25 @@ public class MorphHandler implements DrawableHandler {
             }
             morphs.clear();
             morphStep.clean();
-            previousPoint = new PointArea(newPoint, canvas.getLayer2DMorphable().getPixelSize(), tolerance);
-            Optional<MorphableShape<?>> shape = layer.getShape(newPoint, tryCounter);
-            shape.ifPresent(morphableShape -> {
+            previousPoint = new PointArea(newPoint, canvas.getLayer2D().getPixelSize(), tolerance);
+            //TODO: iterate through all points in PointArea
+            var pointToSearch = previousPoint.getAllPoints();
+            List<MorphableShape<?>> shapes = new ArrayList<>();
+            for (var point : pointToSearch) {
+                layer.getShape(point).ifPresent(shapes::addAll);
+            }
+            MorphableShape<?> morphableShape = shapes.get(tryCounter);
+
+            Thread.ofVirtual().start(() -> {
                 canvas.getLayer2DMorphable().repaintShape(morphableShape);
-                canvas.getLayer2DMorphable().addShape(newPoint, morphableShape);
-                canvas.getLayer2DMorphable().addShape(morphableShape.getParameters().getStartEndPoint().getLast(), morphableShape);
-                canvas.getLayer2D().getState().removeMorphShape(newPoint, 0);
-                canvas.getLayer2D().getState().removeMorphShape(morphableShape.getParameters().getStartEndPoint().getLast(), 0);
+            });
+
+            canvas.getLayer2DMorphable().addShape(newPoint, morphableShape);
+            canvas.getLayer2DMorphable().addShape(morphableShape.getParameters().getStartEndPoint().getLast(), morphableShape);
+            canvas.getLayer2D().getState().removeMorphShape(newPoint, 0);
+            canvas.getLayer2D().getState().removeMorphShape(morphableShape.getParameters().getStartEndPoint().getLast(), 0);
+
+            Thread.ofVirtual().start(() -> {
                 canvas.getLayer2D().repaint();
             });
 

@@ -12,6 +12,10 @@ public class PenStep implements Step{
         y=-1;
         brightness=255;
     }
+    public PenStep(Point point) {
+        x=point.getX();
+        y=point.getY();
+    }
     public PenStep(int x, int y) {
         this.x = x;
         this.y = y;

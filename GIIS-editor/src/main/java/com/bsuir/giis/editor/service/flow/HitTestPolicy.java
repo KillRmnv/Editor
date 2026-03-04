@@ -9,7 +9,7 @@ import java.util.Set;
 public class HitTestPolicy {
 
     public int calculateTolerance(int pixelSize) {
-        return Math.max(3, pixelSize / 2);
+        return Math.max(4, pixelSize / 2);
     }
 
     public Optional<Point> resolvePoint(

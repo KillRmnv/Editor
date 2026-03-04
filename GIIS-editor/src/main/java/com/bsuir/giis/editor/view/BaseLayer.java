@@ -1,9 +1,9 @@
 package com.bsuir.giis.editor.view;
 
 import com.bsuir.giis.editor.model.CanvasState;
-import com.bsuir.giis.editor.model.MorphableShape;
+import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.model.Point;
-import com.bsuir.giis.editor.model.Shape;
+import com.bsuir.giis.editor.model.shapes.Shape;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Regular;
 
@@ -38,8 +38,8 @@ public class BaseLayer extends JPanel {
         state.addMorphShape(point, shape);
     }
 
-    public Optional<MorphableShape<?>> getShape(Point point, int tryCounter) {
-        return state.getMorphShape(point, tryCounter);
+    public Optional<List<MorphableShape<?>>> getShape(Point point) {
+        return state.getMorphShape(point);
     }
 
 

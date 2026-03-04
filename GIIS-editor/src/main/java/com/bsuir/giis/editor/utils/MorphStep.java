@@ -1,6 +1,6 @@
 package com.bsuir.giis.editor.utils;
 
-import com.bsuir.giis.editor.model.MorphableShape;
+import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.model.Point;
 
 public class MorphStep implements Step {

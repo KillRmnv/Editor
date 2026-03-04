@@ -5,14 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e988ada3-b22d-4481-8c7b-fc47d43dd0aa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Colorable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/ColorableShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Thickable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/ThickableShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/BottomPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/BottomPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/TopPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/TopPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/AlgorithmParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/AlgorithmParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/CanvasState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Drawable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Morphable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Morphable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/MorphableShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/MorphableShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Point.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/PointArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/PointArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/PointShapeParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/PointShapeParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/model/shapes/Shape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/CircleAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/CircleAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/CurvesAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/CurvesAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/EllipseAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/EllipseAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/HyperbolaAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/HyperbolaAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/ParabolaAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/curves/ParabolaAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/flow/HitTestPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/flow/HitTestPolicy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/Antialiasing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/Antialiasing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/BresenhamAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/BresenhamAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/CDAAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/CDAAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/StraightLineAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/lines/StraightLineAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/BSplineAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/BSplineAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/BezierAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/BezierAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/HermiteAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/HermiteAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/ParameterCurveAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/service/parameterCurves/ParameterCurveAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MorphStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MorphStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MultiStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MultiStep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/PenStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/PenStep.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BaseLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BaseLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BottomToolbar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/BottomToolbar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/Canvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/CanvasRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/CanvasRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/TopToolbar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/TopToolbar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_progress.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,28 +78,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/kirillromanoff/University/Editor/GIIS-editor&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/kirillromanoff/University/BSUIR/GIIS/GIIS-editor/src/main/java/com/bsuir/giis/editor/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/kirillromanoff/Загрузки/claude-code-jetbrains-plugin-0.1.14-beta.zip",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/home/kirillromanoff/University/BSUIR/GIIS/GIIS-editor/src/main/java/com/bsuir/giis/editor/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.bsuir.giis.editor.controllers.handlers" />
@@ -117,7 +154,16 @@
       <workItem from="1770716963678" duration="191000" />
       <workItem from="1770720042851" duration="16506000" />
       <workItem from="1770800591312" duration="10464000" />
-      <workItem from="1770882758409" duration="7304000" />
+      <workItem from="1770882758409" duration="9948000" />
+      <workItem from="1770976480763" duration="6000" />
+      <workItem from="1771101619383" duration="556000" />
+      <workItem from="1771147041315" duration="405000" />
+      <workItem from="1771177162592" duration="30000" />
+      <workItem from="1771488301406" duration="13024000" />
+      <workItem from="1771510307373" duration="1400000" />
+      <workItem from="1772304802643" duration="1000" />
+      <workItem from="1772450348250" duration="15000" />
+      <workItem from="1772623625710" duration="15400000" />
     </task>
     <servers />
   </component>
@@ -146,5 +192,24 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/view/CanvasRenderer.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="java-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

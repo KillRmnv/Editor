@@ -14,25 +14,19 @@ public class Antialiasing implements StraightLineAlgorithm {
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         PointShapeParameters linesParameters = (PointShapeParameters) parameters;
 
-        // 1. Получаем размер пикселя для корректной работы с сеткой
-        // Предполагается, что у Canvas есть геттер. Если нет — добавьте: public int getPixelSize() { return pixelSize; }
         int pixelSize = canvas.getPixelSize();
 
-        // 2. Нормализуем координаты: переводим из экранных в логические (индексы сетки)
         int x1 = (linesParameters.getPoint(0)).getX() / pixelSize;
         int y1 = (linesParameters.getPoint(0)).getY() / pixelSize;
         int x2 = (linesParameters.getPoint(1)).getX() / pixelSize;
         int y2 = (linesParameters.getPoint(1)).getY() / pixelSize;
 
-        // Определяем "крутизну" линии
         boolean steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
 
-        // Если угол больше 45 градусов, меняем оси местами
         if (steep) {
             int temp = x1; x1 = y1; y1 = temp;
             temp = x2; x2 = y2; y2 = temp;
         }
-        // Упорядочиваем координаты слева направо
         if (x1 > x2) {
             int temp = x1; x1 = x2; x2 = temp;
             temp = y1; y1 = y2; y2 = temp;
@@ -42,10 +36,8 @@ public class Antialiasing implements StraightLineAlgorithm {
         double dy = y2 - y1;
         double gradient = (dx == 0) ? 1.0 : dy / dx;
 
-        // Первое пересечение Y
         double intery = y1 + gradient;
 
-        // Рисуем начальную и конечную точки (с полной яркостью)
 
         drawPixel(canvas, x1, y1, 1.0, steep, pixelSize);
         mode.onStep(new PenStep(x1,y1,255),"Wu Algorithm(start point): ");
@@ -53,7 +45,6 @@ public class Antialiasing implements StraightLineAlgorithm {
         mode.onStep(new PenStep(x2,y2,255),"Wu Algorithm(end point): ");
 
 
-        // Основной цикл алгоритма Ву
         for (int x = x1 + 1; x < x2; x++) {
             // Рисуем основную точку (яркость = перевернутая дробная часть)
             drawPixel(canvas, x, (int) intery, 1.0 - (intery - (int) intery), steep, pixelSize);
@@ -69,14 +60,11 @@ public class Antialiasing implements StraightLineAlgorithm {
     private void drawPixel(BaseLayer canvas, int x, int y, double brightness, boolean steep, int pixelSize) {
         int alpha = (int) (brightness * 255);
 
-        // 4. Переводим координаты обратно в "экранные" для корректной работы canvas.paintPixel,
-        // так как внутри paintPixel происходит деление: px = inputX / pixelSize
         int screenX = x * pixelSize;
         int screenY = y * pixelSize;
         Color color=new Color(0,0,0,alpha);
         if (steep) {
 
-            // Если оси были перевернуты, возвращаем их на место при отрисовке
             canvas.paintPixel(screenY, screenX, color);
         } else {
             canvas.paintPixel(screenX, screenY, color);

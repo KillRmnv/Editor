@@ -1,13 +1,12 @@
 package com.bsuir.giis.editor.view;
 
 import com.bsuir.giis.editor.model.CanvasState;
-import com.bsuir.giis.editor.model.MorphableShape;
-import com.bsuir.giis.editor.model.Shape;
+import com.bsuir.giis.editor.model.shapes.MorphableShape;
+import com.bsuir.giis.editor.model.shapes.Shape;
 import com.bsuir.giis.editor.service.flow.Mode;
 import org.w3c.dom.css.RGBColor;
 
 import java.awt.*;
-import java.util.List;
 
 public class CanvasRenderer {
     private final Mode mode;
@@ -17,13 +16,11 @@ public class CanvasRenderer {
     }
 
     public void renderAll(CanvasState state, BaseLayer layer) {
-        // Рендеринг MorphableShape из layersMap
         for (var entry : state.getLayersMap().entrySet()) {
             for (MorphableShape<?> shape : entry.getValue()) {
                 shape.getDrawable().draw(layer, shape.getParameters(), mode);
             }
         }
-        // Рендеринг обычных Shape
         for (Shape<?> shape : state.getAllShapes()) {
             shape.getDrawable().draw(layer, shape.getParameters(), mode);
         }

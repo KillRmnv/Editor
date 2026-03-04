@@ -10,7 +10,6 @@ import com.bsuir.giis.editor.view.BaseLayer;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-//TODO:add pixel size approximation
 public class CircleAlgorithm implements CurvesAlgorithm {
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -27,10 +26,9 @@ public class CircleAlgorithm implements CurvesAlgorithm {
         int radius = (int) Math.sqrt(Math.pow((point.getX()/pixelSize) - xc, 2) +
                                     Math.pow((point.getY()/pixelSize) - yc, 2));
         
-        // Алгоритм построения окружности
         int x = 0;
         int y = radius;
-        int d = 3 - 2 * radius;
+        int d = 3 - 2 * radius;// decision parameter
         
         drawCirclePoints(canvas, xc, yc, x, y,pixelSize);
         try {
@@ -39,6 +37,7 @@ public class CircleAlgorithm implements CurvesAlgorithm {
             throw new RuntimeException(e);
         }
         while (x <= y) {
+            //inside
             if (d < 0) {
                 d = d + 4 * x + 6;
             } else {
@@ -68,7 +67,6 @@ public class CircleAlgorithm implements CurvesAlgorithm {
         drawPixel(canvas,xc - y, yc - x, pixelSize);
     }
     private void drawPixel(BaseLayer canvas, int cx, int cy, int pixelSize) {
-        // Умножаем на pixelSize, чтобы вернуть экранные координаты для paintPixel
         canvas.paintPixel(cx * pixelSize, cy * pixelSize, Color.BLACK);
     }
 }

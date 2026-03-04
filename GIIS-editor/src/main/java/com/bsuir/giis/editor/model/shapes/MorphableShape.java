@@ -1,4 +1,6 @@
-package com.bsuir.giis.editor.model;
+package com.bsuir.giis.editor.model.shapes;
+
+import com.bsuir.giis.editor.model.AlgorithmParameters;
 
 import java.awt.*;
 

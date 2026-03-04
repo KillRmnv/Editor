@@ -16,7 +16,6 @@ public class CDAAlgorithm implements StraightLineAlgorithm {
 
         int pixelSize = canvas.getPixelSize();
 
-        // 2. Нормализуем координаты: переводим из экранных координат в логические (индексы сетки)
         int x1 = (linesParameters.getPoint(0)).getX() / pixelSize;
         int y1 = (linesParameters.getPoint(0)).getY() / pixelSize;
         int x2 = (linesParameters.getPoint(1)).getX() / pixelSize;

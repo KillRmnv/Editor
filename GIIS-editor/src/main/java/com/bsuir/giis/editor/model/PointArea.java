@@ -1,5 +1,8 @@
 package com.bsuir.giis.editor.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PointArea {
 
     private final Point point;
@@ -59,6 +62,17 @@ public class PointArea {
     }
     public int getMaxY() {
         return maxY;
+    }
+    public List<Point> getAllPoints() {
+        List<Point> areaPoints = new ArrayList<>();
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                areaPoints.add(new Point(x, y));
+            }
+        }
+
+        return areaPoints;
     }
 }
 

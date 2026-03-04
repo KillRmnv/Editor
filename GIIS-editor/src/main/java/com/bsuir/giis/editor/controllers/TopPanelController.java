@@ -1,6 +1,7 @@
 package com.bsuir.giis.editor.controllers;
 
 import com.bsuir.giis.editor.controllers.handlers.DrawableHandler;
+import com.bsuir.giis.editor.controllers.handlers.ParametersCurveHandler;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.controllers.handlers.StraightLineHandler;
 import com.bsuir.giis.editor.controllers.handlers.curves.Curve2PointsHandler;
@@ -79,11 +80,11 @@ public final class TopPanelController {
 
         try {
             hermitItem.addActionListener(new ParameterCurveListener(new HermiteAlgorithm(),
-                    new CurveEllipseHandler(new MultiStep(4, PenStep.class))));
+                    new ParametersCurveHandler(new MultiStep(4, PenStep.class))));
             bezierItem.addActionListener(new ParameterCurveListener(new BezierAlgorithm(),
-                    new Curve2PointsHandler(new MultiStep(4, PenStep.class))));
+                    new ParametersCurveHandler(new MultiStep(4, PenStep.class))));
             splineItem.addActionListener(new ParameterCurveListener(new BSplineAlgorithm(),
-                    new Curve2PointsHandler(new MultiStep(4, PenStep.class))));
+                    new ParametersCurveHandler(new MultiStep(4, PenStep.class))));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
