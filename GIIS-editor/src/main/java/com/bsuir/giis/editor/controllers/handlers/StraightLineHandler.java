@@ -16,7 +16,7 @@ public class StraightLineHandler implements DrawableHandler {
         this.Step = Step;
     }
     @Override
-    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         if(tool.getTool() instanceof StraightLineAlgorithm lineAlgorithm){
             MultiStep step = (MultiStep) Step;
             step.setStep(new PenStep(mouseEvent.getX(), mouseEvent.getY()));
@@ -34,7 +34,7 @@ public class StraightLineHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         if(tool.getTool() instanceof StraightLineAlgorithm lineAlgorithm){
             MultiStep step = (MultiStep) Step;
             if(step.getStep(0).isReady()){
@@ -48,12 +48,12 @@ public class StraightLineHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
-        handleMove(canvas, mouseEvent, tool, mode);
+    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
+        handleMove(canvas, mouseEvent, tool, mode, modifierState);
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
 }

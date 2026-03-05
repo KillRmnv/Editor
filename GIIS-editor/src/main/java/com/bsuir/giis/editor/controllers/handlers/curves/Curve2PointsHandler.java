@@ -20,7 +20,7 @@ public class Curve2PointsHandler implements DrawableHandler {
     }
 
     @Override
-    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
         MultiStep multiStep = (MultiStep) Step;
@@ -40,7 +40,7 @@ public class Curve2PointsHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
         MultiStep multiStep = (MultiStep) Step;
@@ -57,12 +57,12 @@ public class Curve2PointsHandler implements DrawableHandler {
 
 
     @Override
-    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
-        handleMove(canvas, mouseEvent, tool, mode);
+    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
+        handleMove(canvas, mouseEvent, tool, mode, modifierState);
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
 }

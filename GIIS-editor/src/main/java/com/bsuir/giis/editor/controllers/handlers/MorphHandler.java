@@ -4,6 +4,7 @@ import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointArea;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.utils.ModeContainer;
+import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.MorphStep;
 import com.bsuir.giis.editor.utils.Step;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -14,7 +15,7 @@ import com.bsuir.giis.editor.view.TwoDimensionLayer;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-//TODO:fix double click problem
+//TODO:fix basic 2dlayer update problem
 public class MorphHandler implements DrawableHandler {
     private int tryCounter = 0;
     private PointArea previousPoint;
@@ -28,7 +29,7 @@ public class MorphHandler implements DrawableHandler {
     }
 
     @Override
-    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         int tolerance = canvas.getLayer2DMorphable().getHitTestPolicy().calculateTolerance(canvas.getLayer2DMorphable().getPixelSize());
         MorphStep morphStep = (MorphStep) Step;
         TwoDimensionLayer layer = canvas.getLayer2D();
@@ -94,12 +95,12 @@ public class MorphHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         //pass
     }
 
     @Override
-    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         MorphStep morphStep = (MorphStep) Step;
         if (morphStep.isReady()) {
             morphStep.setPoint(mouseEvent.getX(), mouseEvent.getY());
@@ -109,13 +110,13 @@ public class MorphHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         MorphStep morphStep = (MorphStep) Step;
         if (morphStep.isReady()) {
             for (var point : morphStep.getMorphableShape().getParameters().getPoints()) {
                 canvas.getLayer2DMorphable().getState().addMorphShape(point, morphStep.getMorphableShape());
             }
-            canvas.getLayer2DMorphable().repaintShape(morphStep.getMorphableShape());
+
             var morphs = canvas.getLayer2DMorphable().getState().getLayersMap();
             if (morphs != null && !morphs.isEmpty()) {
                 for (var point : morphs.keySet()) {
@@ -126,7 +127,9 @@ public class MorphHandler implements DrawableHandler {
 
                 canvas.getLayer2D().repaintAll();
             }
+            canvas.getLayer2DMorphable().repaintShape(morphStep.getMorphableShape());
             morphStep.clean();
+
         }
 
     }

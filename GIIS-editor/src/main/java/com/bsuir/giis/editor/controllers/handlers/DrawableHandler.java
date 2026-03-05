@@ -4,6 +4,7 @@ import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.shapes.Drawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.utils.ModeContainer;
+import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.ToolContainer;
 import com.bsuir.giis.editor.view.BaseLayer;
 import com.bsuir.giis.editor.view.Canvas;
@@ -11,13 +12,13 @@ import com.bsuir.giis.editor.view.Canvas;
 import java.awt.event.MouseEvent;
 
 public interface DrawableHandler {
-    void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode);
+    void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
-    void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode);
+    void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
-    void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode);
+    void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
-    void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode);
+    void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
     default void addToLayer(BaseLayer canvas, ToolContainer tool, AlgorithmParameters parameters, MouseEvent mouseEvent) {
         MorphableShape<?> shape = new MorphableShape(parameters, (Drawable) tool.getTool());

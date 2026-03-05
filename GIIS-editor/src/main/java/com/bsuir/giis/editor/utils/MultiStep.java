@@ -73,7 +73,9 @@ public class MultiStep implements Step {
     public void setStep(int index, Step step) {
         steps.set(index, step);
     }
-
+    public int getStepIndex() {
+        return stepIndex;
+    }
     public void setStep(Step step) {
         if (stepIndex == size ) {
             Class<?> clazz = step.getClass();

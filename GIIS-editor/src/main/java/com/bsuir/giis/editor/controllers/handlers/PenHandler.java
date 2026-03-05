@@ -8,6 +8,7 @@ import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.ModeContainer;
+import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.Step;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -25,7 +26,7 @@ public class PenHandler implements DrawableHandler {
     }
 
     @Override
-    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         if (tool.getTool() instanceof Pen) {
             canvas.getLayer2D().paintPixel(mouseEvent.getX(), mouseEvent.getY(), Color.BLACK);
             PenStep step = (PenStep) Step;
@@ -35,12 +36,12 @@ public class PenHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
 
     @Override
-    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode) {
+    public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         if (tool.getTool() instanceof Pen) {
             PenStep step = (PenStep) Step;
             StraightLineAlgorithm lineDrawer = new Antialiasing();
@@ -55,7 +56,7 @@ public class PenHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode) {
+    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
 }
