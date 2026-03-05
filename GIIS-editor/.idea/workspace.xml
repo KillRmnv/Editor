@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e988ada3-b22d-4481-8c7b-fc47d43dd0aa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/CanvasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/DrawableHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/MorphHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/PenHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/PenHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/StraightLineHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/StraightLineHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/Curve2PointsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveEllipseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/curves/CurveHyperbolaHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MultiStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/utils/MultiStep.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -132,7 +121,7 @@
       <workItem from="1772304802643" duration="1000" />
       <workItem from="1772450348250" duration="15000" />
       <workItem from="1772623625710" duration="38103000" />
-      <workItem from="1772694590994" duration="6652000" />
+      <workItem from="1772694590994" duration="9045000" />
     </task>
     <servers />
   </component>
@@ -178,13 +167,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java</url>
-          <line>137</line>
-          <option name="timeStamp" value="59" />
+          <line>125</line>
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bsuir/giis/editor/controllers/handlers/ParametersCurveHandler.java</url>
-          <line>125</line>
-          <option name="timeStamp" value="60" />
+          <line>32</line>
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

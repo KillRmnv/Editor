@@ -53,9 +53,9 @@ public class MorphHandler implements DrawableHandler {
                     }
                     System.out.println("Remove 2D(previous): " + point.toString());
                 }
-//                Thread.ofVirtual().start(() -> {
-//                    canvas.getLayer2D().repaintAll();
-//                });
+                Thread.ofVirtual().start(() -> {
+                    canvas.getLayer2D().repaintAll();
+                });
             }
         } else {
             tryCounter = 0;
@@ -80,17 +80,18 @@ public class MorphHandler implements DrawableHandler {
                         PointArea area = new PointArea(point, canvas.getLayer2DMorphable().getPixelSize(), tolerance);
                         if (area.contains(mouseEvent.getX(), mouseEvent.getY())) {
                             morphStep.setup(point, morphs.get(point).getFirst());
-                            return;
+                            break;
                         }
                     }
                 }
                 morphs.clear();
                 canvas.getLayer2DMorphable().cleanLayer();
-
+                canvas.getLayer2DMorphable().repaintShape(morphStep.getMorphableShape());
                 Thread.ofVirtual().start(() -> {
                     canvas.getLayer2D().repaintAll();
                 });
-            } else canvas.getLayer2DMorphable().cleanLayer();
+            } else
+                canvas.getLayer2DMorphable().cleanLayer();
         }
     }
 
