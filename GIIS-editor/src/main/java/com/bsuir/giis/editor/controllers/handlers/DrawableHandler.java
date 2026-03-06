@@ -18,7 +18,7 @@ public interface DrawableHandler {
 
     void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
-    void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
+    void handleRelease(Canvas canvas,MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
     default void addToLayer(BaseLayer canvas, ToolContainer tool, AlgorithmParameters parameters, MouseEvent mouseEvent) {
         MorphableShape<?> shape = new MorphableShape(parameters, (Drawable) tool.getTool());

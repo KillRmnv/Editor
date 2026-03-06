@@ -36,6 +36,7 @@ public class Main {
         Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100,bottom.getCoordinates(),bottom.getField());
         regularCanvas.getLayer2D().setDefaultPixelSize();
         regularCanvas.getLayer2DMoveable().setDefaultPixelSize();
+        regularCanvas.getLayer2DMorphable().setDefaultPixelSize();
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode);
         BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas,tool);
 

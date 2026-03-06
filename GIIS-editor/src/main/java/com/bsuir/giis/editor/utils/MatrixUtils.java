@@ -42,7 +42,6 @@ public class MatrixUtils {
         return matrix;
     }
 
-// В MatrixUtils.java добавьте:
 
     /**
      * Вычисление коэффициентов для кривой Эрмита

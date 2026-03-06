@@ -61,9 +61,7 @@ public class BSplineAlgorithm implements ParameterCurveAlgorithm {
         drawBSplineCurve(canvas, controlPoints, mode);
     }
 
-    /**
-     * Подготавливает массив из 4 контрольных точек
-     */
+
     private Point[] preparePoints(AlgorithmParameters parameters) {
         List<Point> points = parameters.getPoints();
         if (points == null || points.size() < 4) return null;
@@ -76,17 +74,11 @@ public class BSplineAlgorithm implements ParameterCurveAlgorithm {
         };
     }
 
-    /**
-     * Рисует кривую B-сплайна с использованием матричных вычислений
-     */
     private void drawBSplineCurve(BaseLayer canvas, Point[] controlPoints, Mode mode) {
-        // Вычисляем коэффициенты: C = M_B × G
         double[][] coefficients = MatrixUtils.multiplyPoints(BSPLINE_MATRIX, controlPoints);
 
-        // Вычисляем первую точку
         Point prevPoint = MatrixUtils.evaluateCubicCurve(coefficients, 0.0);
 
-        // Отрисовываем кривую по шагам
         for (int i = 1; i <= STEPS; i++) {
             double t = (double) i / STEPS;
             Point currentPoint = MatrixUtils.evaluateCubicCurve(coefficients, t);
@@ -101,13 +93,10 @@ public class BSplineAlgorithm implements ParameterCurveAlgorithm {
         }
     }
 
-    /**
-     * Рисует контрольный полигон и маркеры контрольных точек
-     */
+
     private void drawControlPolygon(BaseLayer canvas, Point[] pts, Mode mode) {
         if (pts == null || pts.length < 2) return;
 
-        // Линии между контрольными точками
         for (int i = 0; i < pts.length - 1; i++) {
             straightLineAlgorithm.draw(
                     canvas,
@@ -116,7 +105,6 @@ public class BSplineAlgorithm implements ParameterCurveAlgorithm {
             );
         }
 
-        // Маркеры в контрольных точках
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
         for (Point pt : pts) {
             curvesAlgorithm.draw(

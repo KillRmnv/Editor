@@ -73,6 +73,6 @@ public final class CanvasController extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        tool.getHandler().handleRelease(canvas, tool, mode, modifierState);
+        tool.getHandler().handleRelease(canvas,e, tool, mode, modifierState);
     }
 }

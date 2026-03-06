@@ -32,21 +32,14 @@ public class CanvasState {
         shapes = new ArrayList<>();
     }
     public void setupWithStateSave(boolean isTransparentLayer){
-        canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = canvasImage.createGraphics();
-
-        if (isTransparentLayer) {
-            g2.setComposite(AlphaComposite.Clear);
-            g2.fillRect(0, 0, width, height);
-            g2.setComposite(AlphaComposite.SrcOver);
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.fillRect(0, 0, width, height);
-        }
-
-        g2.dispose();
+        baseSetup(isTransparentLayer);
     }
     public void setupCanvas(boolean isTransparentLayer) {
+        baseSetup(isTransparentLayer);
+        layersMap.clear();
+    }
+
+    private void baseSetup(boolean isTransparentLayer) {
         canvasImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = canvasImage.createGraphics();
 
@@ -60,7 +53,6 @@ public class CanvasState {
         }
 
         g2.dispose();
-        layersMap.clear();
     }
 
     public List<MorphableShape<?>> getMorphShapesInArea(PointArea area, int pixelSize) {

@@ -81,7 +81,7 @@ public class CurveHyperbolaHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
+    public void handleRelease(Canvas canvas,MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
 }

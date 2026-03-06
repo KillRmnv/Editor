@@ -61,34 +61,26 @@ public class BezierAlgorithm implements ParameterCurveAlgorithm {
         drawBezierCurve(canvas, controlPoints, mode);
     }
 
-    /**
-     * Подготавливает массив из 4 контрольных точек
-     * Порядок: P0 (начало), P2 (ручка начала), P3 (ручка конца), P1 (конец)
-     * Это соответствует порядку точек из UI
-     */
+
     private Point[] preparePoints(AlgorithmParameters parameters) {
         List<Point> pointsList = parameters.getPoints();
         if (pointsList == null || pointsList.size() < 4) return null;
 
         return new Point[] {
-                pointsList.get(0),  // P₀ — начало кривой
-                pointsList.get(2),  // P₁ — первая контрольная точка (ручка от начала)
-                pointsList.get(3),  // P₂ — вторая контрольная точка (ручка к концу)
-                pointsList.get(1)   // P₃ — конец кривой
+                pointsList.get(0),
+                pointsList.get(2),
+                pointsList.get(3),
+                pointsList.get(1)
         };
     }
 
-    /**
-     * Рисует кривую Безье с использованием матричных вычислений
-     */
+
     private void drawBezierCurve(BaseLayer canvas, Point[] controlPoints, Mode mode) {
         // Вычисляем коэффициенты: C = M_B × G
         double[][] coefficients = MatrixUtils.multiplyPoints(BEZIER_MATRIX, controlPoints);
 
-        // Вычисляем первую точку
         Point prevPoint = MatrixUtils.evaluateCubicCurve(coefficients, 0.0);
 
-        // Отрисовываем кривую по шагам
         for (int i = 1; i <= STEPS; i++) {
             double t = (double) i / STEPS;
             Point currentPoint = MatrixUtils.evaluateCubicCurve(coefficients, t);
@@ -103,9 +95,7 @@ public class BezierAlgorithm implements ParameterCurveAlgorithm {
         }
     }
 
-    /**
-     * Рисует контрольный полигон и маркеры контрольных точек
-     */
+
     private void drawControlPolygon(BaseLayer canvas, Point[] pts, Mode mode) {
         if (pts == null) return;
 

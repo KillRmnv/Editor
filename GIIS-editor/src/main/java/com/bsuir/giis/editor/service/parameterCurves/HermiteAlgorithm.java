@@ -61,9 +61,7 @@ public class HermiteAlgorithm implements ParameterCurveAlgorithm {
         drawHermiteCurve(canvas, pts, mode);
     }
 
-    /**
-     * Рисует контрольный полигон и маркеры для кривой Эрмита
-     */
+
     private void drawControlPolygon(BaseLayer canvas, Point[] pts, Mode mode) {
         // Линия от начала (P0) к контрольной точке вектора (P2)
         straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(pts[0], pts[2])), mode);
@@ -81,29 +79,22 @@ public class HermiteAlgorithm implements ParameterCurveAlgorithm {
                 new Point(pts[3].getX() + radius, pts[3].getY() + radius))), mode);
     }
 
-    /**
-     * Рисует кривую Эрмита с использованием матричных вычислений
-     */
     private void drawHermiteCurve(BaseLayer canvas, Point[] pts, Mode mode) {
-        // Вычисляем касательные векторы (могут быть отрицательными!)
         double v0x = pts[2].getX() - pts[0].getX();
         double v0y = pts[2].getY() - pts[0].getY();
         double v1x = pts[3].getX() - pts[1].getX();
         double v1y = pts[3].getY() - pts[1].getY();
 
-        // Вычисляем коэффициенты: C = M_H × G
-        // Используем специальный метод для Эрмита (не требует Point для векторов)
+
         double[][] coefficients = MatrixUtils.multiplyHermiteGeometry(
                 HERMITE_MATRIX,
-                pts[0], pts[1],  // P₀, P₁ — точки
-                v0x, v0y,        // V₀ — касательная в начале
-                v1x, v1y         // V₁ — касательная в конце
+                pts[0], pts[1],
+                v0x, v0y,
+                v1x, v1y
         );
 
-        // Вычисляем первую точку
         Point prevPoint = MatrixUtils.evaluateCubicCurve(coefficients, 0.0);
 
-        // Отрисовываем кривую по шагам
         for (int i = 1; i <= STEPS; i++) {
             double t = (double) i / STEPS;
             Point currentPoint = MatrixUtils.evaluateCubicCurve(coefficients, t);
@@ -118,16 +109,14 @@ public class HermiteAlgorithm implements ParameterCurveAlgorithm {
         }
     }
 
-    /**
-     * Извлекает 4 контрольные точки из параметров
-     */
+
     private Point[] getPointsArray(AlgorithmParameters parameters) {
         List<Point> points = parameters.getPoints();
         if (points == null || points.size() < 4) return null;
 
         Point[] pts = new Point[4];
-        pts[0] = points.get(0); // P₀ — начало
-        pts[1] = points.get(1); // P₁ — конец
+        pts[0] = points.get(0);
+        pts[1] = points.get(1);
         pts[2] = points.get(2); // P₂ — ручка для P₀
         pts[3] = points.get(3); // P₃ — ручка для P₁
         return pts;

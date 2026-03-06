@@ -119,7 +119,7 @@ public class ParametersCurveHandler implements DrawableHandler {
     }
 
     @Override
-    public void handleRelease(Canvas canvas, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
+    public void handleRelease(Canvas canvas,MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
 
     }
     private Point snapToExistingPoint(Canvas canvas, int screenX, int screenY, ModifierState modifierState) {
