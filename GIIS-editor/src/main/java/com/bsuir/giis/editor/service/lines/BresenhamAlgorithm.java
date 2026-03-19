@@ -50,6 +50,7 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
             mode.onStep(new PenStep(x1,y1,255),"Bresenham Algorithm: ");
 
             if (x1 == x2 && y1 == y2) {
+                
                 break;
             }
 
@@ -79,5 +80,30 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
                 new Point(start.getX() + radius, start.getY() + radius))), mode);
         getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(end,
                 new Point(end.getX() + radius, end.getY() + radius))), mode);
+    }
+
+    public void drawLine(BaseLayer canvas, int x1, int y1, int x2, int y2, Color color) {
+        int pixelSize = canvas.getPixelSize();
+
+        int gx1 = x1 / pixelSize;
+        int gy1 = y1 / pixelSize;
+        int gx2 = x2 / pixelSize;
+        int gy2 = y2 / pixelSize;
+
+        int dx = Math.abs(gx2 - gx1);
+        int dy = Math.abs(gy2 - gy1);
+        int sx = (gx1 < gx2) ? 1 : -1;
+        int sy = (gy1 < gy2) ? 1 : -1;
+        int err = dx - dy;
+
+        while (true) {
+            canvas.paintPixel(gx1 * pixelSize, gy1 * pixelSize, color);
+
+            if (gx1 == gx2 && gy1 == gy2) break;
+
+            int e2 = 2 * err;
+            if (e2 > -dy) { err -= dy; gx1 += sx; }
+            if (e2 < dx) { err += dx; gy1 += sy; }
+        }
     }
 }

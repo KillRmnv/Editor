@@ -33,7 +33,10 @@ public class Curve2PointsHandler implements DrawableHandler {
 
             canvas.getLayer2DMoveable().cleanLayer();
 
-            new Thread(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode())).start();
+            new Thread(() -> {
+                ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode());
+                javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2D().repaint());
+            }).start();
             addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
             multiStep.clean();
         }
@@ -51,7 +54,10 @@ public class Curve2PointsHandler implements DrawableHandler {
             MultiStep copy = multiStep.copy();
             copy.setStep(new PenStep(x, y));
             AlgorithmParameters parameters = new PointShapeParameters(copy);
-            new Thread(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2DMoveable(), parameters, new Regular())).start();
+            new Thread(() -> {
+                ((Drawable) tool.getTool()).draw(canvas.getLayer2DMoveable(), parameters, new Regular());
+                javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2DMoveable().repaint());
+            }).start();
         }
     }
 

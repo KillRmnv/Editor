@@ -73,6 +73,7 @@ public class BaseLayer extends JPanel {
         state.setupWithStateSave(isTransparentLayer);
         baseRepaintSetup(width, height);
         renderer.renderAll(state, this);
+        super.repaint();
     }
 
     private void baseRepaintSetup(int width, int height) {
@@ -92,7 +93,14 @@ public class BaseLayer extends JPanel {
             return;
         }
         super.repaint();
+    }
+
+    public void renderAndRepaint() {
+        if (renderer == null || state == null) {
+            return;
+        }
         renderer.renderAll(state, this);
+        super.repaint();
     }
 
     protected void setupCanvas(int width, int height) {

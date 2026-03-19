@@ -38,7 +38,6 @@ public class FileMenuController {
                 fileChooser.showSaveDialog(null);
             });
         }
-        //TODO: add addition to canvas state and repaint canvas after load
         load3DItem.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Load 3D Model");
@@ -48,11 +47,16 @@ public class FileMenuController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     Model3D model = ReaderFactory.getReader(file).read(file);
-                    System.out.println("Loaded model: " + model.getName() + 
-                                     " (vertices: " + model.getVertexCount() + 
-                                     ", faces: " + model.getFaceCount() + ")");
+                    model.computeBoundingBox();
+                    System.out.println("[FileMenu] Loaded: " + model.getName() +
+                                     " (v:" + model.getVertexCount() +
+                                     " f:" + model.getFaceCount() +
+                                     " scale:" + String.format("%.2f", model.getNormalizedScale()) + ")");
+
+                    canvas.getLayer2D().getState().setCurrentModel(model);
+                    canvas.getLayer2D().renderAndRepaint();
                 } catch (ReaderException ex) {
-                    JOptionPane.showMessageDialog(null, 
+                    JOptionPane.showMessageDialog(null,
                         "Failed to load model: " + ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
                 }

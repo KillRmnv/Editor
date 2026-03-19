@@ -29,6 +29,7 @@ public class PenHandler implements DrawableHandler {
     public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         if (tool.getTool() instanceof Pen) {
             canvas.getLayer2D().paintPixel(mouseEvent.getX(), mouseEvent.getY(), Color.BLACK);
+            canvas.getLayer2D().repaint();
             PenStep step = (PenStep) Step;
             step.setX(mouseEvent.getX());
             step.setY(mouseEvent.getY());
@@ -46,12 +47,13 @@ public class PenHandler implements DrawableHandler {
             PenStep step = (PenStep) Step;
             StraightLineAlgorithm lineDrawer = new Antialiasing();
             AlgorithmParameters parameters = new PointShapeParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
-            new Thread(()-> lineDrawer.draw(canvas.getLayer2D(), parameters,new Regular())).start();
-
+            new Thread(()-> {
+                lineDrawer.draw(canvas.getLayer2D(), parameters, new Regular());
+                javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2D().repaint());
+            }).start();
 
             step.setX(mouseEvent.getX());
             step.setY(mouseEvent.getY());
-//        canvas.paintPixel(mouseEvent.getX(), mouseEvent.getY());
         }
     }
 

@@ -22,15 +22,15 @@ public class Transform3DHandler implements DrawableHandler {
         Model3D model = canvas.getLayer2D().getState().getCurrentModel();
         
         if (model != null) {
+            Rotation3D srcRotation = canvas.getLayer2D().getState().getCurrentRotation();
             canvas.getLayer2DMoveable().getState().setCurrentModel(model);
             canvas.getLayer2DMoveable().getState().setCurrentRotation(
-                canvas.getLayer2D().getState().getCurrentRotation()
+                new Rotation3D(srcRotation.getAngleX(), srcRotation.getAngleY(), srcRotation.getAngleZ())
             );
+            canvas.getLayer2DMoveable().renderAndRepaint();
             canvas.getLayer2D().getState().clearCurrentModel();
-        }
-        
-        canvas.getLayer2D().repaint();
-        canvas.getLayer2DMoveable().repaint();
+            canvas.getLayer2D().repaintAll();
+        } 
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Transform3DHandler implements DrawableHandler {
         lastMousePos = mouseEvent.getPoint();
         
         canvas.getLayer2DMoveable().cleanLayer();
-        canvas.getLayer2DMoveable().repaint();
+        canvas.getLayer2DMoveable().renderAndRepaint();
     }
 
     @Override
@@ -69,12 +69,14 @@ public class Transform3DHandler implements DrawableHandler {
         
         if (model != null) {
             canvas.getLayer2D().getState().setCurrentModel(model);
-            canvas.getLayer2D().getState().setCurrentRotation(rotation);
+            canvas.getLayer2D().getState().setCurrentRotation(
+                new Rotation3D(rotation.getAngleX(), rotation.getAngleY(), rotation.getAngleZ())
+            );
             canvas.getLayer2DMoveable().getState().clearCurrentModel();
         }
         
         canvas.getLayer2D().cleanLayer();
-        canvas.getLayer2D().repaint();
+        canvas.getLayer2D().renderAndRepaint();
         
         lastMousePos = null;
     }

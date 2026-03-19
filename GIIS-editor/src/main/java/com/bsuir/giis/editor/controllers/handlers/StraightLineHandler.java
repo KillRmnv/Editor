@@ -26,7 +26,10 @@ public class StraightLineHandler implements DrawableHandler {
                 Point second= ((PenStep)step.getStep(1)).getPoint();
                 AlgorithmParameters parameters = new PointShapeParameters(first, second);
                 canvas.getLayer2DMoveable().cleanLayer();
-                new Thread(()-> ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2D(), parameters,mode.getMode())).start();
+                new Thread(()-> {
+                    ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2D(), parameters, mode.getMode());
+                    javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2D().repaint());
+                }).start();
                 addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
                 step.clean();
             }
@@ -41,7 +44,10 @@ public class StraightLineHandler implements DrawableHandler {
                 canvas.getLayer2DMoveable().cleanLayer();
                 Point first= ((PenStep)step.getStep(0)).getPoint();
                 AlgorithmParameters parameters = new PointShapeParameters(first, new Point(mouseEvent.getX(), mouseEvent.getY()));
-                new Thread(()-> ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2DMoveable(), parameters,new Regular())).start();
+                new Thread(()-> {
+                    ((StraightLineAlgorithm) lineAlgorithm).draw(canvas.getLayer2DMoveable(), parameters, new Regular());
+                    javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2DMoveable().repaint());
+                }).start();
 
             }
         }
