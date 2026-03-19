@@ -7,6 +7,7 @@ import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
 import com.bsuir.giis.editor.rendering.Canvas;
+import com.bsuir.giis.editor.rendering.RenderThreadPool;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.*;
@@ -18,6 +19,8 @@ import javax.swing.*;
 import java.awt.*;
 public class Main {
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new Thread(RenderThreadPool::shutdown));
+
         try {
             UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
         } catch (Exception e) {

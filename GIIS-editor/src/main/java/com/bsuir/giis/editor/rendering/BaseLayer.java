@@ -138,6 +138,14 @@ public class BaseLayer extends JPanel {
         return state.getPixelBuffer();
     }
 
+    public int getBufferWidth() {
+        return state.getWidth();
+    }
+
+    public int getBufferHeight() {
+        return state.getHeight();
+    }
+
     public CanvasState getState() {
         return state;
     }
