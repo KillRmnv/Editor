@@ -1,26 +1,33 @@
 package com.bsuir.giis.editor.view;
 
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
 public final class BottomToolbar {
     private final JPanel bottom;
     private final JButton morphButton;
     private final JButton regularModeButton;
-    private final JButton debugButton;
-    private final JButton transformButton;
+    private JButton debugButton;
+    private JButton transformButton;
     private JPopupMenu debugPopup;
     private JPopupMenu transformPopup;
     private final JFormattedTextField field;
     private final JLabel coordinates;
+
+    private volatile boolean itemClicked = false;
 
     private JTextField translateX, translateY;
     private JTextField scaleX, scaleY;
     private JTextField angleField;
     private JButton translateApply, scaleApply;
     private JButton rotateApply, rotateAroundPoint;
+    private JButton transform3DButton;
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
@@ -29,7 +36,6 @@ public final class BottomToolbar {
         
         morphButton = new JButton("Morph");
         regularModeButton = new JButton("Reg");
-        debugButton = new JButton("Debug");
         transformButton = new JButton("Transform");
 
         setupDebugPopup();
@@ -61,26 +67,77 @@ public final class BottomToolbar {
 
     private void setupDebugPopup() {
         debugPopup = new JPopupMenu();
-        
-        
-        JMenuItem debugModeItem = new JMenuItem("Debug Mode");
-        JMenuItem nextStepItem = new JMenuItem("Next Step");
-        JMenuItem skipItem = new JMenuItem("Skip");
-        JMenuItem showDlogItem = new JMenuItem("Show Dlog");
+        debugPopup.setLightWeightPopupEnabled(false);
 
-       
+        PopupMenuListener listener = new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                itemClicked = false;
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                if (itemClicked) {
+                    SwingUtilities.invokeLater(() -> {
+                        Component invoker = debugPopup.getInvoker();
+                        if (invoker != null) {
+                            debugPopup.show(invoker, 0, -debugPopup.getPreferredSize().height);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                itemClicked = false;
+            }
+        };
+        debugPopup.addPopupMenuListener(listener);
+
+        JMenuItem debugModeItem = new JMenuItem("Debug Mode");
+        debugModeItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                itemClicked = true;
+            }
+        });
         debugPopup.add(debugModeItem);
         debugPopup.add(new JSeparator());
+
+        JMenuItem nextStepItem = new JMenuItem("Next Step");
+        nextStepItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                itemClicked = true;
+            }
+        });
         debugPopup.add(nextStepItem);
+
+        JMenuItem skipItem = new JMenuItem("Skip");
+        skipItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                itemClicked = true;
+            }
+        });
         debugPopup.add(skipItem);
+
+        JMenuItem showDlogItem = new JMenuItem("Show Dlog");
+        showDlogItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                itemClicked = true;
+            }
+        });
         debugPopup.add(showDlogItem);
 
+        debugButton = new JButton("Debug");
         debugButton.addActionListener(e -> {
-            Component button = (Component) e.getSource();
-            Dimension popupSize = debugPopup.getPreferredSize();
-            int x = 0;
-            int y = -popupSize.height;
-            debugPopup.show(button, x, y);
+            if (debugPopup.isVisible()) {
+                debugPopup.setVisible(false);
+            } else {
+                debugPopup.show(debugButton, 0, -debugPopup.getPreferredSize().height);
+            }
         });
     }
 
@@ -127,9 +184,16 @@ public final class BottomToolbar {
         rotateButtons.add(rotateAroundPoint);
         rotatePanel.add(rotateButtons, BorderLayout.SOUTH);
 
+        JPanel transform3DPanel = new JPanel(new BorderLayout(5, 5));
+        transform3DPanel.add(new JLabel("3D Transform:"), BorderLayout.NORTH);
+        transform3DButton = new JButton("Enable 3D Mode");
+        transform3DPanel.add(transform3DButton, BorderLayout.CENTER);
+
         transformPopup.add(translatePanel);
         transformPopup.add(scalePanel);
         transformPopup.add(rotatePanel);
+        transformPopup.add(new JSeparator());
+        transformPopup.add(transform3DPanel);
 
         transformButton.addActionListener(e -> {
             Component button = (Component) e.getSource();
@@ -210,5 +274,9 @@ public final class BottomToolbar {
 
     public JButton getRotateAroundPoint() {
         return rotateAroundPoint;
+    }
+
+    public JButton getTransform3DButton() {
+        return transform3DButton;
     }
 }

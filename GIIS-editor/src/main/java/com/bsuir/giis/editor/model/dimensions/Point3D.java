@@ -2,6 +2,7 @@ package com.bsuir.giis.editor.model.dimensions;
 
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.service.readers.ProjectionType;
+import com.bsuir.giis.editor.utils.MatrixUtils;
 
 public class Point3D {
     private final double x;
@@ -59,5 +60,11 @@ public class Point3D {
         result = 31 * result + Double.hashCode(y);
         result = 31 * result + Double.hashCode(z);
         return result;
+    }
+
+    public Point3D applyMatrix(double[][] matrix) {
+        double[] vector = {x, y, z, 1.0};
+        double[] result = MatrixUtils.multiplyVector(matrix, vector);
+        return new Point3D(result[0], result[1], result[2]);
     }
 }

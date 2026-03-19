@@ -51,8 +51,6 @@ public class BaseLayer extends JPanel {
         renderer.renderShape(shape, this);
     }
 
-
-
     @Override
     public void setOpaque(boolean isOpaque) {
         super.setOpaque(isOpaque);

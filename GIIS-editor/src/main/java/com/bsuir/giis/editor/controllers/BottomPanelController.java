@@ -1,6 +1,7 @@
 package com.bsuir.giis.editor.controllers;
 
 import com.bsuir.giis.editor.controllers.handlers.MorphHandler;
+import com.bsuir.giis.editor.controllers.handlers.Transform3DHandler;
 import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
@@ -23,7 +24,7 @@ public final class BottomPanelController {
     ) {
         setupDebugPopup(bottomToolbar, mode, debugFrame, canvas, tool);
         
-        setupTransformPopup(bottomToolbar, canvas);
+        setupTransformPopup(bottomToolbar, canvas, tool);
 
         bottomToolbar
             .getRegularModeButton()
@@ -50,7 +51,6 @@ public final class BottomPanelController {
                 );
             });
     }
-
     private void setupDebugPopup(
         BottomToolbar bottomToolbar,
         ModeContainer mode,
@@ -94,8 +94,8 @@ public final class BottomPanelController {
             }
         }
     }
-
-    private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas) {
+    //TODO: add actions to menu items
+    private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas, ToolContainer tool) {
         bottomToolbar.getTranslateApply().addActionListener(e -> {
             try {
                 double dx = Double.parseDouble(bottomToolbar.getTranslateX().getText());
@@ -127,6 +127,11 @@ public final class BottomPanelController {
 
         bottomToolbar.getRotateAroundPoint().addActionListener(e -> {
             System.out.println("Rotation around point clicked");
+        });
+
+        bottomToolbar.getTransform3DButton().addActionListener(e -> {
+            canvas.getLayer2D().cleanLayer();
+            tool.setHandler(new Transform3DHandler());
         });
     }
 }

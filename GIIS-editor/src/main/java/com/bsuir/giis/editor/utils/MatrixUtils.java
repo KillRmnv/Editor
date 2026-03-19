@@ -414,6 +414,56 @@ public class MatrixUtils {
 
 
 
+    public static double[][] translate3D(double dx, double dy, double dz) {
+        double[][] matrix = identityMatrix(4);
+        matrix[0][3] = dx;
+        matrix[1][3] = dy;
+        matrix[2][3] = dz;
+        return matrix;
+    }
+
+    public static double[][] rotateX(double angleRadians) {
+        double cos = Math.cos(angleRadians);
+        double sin = Math.sin(angleRadians);
+        double[][] matrix = identityMatrix(4);
+        matrix[1][1] = cos;
+        matrix[1][2] = -sin;
+        matrix[2][1] = sin;
+        matrix[2][2] = cos;
+        return matrix;
+    }
+
+    public static double[][] rotateY(double angleRadians) {
+        double cos = Math.cos(angleRadians);
+        double sin = Math.sin(angleRadians);
+        double[][] matrix = identityMatrix(4);
+        matrix[0][0] = cos;
+        matrix[0][2] = sin;
+        matrix[2][0] = -sin;
+        matrix[2][2] = cos;
+        return matrix;
+    }
+
+    public static double[][] rotateZ(double angleRadians) {
+        double cos = Math.cos(angleRadians);
+        double sin = Math.sin(angleRadians);
+        double[][] matrix = identityMatrix(4);
+        matrix[0][0] = cos;
+        matrix[0][1] = -sin;
+        matrix[1][0] = sin;
+        matrix[1][1] = cos;
+        return matrix;
+    }
+
+    public static double[][] scale3D(double sx, double sy, double sz) {
+        double[][] matrix = identityMatrix(4);
+        matrix[0][0] = sx;
+        matrix[1][1] = sy;
+        matrix[2][2] = sz;
+        return matrix;
+    }
+
+
     private static void validateSameDimensions(double[][] a, double[][] b) {
         if (!haveSameDimensions(a, b)) {
             throw new IllegalArgumentException(

@@ -1,6 +1,8 @@
 package com.bsuir.giis.editor.rendering;
 
 import com.bsuir.giis.editor.model.CanvasState;
+import com.bsuir.giis.editor.model.Model3DParameters;
+import com.bsuir.giis.editor.model.shapes.Model3DDrawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.model.shapes.Shape;
 import com.bsuir.giis.editor.service.flow.Mode;
@@ -17,7 +19,7 @@ public class CanvasRenderer {
     public CanvasRenderer(Mode mode) {
         this.mode = mode;
     }
-
+    //TODO:add parallelism?
     public void renderAll(CanvasState state, BaseLayer layer) {
         Set<Shape> shapes = new HashSet<>();
         for (var entry : state.getLayersMap().entrySet()) {
@@ -33,6 +35,12 @@ public class CanvasRenderer {
                 shape.getDrawable().draw(layer, shape.getParameters(), mode);
                 shapes.add(shape);
             }
+        }
+        
+        if (state.getCurrentModel() != null) {
+            Model3DDrawable modelDrawable = new Model3DDrawable();
+            Model3DParameters params = state.getModelParameters();
+            modelDrawable.draw(layer, params, mode);
         }
     }
 

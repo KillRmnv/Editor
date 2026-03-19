@@ -14,18 +14,22 @@ public final class TopToolbar {
     public TopToolbar() {
 
         upperPanel = new JPanel(new BorderLayout());
-        JPanel icons = new JPanel(new GridLayout());
+        JPanel icons = new JPanel(new BorderLayout());
 
         lineMenu = getLineJMenu();
         curveMenu = getCurvesJMenu();
         parameterCurvesMenu = getParameterCurvesJMenu();
         penButton = new JButton("Pen");
         
+        JMenuBar toolsMenuBar = new JMenuBar();
+        toolsMenuBar.add(lineMenu);
+        toolsMenuBar.add(curveMenu);
+        toolsMenuBar.add(parameterCurvesMenu);
+
+        icons.add(penButton, BorderLayout.WEST);
+        icons.add(toolsMenuBar, BorderLayout.CENTER);
+        
         upperPanel.add(icons, BorderLayout.WEST);
-        icons.add(penButton);
-        icons.add(lineMenu);
-        icons.add(curveMenu);
-        icons.add(parameterCurvesMenu);
 
         fileMenu = setupTopJMenuBar();
     }

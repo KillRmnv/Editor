@@ -38,7 +38,7 @@ public class FileMenuController {
                 fileChooser.showSaveDialog(null);
             });
         }
-
+        //TODO: add addition to canvas state and repaint canvas after load
         load3DItem.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Load 3D Model");

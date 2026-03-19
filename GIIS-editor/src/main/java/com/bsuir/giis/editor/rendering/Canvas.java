@@ -1,5 +1,7 @@
 package com.bsuir.giis.editor.rendering;
 
+import com.bsuir.giis.editor.model.CanvasState;
+
 import javax.swing.*;
 
 
@@ -29,7 +31,7 @@ public class Canvas extends JPanel {
         //don't change order of layers
         add(layer2DMorphable);
         add(layer2DMoveable);
-        add(layer2D);          // Индекс 2 - самый низ (фон)
+        add(layer2D);          
     }
 
     public TwoDimensionLayer getLayer2D() {
@@ -55,6 +57,10 @@ public class Canvas extends JPanel {
 
     public JLabel getCoordinates() {
         return coordinates;
+    }
+
+    public CanvasState getState() {
+        return layer2D.getState();
     }
 
 }
