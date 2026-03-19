@@ -3,10 +3,10 @@ package com.bsuir.giis.editor.controllers.handlers;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.*;
-import com.bsuir.giis.editor.view.Canvas;
 
 import java.awt.event.MouseEvent;
 

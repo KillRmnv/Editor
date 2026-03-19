@@ -3,6 +3,7 @@ package com.bsuir.giis.editor.service.parameterCurves;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.rendering.BaseLayer;
 import com.bsuir.giis.editor.service.curves.CircleAlgorithm;
 import com.bsuir.giis.editor.service.curves.CurvesAlgorithm;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
@@ -10,7 +11,6 @@ import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MatrixUtils;
-import com.bsuir.giis.editor.view.BaseLayer;
 
 import java.util.List;
 

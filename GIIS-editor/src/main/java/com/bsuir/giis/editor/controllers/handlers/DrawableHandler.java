@@ -3,11 +3,11 @@ package com.bsuir.giis.editor.controllers.handlers;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.shapes.Drawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
+import com.bsuir.giis.editor.rendering.BaseLayer;
+import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.ToolContainer;
-import com.bsuir.giis.editor.view.BaseLayer;
-import com.bsuir.giis.editor.view.Canvas;
 
 import java.awt.event.MouseEvent;
 

@@ -5,12 +5,12 @@ import com.bsuir.giis.editor.controllers.CanvasController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
+import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.*;
 
 import com.bsuir.giis.editor.view.BottomToolbar;
-import com.bsuir.giis.editor.view.Canvas;
 import com.bsuir.giis.editor.view.TopToolbar;
 
 import javax.swing.*;

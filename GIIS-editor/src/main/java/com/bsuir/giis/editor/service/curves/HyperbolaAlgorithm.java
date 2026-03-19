@@ -3,15 +3,22 @@ package com.bsuir.giis.editor.service.curves;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.lines.Antialiasing;
+import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
-import com.bsuir.giis.editor.view.BaseLayer;
+import com.bsuir.giis.editor.rendering.BaseLayer;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class HyperbolaAlgorithm implements CurvesAlgorithm {
+
+    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -103,6 +110,24 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
             }
         }
         mode.onFinish();
+    }
+
+    @Override
+    public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
+        draw(canvas, parameters, mode);
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point center = curvesParameters.getPoint(0);
+        Point pX = curvesParameters.getPoint(1);
+        Point pY = curvesParameters.getPoint(2);
+        int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
+        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(center, pX)), mode);
+        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(center, pY)), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(center,
+                new Point(center.getX() + radius, center.getY() + radius))), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(pX,
+                new Point(pX.getX() + radius, pX.getY() + radius))), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(pY,
+                new Point(pY.getX() + radius, pY.getY() + radius))), mode);
     }
 
     private void drawHyperbolaPoints(BaseLayer canvas, int xc, int yc, int x, int y, int pixelSize) {

@@ -1,4 +1,4 @@
-package com.bsuir.giis.editor.view;
+package com.bsuir.giis.editor.rendering;
 
 import javax.swing.*;
 

@@ -1,14 +1,22 @@
 package com.bsuir.giis.editor.service.lines;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
+import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.rendering.BaseLayer;
+import com.bsuir.giis.editor.service.curves.CircleAlgorithm;
+import com.bsuir.giis.editor.service.curves.CurvesAlgorithm;
+import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.utils.PenStep;
-import com.bsuir.giis.editor.view.BaseLayer;
 
 import java.awt.*;
+import java.util.List;
 
 public class CDAAlgorithm implements StraightLineAlgorithm {
+
+    private final CurvesAlgorithm curvesAlgorithm = new CircleAlgorithm();
+    private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -49,6 +57,14 @@ public class CDAAlgorithm implements StraightLineAlgorithm {
 
     @Override
     public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-
+        draw(canvas, parameters, mode);
+        PointShapeParameters linesParams = (PointShapeParameters) parameters;
+        Point start = linesParams.getPoint(0);
+        Point end = linesParams.getPoint(1);
+        int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
+        curvesAlgorithm.draw(canvas, new PointShapeParameters(List.of(start,
+                new Point(start.getX() + radius, start.getY() + radius))), mode);
+        curvesAlgorithm.draw(canvas, new PointShapeParameters(List.of(end,
+                new Point(end.getX() + radius, end.getY() + radius))), mode);
     }
 }

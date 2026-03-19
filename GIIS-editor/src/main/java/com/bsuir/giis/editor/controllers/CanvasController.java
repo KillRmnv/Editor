@@ -1,9 +1,10 @@
 package com.bsuir.giis.editor.controllers;
 
+import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.ToolContainer;
-import com.bsuir.giis.editor.view.Canvas;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;

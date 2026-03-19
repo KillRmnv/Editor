@@ -1,6 +1,8 @@
-package com.bsuir.giis.editor.view;
+package com.bsuir.giis.editor.rendering;
 
 import javax.swing.*;
+
+
 
 public class TwoDimensionLayer extends BaseLayer {
     protected JFormattedTextField pixelSizeField;

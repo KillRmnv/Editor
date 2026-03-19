@@ -3,15 +3,22 @@ package com.bsuir.giis.editor.service.curves;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.lines.Antialiasing;
+import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
-import com.bsuir.giis.editor.view.BaseLayer;
+import com.bsuir.giis.editor.rendering.BaseLayer;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class ParabolaAlgorithm implements CurvesAlgorithm {
+
+    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -96,6 +103,20 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
             }
         }
         mode.onFinish();
+    }
+
+    @Override
+    public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
+        draw(canvas, parameters, mode);
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point vertex = curvesParameters.getPoint(0);
+        Point endPoint = curvesParameters.getPoint(1);
+        int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
+        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(vertex, endPoint)), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(vertex,
+                new Point(vertex.getX() + radius, vertex.getY() + radius))), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(endPoint,
+                new Point(endPoint.getX() + radius, endPoint.getY() + radius))), mode);
     }
 
 

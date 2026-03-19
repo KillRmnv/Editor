@@ -1,4 +1,4 @@
-package com.bsuir.giis.editor.view;
+package com.bsuir.giis.editor.rendering;
 
 import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;

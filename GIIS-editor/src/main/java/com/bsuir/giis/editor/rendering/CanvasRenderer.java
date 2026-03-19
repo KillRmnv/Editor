@@ -1,9 +1,10 @@
-package com.bsuir.giis.editor.view;
+package com.bsuir.giis.editor.rendering;
 
 import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.model.shapes.Shape;
 import com.bsuir.giis.editor.service.flow.Mode;
+
 import org.w3c.dom.css.RGBColor;
 
 import java.awt.*;

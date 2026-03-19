@@ -3,14 +3,14 @@ package com.bsuir.giis.editor.controllers.handlers;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointArea;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
+import com.bsuir.giis.editor.rendering.Canvas;
+import com.bsuir.giis.editor.rendering.TwoDimensionLayer;
 import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.MorphStep;
 import com.bsuir.giis.editor.utils.Step;
 import com.bsuir.giis.editor.utils.ToolContainer;
-import com.bsuir.giis.editor.view.BaseLayer;
-import com.bsuir.giis.editor.view.Canvas;
-import com.bsuir.giis.editor.view.TwoDimensionLayer;
+import com.bsuir.giis.editor.rendering.BaseLayer;
 
 import java.awt.event.MouseEvent;
 import java.util.List;

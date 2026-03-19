@@ -3,14 +3,23 @@ package com.bsuir.giis.editor.service.curves;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
+import com.bsuir.giis.editor.rendering.BaseLayer;
+import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.lines.Antialiasing;
+import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
-import com.bsuir.giis.editor.view.BaseLayer;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 public class CircleAlgorithm implements CurvesAlgorithm {
+
+    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
+
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
@@ -54,6 +63,20 @@ public class CircleAlgorithm implements CurvesAlgorithm {
 
         }
         mode.onFinish();
+    }
+
+    @Override
+    public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
+        draw(canvas, parameters, mode);
+        PointShapeParameters curvesParameters = (PointShapeParameters) parameters;
+        Point center = curvesParameters.getPoint(0);
+        Point point = curvesParameters.getPoint(1);
+        int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
+        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(center, point)), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(center,
+                new Point(center.getX() + radius, center.getY() + radius))), mode);
+        this.draw(canvas, new PointShapeParameters(List.of(point,
+                new Point(point.getX() + radius, point.getY() + radius))), mode);
     }
     
     private void drawCirclePoints(BaseLayer canvas, int xc, int yc, int x, int y,int pixelSize) {
