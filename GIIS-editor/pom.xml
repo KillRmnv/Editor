@@ -22,4 +22,22 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <mainClass>com.bsuir.giis.editor.Main</mainClass>
+                    <jvmArgs>
+                        <jvmArg>-XX:+UseZGC</jvmArg>
+                        <jvmArg>-Xmx2g</jvmArg>
+                        <jvmArg>-Dsun.java2d.opengl=true</jvmArg>
+                    </jvmArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
