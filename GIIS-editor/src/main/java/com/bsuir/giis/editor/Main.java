@@ -2,6 +2,7 @@ package com.bsuir.giis.editor;
 
 import com.bsuir.giis.editor.controllers.BottomPanelController;
 import com.bsuir.giis.editor.controllers.CanvasController;
+import com.bsuir.giis.editor.controllers.FileMenuController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
@@ -17,6 +18,12 @@ import javax.swing.*;
 import java.awt.*;
 public class Main {
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         JFrame frame = new JFrame("GIIS Editor");
         GraphicsConfiguration gc = frame.getGraphicsConfiguration();
         Rectangle bounds = gc.getBounds();
@@ -24,7 +31,6 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JFrame debugFrame = getDebugFrame();
-
 
         ToolContainer tool =new ToolContainer(new Pen());
         tool.setHandler(new PenHandler(new PenStep()));
@@ -42,7 +48,7 @@ public class Main {
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool);
-
+        FileMenuController fileMenuController = new FileMenuController(top.getFileMenuBar(), regularCanvas);
 
         mainPanel.add(regularCanvas, BorderLayout.CENTER);
         mainPanel.add(bottom.getBottom(), BorderLayout.SOUTH);

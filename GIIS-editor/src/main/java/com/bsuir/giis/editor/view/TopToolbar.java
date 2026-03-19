@@ -17,20 +17,25 @@ public final class TopToolbar {
         JPanel icons = new JPanel(new GridLayout());
 
         lineMenu = getLineJMenu();
-
         curveMenu = getCurvesJMenu();
-
         parameterCurvesMenu = getParameterCurvesJMenu();
         penButton = new JButton("Pen");
+        
         upperPanel.add(icons, BorderLayout.WEST);
         icons.add(penButton);
         icons.add(lineMenu);
         icons.add(curveMenu);
         icons.add(parameterCurvesMenu);
 
-
         fileMenu = setupTopJMenuBar();
 
+        setupIcons();
+    }
+
+    private void setupIcons() {
+        lineMenu.setIcon(UIManager.getIcon("FileView.fileIcon"));
+        curveMenu.setIcon(UIManager.getIcon("Tree.leafIcon"));
+        parameterCurvesMenu.setIcon(UIManager.getIcon("Tree.closedIcon"));
     }
 
     private JMenu setupTopJMenuBar() {
@@ -56,7 +61,6 @@ public final class TopToolbar {
 
     private JMenu getLineJMenu() {
         final JMenu lineMenu;
-        //don't touch order of menu items
         lineMenu = new JMenu("Line");
         lineMenu.add(new JMenuItem("Antialias"));
         lineMenu.add(new JMenuItem("CDA"));
@@ -66,7 +70,6 @@ public final class TopToolbar {
 
     private JMenu getParameterCurvesJMenu() {
         final JMenu parameterCurvesMenu;
-        //don't touch order of menu items
         parameterCurvesMenu = new JMenu("PCurves");
         parameterCurvesMenu.add(new JMenuItem("Hermit"));
         parameterCurvesMenu.add(new JMenuItem("Bezier"));

@@ -1,5 +1,7 @@
 package com.bsuir.giis.editor.view;
 
+import com.bsuir.giis.editor.rendering.Canvas;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -7,86 +9,162 @@ import java.text.NumberFormat;
 
 public final class BottomToolbar {
     private final JPanel bottom;
+    private final JButton morphButton;
     private final JButton regularModeButton;
-    private final JButton debugModeButton;
-    private final JButton debugFrameButton;
-    private final JButton nextStepButton;
-    private final JButton skipButton;
+    private final JButton debugButton;
+    private final JButton transformButton;
+    private JPopupMenu debugPopup;
+    private JPopupMenu transformPopup;
     private final JFormattedTextField field;
     private final JLabel coordinates;
-    private final JButton morphButton;
-
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
 
         bottom = new JPanel(new BorderLayout());
-        regularModeButton = new JButton("Regular");
-        debugModeButton = new JButton("Debug");
-        debugFrameButton = new JButton("Dlog");
-        nextStepButton = new JButton("Next");
-        skipButton = new JButton("Skip");
+        
         morphButton = new JButton("Morph");
+        regularModeButton = new JButton("Reg");
+        debugButton = new JButton("Debug");
+        transformButton = new JButton("Transform");
 
+        setupDebugPopup();
+        setupTransformPopup();
 
-        debugFrameButton.setEnabled(false);
-        skipButton.setEnabled(false);
-        nextStepButton.setEnabled(false);
-
-        NumberFormatter formatter = new NumberFormatter(
-                NumberFormat.getIntegerInstance()
-        );
-
+        NumberFormatter formatter = new NumberFormatter(NumberFormat.getIntegerInstance());
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(true);
-        JLabel iterationsLabel = new JLabel("Pixels:");
-        field =
-                new JFormattedTextField(formatter);
+        
+        JLabel iterationsLabel = new JLabel("Px:");
+        field = new JFormattedTextField(formatter);
         field.setColumns(2);
         field.setValue(8);
 
-
-        JPanel bottomWestFlow = new JPanel(new FlowLayout());
+        JPanel bottomWestFlow = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
         bottomWestFlow.add(morphButton);
         bottomWestFlow.add(regularModeButton);
-        bottomWestFlow.add(debugModeButton);
-        bottomWestFlow.add(nextStepButton);
-        bottomWestFlow.add(skipButton);
-        bottomWestFlow.add(debugFrameButton);
+        bottomWestFlow.add(debugButton);
+        bottomWestFlow.add(transformButton);
 
-
-        JPanel bottomEastFlow = new JPanel(new FlowLayout());
+        JPanel bottomEastFlow = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         bottomEastFlow.add(iterationsLabel);
         bottomEastFlow.add(field);
         bottomEastFlow.add(coordinates);
 
         bottom.add(bottomWestFlow, BorderLayout.WEST);
         bottom.add(bottomEastFlow, BorderLayout.EAST);
+    }
 
+    private void setupDebugPopup() {
+        debugPopup = new JPopupMenu();
+        
+        JMenuItem regularModeItem = new JMenuItem("Regular Mode");
+        JMenuItem debugModeItem = new JMenuItem("Debug Mode");
+        JMenuItem nextStepItem = new JMenuItem("Next Step");
+        JMenuItem skipItem = new JMenuItem("Skip");
+        JMenuItem showDlogItem = new JMenuItem("Show Dlog");
+
+        debugPopup.add(regularModeItem);
+        debugPopup.add(debugModeItem);
+        debugPopup.add(new JSeparator());
+        debugPopup.add(nextStepItem);
+        debugPopup.add(skipItem);
+        debugPopup.add(showDlogItem);
+
+        debugButton.addActionListener(e -> {
+            Component button = (Component) e.getSource();
+            Point buttonLocation = button.getLocationOnScreen();
+            Dimension popupSize = debugPopup.getPreferredSize();
+            int x = 0;
+            int y = -popupSize.height;
+            debugPopup.show(button, x, y);
+        });
+
+        debugButton.putClientProperty("JButton.buttonType", "square");
+    }
+
+    private void setupTransformPopup() {
+        transformPopup = new JPopupMenu();
+
+        JPanel translatePanel = new JPanel(new BorderLayout(5, 5));
+        translatePanel.add(new JLabel("Translation:"), BorderLayout.NORTH);
+        JPanel translateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JTextField translateX = new JTextField(5);
+        JTextField translateY = new JTextField(5);
+        translateFields.add(new JLabel("X:"));
+        translateFields.add(translateX);
+        translateFields.add(new JLabel("Y:"));
+        translateFields.add(translateY);
+        translatePanel.add(translateFields, BorderLayout.CENTER);
+        JButton translateApply = new JButton("Apply");
+        translatePanel.add(translateApply, BorderLayout.SOUTH);
+
+        JPanel scalePanel = new JPanel(new BorderLayout(5, 5));
+        scalePanel.add(new JLabel("Scaling:"), BorderLayout.NORTH);
+        JPanel scaleFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JTextField scaleX = new JTextField(5);
+        JTextField scaleY = new JTextField(5);
+        scaleFields.add(new JLabel("X:"));
+        scaleFields.add(scaleX);
+        scaleFields.add(new JLabel("Y:"));
+        scaleFields.add(scaleY);
+        scalePanel.add(scaleFields, BorderLayout.CENTER);
+        JButton scaleApply = new JButton("Apply");
+        scalePanel.add(scaleApply, BorderLayout.SOUTH);
+
+        JPanel rotatePanel = new JPanel(new BorderLayout(5, 5));
+        rotatePanel.add(new JLabel("Rotation:"), BorderLayout.NORTH);
+        JPanel rotateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JTextField angleField = new JTextField(8);
+        rotateFields.add(new JLabel("°:"));
+        rotateFields.add(angleField);
+        rotatePanel.add(rotateFields, BorderLayout.CENTER);
+        JPanel rotateButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JButton rotateApply = new JButton("Apply");
+        JButton rotateAroundPoint = new JButton("Around Point");
+        rotateButtons.add(rotateApply);
+        rotateButtons.add(rotateAroundPoint);
+        rotatePanel.add(rotateButtons, BorderLayout.SOUTH);
+
+        transformPopup.add(translatePanel);
+        transformPopup.add(scalePanel);
+        transformPopup.add(rotatePanel);
+
+        transformButton.addActionListener(e -> {
+            Component button = (Component) e.getSource();
+            Dimension popupSize = transformPopup.getPreferredSize();
+            int x = 0;
+            int y = -popupSize.height;
+            transformPopup.show(button, x, y);
+        });
+    }
+
+    public JButton getMorphButton() {
+        return morphButton;
     }
 
     public JButton getRegularModeButton() {
         return regularModeButton;
     }
 
-    public JButton getDebugModeButton() {
-        return debugModeButton;
+    public JButton getDebugButton() {
+        return debugButton;
     }
 
-    public JButton getNextStepButton() {
-        return nextStepButton;
+    public JButton getTransformButton() {
+        return transformButton;
     }
 
-    public JButton getDebugFrameButton() {
-        return debugFrameButton;
+    public JPopupMenu getDebugPopup() {
+        return debugPopup;
+    }
+
+    public JPopupMenu getTransformPopup() {
+        return transformPopup;
     }
 
     public JPanel getBottom() {
         return bottom;
-    }
-
-    public JButton getSkipButton() {
-        return skipButton;
     }
 
     public JFormattedTextField getField() {
@@ -95,9 +173,5 @@ public final class BottomToolbar {
 
     public JLabel getCoordinates() {
         return coordinates;
-    }
-
-    public JButton getMorphButton() {
-        return morphButton;
     }
 }
