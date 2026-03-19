@@ -6,6 +6,7 @@ import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.rendering.BaseLayer;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
@@ -17,8 +18,23 @@ import java.util.List;
 
 public class EllipseAlgorithm implements CurvesAlgorithm {
 
-    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private StraightLineAlgorithm straightLineAlgorithm;
+    private CurvesAlgorithm curvesAlgorithm;
     private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
+
+    private StraightLineAlgorithm getStraightLineAlgorithm() {
+        if (straightLineAlgorithm == null) {
+            straightLineAlgorithm = new Antialiasing();
+        }
+        return straightLineAlgorithm;
+    }
+
+    private CurvesAlgorithm getCurvesAlgorithm() {
+        if (curvesAlgorithm == null) {
+            curvesAlgorithm = new CircleAlgorithm();
+        }
+        return curvesAlgorithm;
+    }
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -119,14 +135,14 @@ public class EllipseAlgorithm implements CurvesAlgorithm {
         Point pX = curvesParameters.getPoint(1);
         Point pY = curvesParameters.getPoint(2);
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
-        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(pCenter, pX)), mode);
-        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(pCenter, pY)), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(pCenter,
-                new Point(pCenter.getX() + radius, pCenter.getY() + radius))), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(pX,
-                new Point(pX.getX() + radius, pX.getY() + radius))), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(pY,
-                new Point(pY.getX() + radius, pY.getY() + radius))), mode);
+        getStraightLineAlgorithm().draw(canvas, new PointShapeParameters(List.of(pCenter, pX)), mode);
+        getStraightLineAlgorithm().draw(canvas, new PointShapeParameters(List.of(pCenter, pY)), mode);
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(pCenter,
+                new Point(pCenter.getX() + radius, pCenter.getY()))), new Regular());
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(pX,
+                new Point(pX.getX() + radius, pX.getY()))), new Regular());
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(pY,
+                new Point(pY.getX() + radius, pY.getY()))), new Regular());
     }
 
     private void drawSymmetricPoints(BaseLayer canvas, int xc, int yc, int x, int y, int pixelSize) {

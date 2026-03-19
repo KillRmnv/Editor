@@ -46,7 +46,7 @@ public class PenHandler implements DrawableHandler {
             PenStep step = (PenStep) Step;
             StraightLineAlgorithm lineDrawer = new Antialiasing();
             AlgorithmParameters parameters = new PointShapeParameters(new Point(step.getX(), step.getY()), new Point(mouseEvent.getX(), mouseEvent.getY()));
-            Thread.ofVirtual().start(()-> lineDrawer.draw(canvas.getLayer2D(), parameters,new Regular()));
+            new Thread(()-> lineDrawer.draw(canvas.getLayer2D(), parameters,new Regular())).start();
 
 
             step.setX(mouseEvent.getX());

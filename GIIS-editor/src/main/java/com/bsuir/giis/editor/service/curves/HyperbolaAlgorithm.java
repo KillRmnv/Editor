@@ -5,6 +5,7 @@ import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
@@ -14,11 +15,26 @@ import com.bsuir.giis.editor.rendering.BaseLayer;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+//TODO: fix out of bounds error for BufferedImage
 public class HyperbolaAlgorithm implements CurvesAlgorithm {
 
-    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private StraightLineAlgorithm straightLineAlgorithm;
+    private CurvesAlgorithm curvesAlgorithm;
     private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
+
+    private StraightLineAlgorithm getStraightLineAlgorithm() {
+        if (straightLineAlgorithm == null) {
+            straightLineAlgorithm = new Antialiasing();
+        }
+        return straightLineAlgorithm;
+    }
+
+    private CurvesAlgorithm getCurvesAlgorithm() {
+        if (curvesAlgorithm == null) {
+            curvesAlgorithm = new CircleAlgorithm();
+        }
+        return curvesAlgorithm;
+    }
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -120,14 +136,14 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
         Point pX = curvesParameters.getPoint(1);
         Point pY = curvesParameters.getPoint(2);
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
-        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(center, pX)), mode);
-        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(center, pY)), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(center,
-                new Point(center.getX() + radius, center.getY() + radius))), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(pX,
-                new Point(pX.getX() + radius, pX.getY() + radius))), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(pY,
-                new Point(pY.getX() + radius, pY.getY() + radius))), mode);
+        getStraightLineAlgorithm().draw(canvas, new PointShapeParameters(List.of(center, pX)), mode);
+        getStraightLineAlgorithm().draw(canvas, new PointShapeParameters(List.of(center, pY)), mode);
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(center,
+                new Point(center.getX() + radius, center.getY()))), new Regular());
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(pX,
+                new Point(pX.getX() + radius, pX.getY()))), new Regular());
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(pY,
+                new Point(pY.getX() + radius, pY.getY()))), new Regular());
     }
 
     private void drawHyperbolaPoints(BaseLayer canvas, int xc, int yc, int x, int y, int pixelSize) {

@@ -1,7 +1,5 @@
 package com.bsuir.giis.editor.view;
 
-import com.bsuir.giis.editor.rendering.Canvas;
-
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -17,6 +15,12 @@ public final class BottomToolbar {
     private JPopupMenu transformPopup;
     private final JFormattedTextField field;
     private final JLabel coordinates;
+
+    private JTextField translateX, translateY;
+    private JTextField scaleX, scaleY;
+    private JTextField angleField;
+    private JButton translateApply, scaleApply;
+    private JButton rotateApply, rotateAroundPoint;
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
@@ -58,13 +62,13 @@ public final class BottomToolbar {
     private void setupDebugPopup() {
         debugPopup = new JPopupMenu();
         
-        JMenuItem regularModeItem = new JMenuItem("Regular Mode");
+        
         JMenuItem debugModeItem = new JMenuItem("Debug Mode");
         JMenuItem nextStepItem = new JMenuItem("Next Step");
         JMenuItem skipItem = new JMenuItem("Skip");
         JMenuItem showDlogItem = new JMenuItem("Show Dlog");
 
-        debugPopup.add(regularModeItem);
+       
         debugPopup.add(debugModeItem);
         debugPopup.add(new JSeparator());
         debugPopup.add(nextStepItem);
@@ -73,14 +77,11 @@ public final class BottomToolbar {
 
         debugButton.addActionListener(e -> {
             Component button = (Component) e.getSource();
-            Point buttonLocation = button.getLocationOnScreen();
             Dimension popupSize = debugPopup.getPreferredSize();
             int x = 0;
             int y = -popupSize.height;
             debugPopup.show(button, x, y);
         });
-
-        debugButton.putClientProperty("JButton.buttonType", "square");
     }
 
     private void setupTransformPopup() {
@@ -89,39 +90,39 @@ public final class BottomToolbar {
         JPanel translatePanel = new JPanel(new BorderLayout(5, 5));
         translatePanel.add(new JLabel("Translation:"), BorderLayout.NORTH);
         JPanel translateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        JTextField translateX = new JTextField(5);
-        JTextField translateY = new JTextField(5);
+        translateX = new JTextField(5);
+        translateY = new JTextField(5);
         translateFields.add(new JLabel("X:"));
         translateFields.add(translateX);
         translateFields.add(new JLabel("Y:"));
         translateFields.add(translateY);
         translatePanel.add(translateFields, BorderLayout.CENTER);
-        JButton translateApply = new JButton("Apply");
+        translateApply = new JButton("Apply");
         translatePanel.add(translateApply, BorderLayout.SOUTH);
 
         JPanel scalePanel = new JPanel(new BorderLayout(5, 5));
         scalePanel.add(new JLabel("Scaling:"), BorderLayout.NORTH);
         JPanel scaleFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        JTextField scaleX = new JTextField(5);
-        JTextField scaleY = new JTextField(5);
+        scaleX = new JTextField(5);
+        scaleY = new JTextField(5);
         scaleFields.add(new JLabel("X:"));
         scaleFields.add(scaleX);
         scaleFields.add(new JLabel("Y:"));
         scaleFields.add(scaleY);
         scalePanel.add(scaleFields, BorderLayout.CENTER);
-        JButton scaleApply = new JButton("Apply");
+        scaleApply = new JButton("Apply");
         scalePanel.add(scaleApply, BorderLayout.SOUTH);
 
         JPanel rotatePanel = new JPanel(new BorderLayout(5, 5));
         rotatePanel.add(new JLabel("Rotation:"), BorderLayout.NORTH);
         JPanel rotateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        JTextField angleField = new JTextField(8);
+        angleField = new JTextField(8);
         rotateFields.add(new JLabel("°:"));
         rotateFields.add(angleField);
         rotatePanel.add(rotateFields, BorderLayout.CENTER);
         JPanel rotateButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        JButton rotateApply = new JButton("Apply");
-        JButton rotateAroundPoint = new JButton("Around Point");
+        rotateApply = new JButton("Apply");
+        rotateAroundPoint = new JButton("Around Point");
         rotateButtons.add(rotateApply);
         rotateButtons.add(rotateAroundPoint);
         rotatePanel.add(rotateButtons, BorderLayout.SOUTH);
@@ -173,5 +174,41 @@ public final class BottomToolbar {
 
     public JLabel getCoordinates() {
         return coordinates;
+    }
+
+    public JTextField getTranslateX() {
+        return translateX;
+    }
+
+    public JTextField getTranslateY() {
+        return translateY;
+    }
+
+    public JTextField getScaleX() {
+        return scaleX;
+    }
+
+    public JTextField getScaleY() {
+        return scaleY;
+    }
+
+    public JTextField getAngleField() {
+        return angleField;
+    }
+
+    public JButton getTranslateApply() {
+        return translateApply;
+    }
+
+    public JButton getScaleApply() {
+        return scaleApply;
+    }
+
+    public JButton getRotateApply() {
+        return rotateApply;
+    }
+
+    public JButton getRotateAroundPoint() {
+        return rotateAroundPoint;
     }
 }

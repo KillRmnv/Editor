@@ -28,14 +28,6 @@ public final class TopToolbar {
         icons.add(parameterCurvesMenu);
 
         fileMenu = setupTopJMenuBar();
-
-        setupIcons();
-    }
-
-    private void setupIcons() {
-        lineMenu.setIcon(UIManager.getIcon("FileView.fileIcon"));
-        curveMenu.setIcon(UIManager.getIcon("Tree.leafIcon"));
-        parameterCurvesMenu.setIcon(UIManager.getIcon("Tree.closedIcon"));
     }
 
     private JMenu setupTopJMenuBar() {

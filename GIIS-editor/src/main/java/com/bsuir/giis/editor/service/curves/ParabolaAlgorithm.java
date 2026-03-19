@@ -5,6 +5,7 @@ import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
+import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.service.lines.Antialiasing;
 import com.bsuir.giis.editor.service.lines.StraightLineAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
@@ -17,8 +18,23 @@ import java.util.List;
 
 public class ParabolaAlgorithm implements CurvesAlgorithm {
 
-    private final StraightLineAlgorithm straightLineAlgorithm = new Antialiasing();
+    private StraightLineAlgorithm straightLineAlgorithm;
+    private CurvesAlgorithm curvesAlgorithm;
     private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
+
+    private StraightLineAlgorithm getStraightLineAlgorithm() {
+        if (straightLineAlgorithm == null) {
+            straightLineAlgorithm = new Antialiasing();
+        }
+        return straightLineAlgorithm;
+    }
+
+    private CurvesAlgorithm getCurvesAlgorithm() {
+        if (curvesAlgorithm == null) {
+            curvesAlgorithm = new CircleAlgorithm();
+        }
+        return curvesAlgorithm;
+    }
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -112,11 +128,11 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
         Point vertex = curvesParameters.getPoint(0);
         Point endPoint = curvesParameters.getPoint(1);
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
-        straightLineAlgorithm.draw(canvas, new PointShapeParameters(List.of(vertex, endPoint)), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(vertex,
-                new Point(vertex.getX() + radius, vertex.getY() + radius))), mode);
-        this.draw(canvas, new PointShapeParameters(List.of(endPoint,
-                new Point(endPoint.getX() + radius, endPoint.getY() + radius))), mode);
+        getStraightLineAlgorithm().draw(canvas, new PointShapeParameters(List.of(vertex, endPoint)), mode);
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(vertex,
+                new Point(vertex.getX() + radius, vertex.getY()))), new Regular());
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(endPoint,
+                new Point(endPoint.getX() + radius, endPoint.getY()))), new Regular());
     }
 
 

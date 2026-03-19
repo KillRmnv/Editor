@@ -66,17 +66,7 @@ public final class BottomPanelController {
                 String text = menuItem.getText();
                 
                 switch (text) {
-                    case "Regular Mode" -> menuItem.addActionListener(e -> {
-                        mode.setMode(new Regular());
-                        bottomToolbar.getRegularModeButton().setSelected(true);
-                        debugFrame.setVisible(false);
-                        if (!tool.getTool().getClass().equals(MorphHandler.class)) {
-                            canvas.getLayer2D().setDefaultPixelSize();
-                            canvas.getLayer2DMoveable().setDefaultPixelSize();
-                        }
-                        canvas.getLayer2DMorphable().setDefaultPixelSize();
-                    });
-                    
+                 
                     case "Debug Mode" -> menuItem.addActionListener(e -> {
                         if (!tool.getTool().getClass().equals(MorphHandler.class)) {
                             canvas.getLayer2D().setPixelSizeFromField();
@@ -106,80 +96,37 @@ public final class BottomPanelController {
     }
 
     private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas) {
-        JPopupMenu transformPopup = bottomToolbar.getTransformPopup();
-        
-        for (Component panel : transformPopup.getComponents()) {
-            if (panel instanceof JPanel jPanel) {
-                Component[] components = jPanel.getComponents();
-                
-                for (Component comp : components) {
-                    if (comp instanceof JButton button) {
-                        String text = button.getText();
-                        
-                        switch (text) {
-                            case "Apply" -> {
-                                JPanel parentPanel = (JPanel) button.getParent().getParent();
-                                JLabel label = (JLabel) parentPanel.getComponent(0);
-                                String transformType = label.getText().replace(":", "");
-                                
-                                button.addActionListener(e -> {
-                                    JPanel fieldsPanel = (JPanel) parentPanel.getComponent(1);
-                                    applyTransformation(fieldsPanel, transformType, canvas);
-                                });
-                            }
-                            
-                            case "Around Point" -> button.addActionListener(e -> {
-                                // TODO: Implement rotation around point
-                                System.out.println("Rotation around point clicked");
-                            });
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void applyTransformation(JPanel fieldsPanel, String transformType, Canvas canvas) {
-        Component[] components = fieldsPanel.getComponents();
-        
-        switch (transformType) {
-            case "Translation" -> {
-                double dx = 0, dy = 0;
-                for (Component c : components) {
-                    if (c instanceof JTextField tf) {
-                        try {
-                            if (dx == 0) dx = Double.parseDouble(tf.getText());
-                            else dy = Double.parseDouble(tf.getText());
-                        } catch (NumberFormatException ignored) {}
-                    }
-                }
+        bottomToolbar.getTranslateApply().addActionListener(e -> {
+            try {
+                double dx = Double.parseDouble(bottomToolbar.getTranslateX().getText());
+                double dy = Double.parseDouble(bottomToolbar.getTranslateY().getText());
                 System.out.println("Translation: dx=" + dx + ", dy=" + dy);
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid translation values");
             }
-            
-            case "Scaling" -> {
-                double sx = 1, sy = 1;
-                for (Component c : components) {
-                    if (c instanceof JTextField tf) {
-                        try {
-                            if (sx == 1) sx = Double.parseDouble(tf.getText());
-                            else sy = Double.parseDouble(tf.getText());
-                        } catch (NumberFormatException ignored) {}
-                    }
-                }
+        });
+
+        bottomToolbar.getScaleApply().addActionListener(e -> {
+            try {
+                double sx = Double.parseDouble(bottomToolbar.getScaleX().getText());
+                double sy = Double.parseDouble(bottomToolbar.getScaleY().getText());
                 System.out.println("Scaling: sx=" + sx + ", sy=" + sy);
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid scale values");
             }
-            
-            case "Rotation" -> {
-                double angle = 0;
-                for (Component c : components) {
-                    if (c instanceof JTextField tf) {
-                        try {
-                            angle = Double.parseDouble(tf.getText());
-                        } catch (NumberFormatException ignored) {}
-                    }
-                }
+        });
+
+        bottomToolbar.getRotateApply().addActionListener(e -> {
+            try {
+                double angle = Double.parseDouble(bottomToolbar.getAngleField().getText());
                 System.out.println("Rotation: angle=" + angle);
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid angle value");
             }
-        }
+        });
+
+        bottomToolbar.getRotateAroundPoint().addActionListener(e -> {
+            System.out.println("Rotation around point clicked");
+        });
     }
 }

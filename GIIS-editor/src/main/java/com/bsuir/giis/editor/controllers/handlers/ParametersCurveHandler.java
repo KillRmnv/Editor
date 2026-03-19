@@ -45,7 +45,7 @@ public class ParametersCurveHandler implements DrawableHandler {
 
             canvas.getLayer2DMoveable().cleanLayer();
 
-            Thread.ofVirtual().start(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode()));
+            new Thread(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode())).start();
             addToLayer(canvas.getLayer2D(), tool, parameters, mouseEvent);
             multiStep.clean();
         }
@@ -93,10 +93,10 @@ public class ParametersCurveHandler implements DrawableHandler {
 
             
             AlgorithmParameters parameters = new PointShapeParameters(fakeMultistep);
-            Thread.ofVirtual().start(() ->
+            new Thread(() ->
                     ((Drawable) tool.getTool())
                             .draw(canvas.getLayer2DMoveable(), parameters, new Regular())
-            );
+            ).start();
         }
         
     }

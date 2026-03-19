@@ -43,3 +43,5 @@ build/
 .classpath
 .project
 AGENTS.md
+mvnw
+mvnw.cmd

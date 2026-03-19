@@ -32,7 +32,7 @@ public class CurveEllipseHandler implements DrawableHandler {
 
             canvas.getLayer2DMoveable().cleanLayer();
 
-            Thread.ofVirtual().start(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode()));
+            new Thread(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode())).start();
             addToLayer(canvas.getLayer2D(),tool,parameters,mouseEvent);
             multiStep.clean();
         }
@@ -65,16 +65,16 @@ public class CurveEllipseHandler implements DrawableHandler {
             copy.setStep(new PenStep(fx, fy)); // теперь это осмысленно
 
             AlgorithmParameters parameters = new PointShapeParameters(copy);
-            Thread.ofVirtual().start(() ->
+            new Thread(() ->
                     ((Drawable) tool.getTool())
                             .draw(canvas.getLayer2DMoveable(), parameters, new Regular())
-            );
+            ).start();
         }else if(multiStep.getStep(0).isReady() && multiStep.getStep(1).isReady()){
             canvas.getLayer2DMoveable().cleanLayer();
             MultiStep copy = multiStep.copy();
             copy.setStep(new PenStep(x, y));
             AlgorithmParameters parameters = new PointShapeParameters(copy);
-            Thread.ofVirtual().start(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2DMoveable(), parameters, new Regular()));
+            new Thread(() -> ((Drawable) tool.getTool()).draw(canvas.getLayer2DMoveable(), parameters, new Regular())).start();
 
         }
     }

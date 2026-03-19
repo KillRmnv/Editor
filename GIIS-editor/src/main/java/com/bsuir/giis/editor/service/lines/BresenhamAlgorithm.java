@@ -15,8 +15,15 @@ import java.util.List;
 
 public class BresenhamAlgorithm implements StraightLineAlgorithm {
 
-    private final CurvesAlgorithm curvesAlgorithm = new CircleAlgorithm();
+    private CurvesAlgorithm curvesAlgorithm;
     private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
+
+    private CurvesAlgorithm getCurvesAlgorithm() {
+        if (curvesAlgorithm == null) {
+            curvesAlgorithm = new CircleAlgorithm();
+        }
+        return curvesAlgorithm;
+    }
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
@@ -68,9 +75,9 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
         Point start = linesParams.getPoint(0);
         Point end = linesParams.getPoint(1);
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
-        curvesAlgorithm.draw(canvas, new PointShapeParameters(List.of(start,
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(start,
                 new Point(start.getX() + radius, start.getY() + radius))), mode);
-        curvesAlgorithm.draw(canvas, new PointShapeParameters(List.of(end,
+        getCurvesAlgorithm().draw(canvas, new PointShapeParameters(List.of(end,
                 new Point(end.getX() + radius, end.getY() + radius))), mode);
     }
 }
