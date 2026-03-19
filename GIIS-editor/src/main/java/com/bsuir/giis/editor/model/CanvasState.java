@@ -7,6 +7,7 @@ import com.bsuir.giis.editor.transform.PerspectiveTransformation;
 import com.bsuir.giis.editor.transform.Rotation3D;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.util.*;
 import java.util.List;
 
@@ -160,6 +161,10 @@ public class CanvasState {
 
     public BufferedImage getCanvasImage() {
         return canvasImage;
+    }
+
+    public int[] getPixelBuffer() {
+        return ((DataBufferInt) canvasImage.getRaster().getDataBuffer()).getData();
     }
 
     public int getWidth() {

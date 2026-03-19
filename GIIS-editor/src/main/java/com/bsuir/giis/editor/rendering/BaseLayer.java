@@ -105,7 +105,7 @@ public class BaseLayer extends JPanel {
 
     protected void setupCanvas(int width, int height) {
         state.setupCanvas(isTransparentLayer);
-
+        renderer.invalidateBuffer();
         baseRepaintSetup(width, height);
     }
 
@@ -132,6 +132,10 @@ public class BaseLayer extends JPanel {
 
     public BufferedImage getCanvasImage() {
         return state.getCanvasImage();
+    }
+
+    public int[] getPixelBuffer() {
+        return state.getPixelBuffer();
     }
 
     public CanvasState getState() {
