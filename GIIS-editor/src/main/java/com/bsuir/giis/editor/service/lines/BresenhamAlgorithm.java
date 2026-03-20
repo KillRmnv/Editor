@@ -48,6 +48,7 @@ public class BresenhamAlgorithm implements StraightLineAlgorithm {
 
             canvas.paintPixel(x1 * pixelSize, y1 * pixelSize,Color.BLACK);
             mode.onStep(new PenStep(x1,y1,255),"Bresenham Algorithm: ");
+            canvas.repaint();
 
             if (x1 == x2 && y1 == y2) {
                 

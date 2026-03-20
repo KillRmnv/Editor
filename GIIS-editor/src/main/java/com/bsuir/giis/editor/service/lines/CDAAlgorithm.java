@@ -56,6 +56,7 @@ public class CDAAlgorithm implements StraightLineAlgorithm {
         for (int i = 0; i <= steps; i++) {
             canvas.paintPixel((int) Math.round(x)*pixelSize, (int) Math.round(y)*pixelSize, Color.BLACK);
             mode.onStep(new PenStep((int) Math.round(x), (int) Math.round(y),255),"CDA Algorithm: ");
+            canvas.repaint();
             x += xIncrement;
             y += yIncrement;
         }

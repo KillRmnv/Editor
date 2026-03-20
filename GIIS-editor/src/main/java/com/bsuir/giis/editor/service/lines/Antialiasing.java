@@ -56,17 +56,21 @@ public class Antialiasing implements StraightLineAlgorithm {
 
         drawPixel(canvas, x1, y1, 1.0, steep, pixelSize);
         mode.onStep(new PenStep(x1,y1,255),"Wu Algorithm(start point): ");
+        canvas.repaint();
         drawPixel(canvas, x2, y2, 1.0, steep, pixelSize);
         mode.onStep(new PenStep(x2,y2,255),"Wu Algorithm(end point): ");
+        canvas.repaint();
 
 
         for (int x = x1 + 1; x < x2; x++) {
             // Рисуем основную точку (яркость = перевернутая дробная часть)
             drawPixel(canvas, x, (int) intery, 1.0 - (intery - (int) intery), steep, pixelSize);
             mode.onStep(new PenStep(x,(int)intery,(int)(1.0 - (intery - (int) intery)*255)),"Wu Algorithm(main point): ");
+            canvas.repaint();
             // Рисуем соседнюю точку (яркость = дробная часть)
             drawPixel(canvas, x, (int) intery + 1, intery - (int) intery, steep, pixelSize);
             mode.onStep(new PenStep(x, (int) intery + 1,(int)(intery - (int) intery)),"Wu Algorithm(neighbor point): ");
+            canvas.repaint();
             intery += gradient;
         }
         mode.onFinish();

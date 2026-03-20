@@ -58,6 +58,7 @@ public class CircleAlgorithm implements CurvesAlgorithm {
         drawCirclePoints(canvas, xc, yc, x, y,pixelSize);
         try {
             mode.onStep(new MultiStep(2, PenStep.class),"Circle(center): ");
+            canvas.repaint();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -73,6 +74,7 @@ public class CircleAlgorithm implements CurvesAlgorithm {
             drawCirclePoints(canvas, xc, yc, x, y,pixelSize);
             try{
             mode.onStep(new MultiStep(2, PenStep.class),"Circle: ");
+            canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

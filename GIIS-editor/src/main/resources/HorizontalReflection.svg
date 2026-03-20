@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Вертикальная пунктирная ось по центру -->
+  <line x1="12" y1="2" x2="12" y2="22" stroke-dasharray="3 3" />
+  
+  <!-- Левый треугольник (увеличен, отодвинут от центра) -->
+  <!-- Tip x=9, Base x=2 -->
+  <polygon points="9,12 2,4 2,20" />
+  
+  <!-- Правый треугольник (увеличен, отодвинут от центра) -->
+  <!-- Tip x=15, Base x=22 -->
+  <polygon points="15,12 22,4 22,20" />
+</svg>

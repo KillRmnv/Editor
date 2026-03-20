@@ -80,6 +80,7 @@ public class EllipseAlgorithm implements CurvesAlgorithm {
         drawSymmetricPoints(canvas, xc, yc, x, y, pixelSize);
         try {
             mode.onStep(new MultiStep(3, PenStep.class),"Ellipse(center): ");
+            canvas.repaint();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -97,6 +98,7 @@ public class EllipseAlgorithm implements CurvesAlgorithm {
             drawSymmetricPoints(canvas, xc, yc, x, y, pixelSize);
             try {
                 mode.onStep(new MultiStep(3, PenStep.class),"Ellipse(region 1): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -119,6 +121,7 @@ public class EllipseAlgorithm implements CurvesAlgorithm {
             drawSymmetricPoints(canvas, xc, yc, x, y, pixelSize);
             try {
                 mode.onStep(new MultiStep(3, PenStep.class),"Ellipse(region 2): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

@@ -78,6 +78,7 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
         drawSymmetricPoints(canvas, x0, y0, (int) x, (int) y, signY, pixelSize);
         try {
             mode.onStep(new MultiStep(2, PenStep.class),"Parabola(center): ");
+            canvas.repaint();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -95,6 +96,7 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
             drawSymmetricPoints(canvas, x0, y0, (int) x, (int) y, signY, pixelSize);
             try {
                 mode.onStep(new MultiStep(2, PenStep.class),"Parabola(x): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -114,6 +116,7 @@ public class ParabolaAlgorithm implements CurvesAlgorithm {
             drawSymmetricPoints(canvas, x0, y0, (int) x, (int) y, signY, pixelSize);
             try {
                 mode.onStep(new MultiStep(2, PenStep.class),"Parabola(y): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

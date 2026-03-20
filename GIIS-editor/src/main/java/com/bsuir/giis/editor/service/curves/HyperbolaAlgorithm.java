@@ -86,6 +86,7 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
         drawHyperbolaPoints(canvas, xc, yc, x, y, pixelSize);
         try {
             mode.onStep(new MultiStep(3, PenStep.class),"Hyperbola(center): ");
+            canvas.repaint();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -102,6 +103,7 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
             drawHyperbolaPoints(canvas, xc, yc, x, y, pixelSize);
             try {
                 mode.onStep(new MultiStep(2, PenStep.class),"Hyperbola(region 1): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -121,6 +123,7 @@ public class HyperbolaAlgorithm implements CurvesAlgorithm {
             drawHyperbolaPoints(canvas, xc, yc, x, y, pixelSize);
             try {
                 mode.onStep(new MultiStep(2, PenStep.class),"Hyperbola(region 2): ");
+                canvas.repaint();
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
