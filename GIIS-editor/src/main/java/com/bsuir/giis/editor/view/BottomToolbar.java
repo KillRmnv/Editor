@@ -29,6 +29,7 @@ public final class BottomToolbar {
     private JButton transform3DButton;
     private JButton reflectHButton;
     private JButton reflectVButton;
+    private JCheckBox perspectiveCheckBox;
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
@@ -183,9 +184,13 @@ public final class BottomToolbar {
         reflectButtons.add(reflectVButton);
         reflectPanel.add(reflectButtons, BorderLayout.CENTER);
 
+        perspectiveCheckBox = new JCheckBox("Perspective", true);
+
         transformPopup.add(transform3DPanel);
         transformPopup.add(new JSeparator());
         transformPopup.add(reflectPanel);
+        transformPopup.add(new JSeparator());
+        transformPopup.add(perspectiveCheckBox);
 
         transformButton.addActionListener(e -> {
             Component button = (Component) e.getSource();
@@ -242,5 +247,9 @@ public final class BottomToolbar {
 
     public JButton getReflectVButton() {
         return reflectVButton;
+    }
+
+    public JCheckBox getPerspectiveCheckBox() {
+        return perspectiveCheckBox;
     }
 }

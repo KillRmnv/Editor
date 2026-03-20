@@ -36,6 +36,7 @@ public class Transform3DHandler implements DrawableHandler {
         dstState.setScaleFactor(srcState.getScaleFactor());
         dstState.setReflectX(srcState.isReflectX());
         dstState.setReflectY(srcState.isReflectY());
+        dstState.setPerspectiveEnabled(srcState.isPerspectiveEnabled());
 
         canvas.getLayer2DMoveable().renderAndRepaint();
         srcState.clearCurrentModel();
@@ -102,6 +103,7 @@ public class Transform3DHandler implements DrawableHandler {
             mainState.setScaleFactor(moveableState.getScaleFactor());
             mainState.setReflectX(moveableState.isReflectX());
             mainState.setReflectY(moveableState.isReflectY());
+            mainState.setPerspectiveEnabled(moveableState.isPerspectiveEnabled());
             moveableState.clearCurrentModel();
         }
 

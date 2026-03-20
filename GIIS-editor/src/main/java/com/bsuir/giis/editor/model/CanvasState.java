@@ -30,6 +30,7 @@ public class CanvasState {
     private double scaleFactor = 1.0;
     private boolean reflectX = false;
     private boolean reflectY = false;
+    private boolean perspectiveEnabled = true;
 
     public CanvasState(int width, int height) {
         this.width = width;
@@ -212,6 +213,7 @@ public class CanvasState {
         this.scaleFactor = 1.0;
         this.reflectX = false;
         this.reflectY = false;
+        this.perspectiveEnabled = true;
     }
 
     public Model3DParameters getModelParameters() {
@@ -260,6 +262,14 @@ public class CanvasState {
 
     public void setReflectY(boolean reflectY) {
         this.reflectY = reflectY;
+    }
+
+    public boolean isPerspectiveEnabled() {
+        return perspectiveEnabled;
+    }
+
+    public void setPerspectiveEnabled(boolean perspectiveEnabled) {
+        this.perspectiveEnabled = perspectiveEnabled;
     }
 
     public void clear() {

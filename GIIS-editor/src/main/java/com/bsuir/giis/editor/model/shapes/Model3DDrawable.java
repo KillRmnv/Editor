@@ -7,8 +7,10 @@ import com.bsuir.giis.editor.model.dimensions.Model3D;
 import com.bsuir.giis.editor.model.dimensions.Point3D;
 import com.bsuir.giis.editor.rendering.BaseLayer;
 import com.bsuir.giis.editor.rendering.RenderThreadPool;
+import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Mode;
 import com.bsuir.giis.editor.service.lines.BresenhamAlgorithm;
+import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.transform.PerspectiveTransformation;
 import com.bsuir.giis.editor.transform.Rotation3D;
 import com.bsuir.giis.editor.utils.MatrixUtils;
@@ -55,6 +57,8 @@ public class Model3DDrawable implements Drawable {
         boolean reflectX = canvas.getState().isReflectX();
         boolean reflectY = canvas.getState().isReflectY();
 
+        boolean perspective = canvas.getState().isPerspectiveEnabled();
+
         double[][] centerMatrix = MatrixUtils.translate3D(-cx, -cy, -cz);
         double[][] normalizeMatrix = MatrixUtils.scale3D(normScale, normScale, normScale);
         double[][] reflectMatrix = MatrixUtils.scale3D(reflectX ? -1.0 : 1.0, reflectY ? -1.0 : 1.0, 1.0);
@@ -63,12 +67,12 @@ public class Model3DDrawable implements Drawable {
         double[][] translationMatrix = MatrixUtils.translate3D(translateX, translateY, FOCAL_LENGTH + 200);
 
         double[][] tm = MatrixUtils.multiply(centerMatrix, normalizeMatrix);
-        tm = MatrixUtils.multiply(reflectMatrix, tm);
         tm = MatrixUtils.multiply(rotationMatrix, tm);
+        tm = MatrixUtils.multiply(reflectMatrix, tm);
         tm = MatrixUtils.multiply(screenScaleMatrix, tm);
-        tm = MatrixUtils.multiply(translationMatrix, tm);
+        final double[][] finalTm = MatrixUtils.multiply(translationMatrix, tm);
 
-        double invFocal = 1.0 / FOCAL_LENGTH;
+        double invFocal = perspective ? 1.0 / FOCAL_LENGTH : 0.0;
         double centerX = projection.getCenterX();
         double centerY = projection.getCenterY();
 
@@ -80,14 +84,21 @@ public class Model3DDrawable implements Drawable {
         List<Face3D> faces = model.getFaces();
         int faceCount = faces.size();
 
-        if (faceCount < PARALLEL_THRESHOLD) {
+        if (mode instanceof Debug) {
+            new Thread(() -> {
+                drawSingleThreaded(vertices, vertexCount, screenX, screenY,
+                        finalTm, invFocal, centerX, centerY,
+                        canvas, faces, mode);
+                javax.swing.SwingUtilities.invokeLater(canvas::repaint);
+            }).start();
+        } else if (faceCount < PARALLEL_THRESHOLD) {
             drawSingleThreaded(vertices, vertexCount, screenX, screenY,
-                    tm, invFocal, centerX, centerY,
-                    canvas, faces);
+                    finalTm, invFocal, centerX, centerY,
+                    canvas, faces, mode);
         } else {
             drawParallel(vertices, vertexCount, screenX, screenY,
-                    tm, invFocal, centerX, centerY,
-                    canvas, faces, faceCount);
+                    finalTm, invFocal, centerX, centerY,
+                    canvas, faces, faceCount, mode);
         }
     }
 
@@ -95,7 +106,7 @@ public class Model3DDrawable implements Drawable {
                                     int[] screenX, int[] screenY,
                                     double[][] tm, double invFocal,
                                     double centerX, double centerY,
-                                    BaseLayer canvas, List<Face3D> faces) {
+                                    BaseLayer canvas, List<Face3D> faces, Mode mode) {
         projectVertices(vertices, vertexCount, screenX, screenY,
                 tm, invFocal, centerX, centerY, 0, vertexCount);
 
@@ -104,7 +115,7 @@ public class Model3DDrawable implements Drawable {
         int[] pixels = canvas.getPixelBuffer();
 
         for (Face3D face : faces) {
-            drawFaceEdges(face, pixels, width, height, screenX, screenY, vertexCount);
+            drawFaceEdges(face, pixels, width, height, screenX, screenY, vertexCount, canvas, mode);
         }
     }
 
@@ -112,7 +123,7 @@ public class Model3DDrawable implements Drawable {
                               int[] screenX, int[] screenY,
                               double[][] tm, double invFocal,
                               double centerX, double centerY,
-                              BaseLayer canvas, List<Face3D> faces, int faceCount) {
+                              BaseLayer canvas, List<Face3D> faces, int faceCount, Mode mode) {
         ExecutorService pool = RenderThreadPool.getPool();
         int threads = RenderThreadPool.THREAD_COUNT;
 
@@ -124,7 +135,7 @@ public class Model3DDrawable implements Drawable {
         int[] pixels = canvas.getPixelBuffer();
 
         parallelDrawFaces(pool, threads, faces, faceCount,
-                pixels, width, height, screenX, screenY, vertexCount);
+                pixels, width, height, screenX, screenY, vertexCount, canvas, mode);
     }
 
     private void parallelProjectVertices(ExecutorService pool, int threads,
@@ -181,7 +192,8 @@ public class Model3DDrawable implements Drawable {
     private void parallelDrawFaces(ExecutorService pool, int threads,
                                    List<Face3D> faces, int faceCount,
                                    int[] pixels, int width, int height,
-                                   int[] screenX, int[] screenY, int vertexCount) {
+                                   int[] screenX, int[] screenY, int vertexCount,
+                                   BaseLayer canvas, Mode mode) {
         int chunkSize = (faceCount + threads - 1) / threads;
         CountDownLatch latch = new CountDownLatch(threads);
 
@@ -191,7 +203,7 @@ public class Model3DDrawable implements Drawable {
             pool.submit(() -> {
                 for (int f = start; f < end; f++) {
                     drawFaceEdges(faces.get(f), pixels, width, height,
-                            screenX, screenY, vertexCount);
+                            screenX, screenY, vertexCount, canvas, mode);
                 }
                 latch.countDown();
             });
@@ -205,7 +217,8 @@ public class Model3DDrawable implements Drawable {
     }
 
     private void drawFaceEdges(Face3D face, int[] pixels, int width, int height,
-                               int[] screenX, int[] screenY, int vertexCount) {
+                               int[] screenX, int[] screenY, int vertexCount,
+                               BaseLayer canvas, Mode mode) {
         List<Integer> indices = face.getVertexIndices();
         int n = indices.size();
 
@@ -217,6 +230,8 @@ public class Model3DDrawable implements Drawable {
                 BresenhamAlgorithm.drawLineDirect(pixels, width, height,
                         screenX[idx1], screenY[idx1],
                         screenX[idx2], screenY[idx2], BLACK);
+                mode.onStep(new PenStep(screenX[idx1], screenY[idx1], 255), "3D Edge: ");
+                javax.swing.SwingUtilities.invokeLater(canvas::repaint);
             }
         }
     }

@@ -115,5 +115,12 @@ public final class BottomPanelController {
             canvas.getLayer2D().cleanLayer();
             canvas.getLayer2D().renderAndRepaint();
         });
+
+        bottomToolbar.getPerspectiveCheckBox().addActionListener(e -> {
+            CanvasState state = canvas.getLayer2D().getState();
+            state.setPerspectiveEnabled(bottomToolbar.getPerspectiveCheckBox().isSelected());
+            canvas.getLayer2D().cleanLayer();
+            canvas.getLayer2D().renderAndRepaint();
+        });
     }
 }
