@@ -94,7 +94,7 @@ public final class BottomPanelController {
             }
         }
     }
-    //TODO: add actions to menu items
+    
     private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas, ToolContainer tool) {
         bottomToolbar.getTranslateApply().addActionListener(e -> {
             try {

@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 public final class CanvasController extends MouseAdapter {
 
@@ -27,6 +28,9 @@ public final class CanvasController extends MouseAdapter {
         this.mode = mode;
         canvas.addMouseListener(this);
         canvas.addMouseMotionListener(this);
+        canvas.addMouseWheelListener(e -> {
+            tool.getHandler().handleWheel(canvas, e, tool, mode, modifierState);
+        });
         
         canvas.setFocusable(true);
         canvas.addKeyListener(new KeyAdapter() {

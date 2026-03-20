@@ -25,6 +25,9 @@ public class CanvasState {
     private Model3D currentModel;
     private Rotation3D currentRotation;
     private PerspectiveTransformation perspectiveProjection;
+    private double translateX = 0;
+    private double translateY = 0;
+    private double scaleFactor = 1.0;
 
     public CanvasState(int width, int height) {
         this.width = width;
@@ -202,6 +205,9 @@ public class CanvasState {
     public void clearCurrentModel() {
         this.currentModel = null;
         this.currentRotation.reset();
+        this.translateX = 0;
+        this.translateY = 0;
+        this.scaleFactor = 1.0;
     }
 
     public Model3DParameters getModelParameters() {
@@ -210,6 +216,30 @@ public class CanvasState {
             currentRotation,
             perspectiveProjection
         );
+    }
+
+    public double getTranslateX() {
+        return translateX;
+    }
+
+    public void setTranslateX(double translateX) {
+        this.translateX = translateX;
+    }
+
+    public double getTranslateY() {
+        return translateY;
+    }
+
+    public void setTranslateY(double translateY) {
+        this.translateY = translateY;
+    }
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
     }
 
     public void clear() {

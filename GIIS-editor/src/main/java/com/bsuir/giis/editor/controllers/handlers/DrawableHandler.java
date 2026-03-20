@@ -10,6 +10,7 @@ import com.bsuir.giis.editor.utils.ModifierState;
 import com.bsuir.giis.editor.utils.ToolContainer;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 public interface DrawableHandler {
     void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
@@ -19,6 +20,9 @@ public interface DrawableHandler {
     void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
 
     void handleRelease(Canvas canvas,MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState);
+
+    default void handleWheel(Canvas canvas, MouseWheelEvent mouseWheelEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
+    }
 
     default void addToLayer(BaseLayer canvas, ToolContainer tool, AlgorithmParameters parameters, MouseEvent mouseEvent) {
         MorphableShape<?> shape = new MorphableShape(parameters, (Drawable) tool.getTool());
