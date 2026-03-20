@@ -34,6 +34,8 @@ public class Transform3DHandler implements DrawableHandler {
         dstState.setTranslateX(srcState.getTranslateX());
         dstState.setTranslateY(srcState.getTranslateY());
         dstState.setScaleFactor(srcState.getScaleFactor());
+        dstState.setReflectX(srcState.isReflectX());
+        dstState.setReflectY(srcState.isReflectY());
 
         canvas.getLayer2DMoveable().renderAndRepaint();
         srcState.clearCurrentModel();
@@ -98,6 +100,8 @@ public class Transform3DHandler implements DrawableHandler {
             mainState.setTranslateX(moveableState.getTranslateX());
             mainState.setTranslateY(moveableState.getTranslateY());
             mainState.setScaleFactor(moveableState.getScaleFactor());
+            mainState.setReflectX(moveableState.isReflectX());
+            mainState.setReflectY(moveableState.isReflectY());
             moveableState.clearCurrentModel();
         }
 

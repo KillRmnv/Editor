@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Кривая -->
+  <path d="M4 20 C 4 10, 20 14, 20 4" />
+  <!-- Рычаги управления (визуализация параметров) -->
+  <line x1="4" y1="20" x2="8" y2="16" stroke-dasharray="2 2" />
+  <line x1="20" y1="4" x2="16" y2="8" stroke-dasharray="2 2" />
+</svg>

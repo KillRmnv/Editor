@@ -2,6 +2,7 @@ package com.bsuir.giis.editor.controllers;
 
 import com.bsuir.giis.editor.controllers.handlers.MorphHandler;
 import com.bsuir.giis.editor.controllers.handlers.Transform3DHandler;
+import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
@@ -11,7 +12,7 @@ import com.bsuir.giis.editor.utils.ToolContainer;
 import com.bsuir.giis.editor.view.BottomToolbar;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 
 public final class BottomPanelController {
 
@@ -94,44 +95,25 @@ public final class BottomPanelController {
             }
         }
     }
-    
+
     private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas, ToolContainer tool) {
-        bottomToolbar.getTranslateApply().addActionListener(e -> {
-            try {
-                double dx = Double.parseDouble(bottomToolbar.getTranslateX().getText());
-                double dy = Double.parseDouble(bottomToolbar.getTranslateY().getText());
-                System.out.println("Translation: dx=" + dx + ", dy=" + dy);
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid translation values");
-            }
-        });
-
-        bottomToolbar.getScaleApply().addActionListener(e -> {
-            try {
-                double sx = Double.parseDouble(bottomToolbar.getScaleX().getText());
-                double sy = Double.parseDouble(bottomToolbar.getScaleY().getText());
-                System.out.println("Scaling: sx=" + sx + ", sy=" + sy);
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid scale values");
-            }
-        });
-
-        bottomToolbar.getRotateApply().addActionListener(e -> {
-            try {
-                double angle = Double.parseDouble(bottomToolbar.getAngleField().getText());
-                System.out.println("Rotation: angle=" + angle);
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid angle value");
-            }
-        });
-
-        bottomToolbar.getRotateAroundPoint().addActionListener(e -> {
-            System.out.println("Rotation around point clicked");
-        });
-
         bottomToolbar.getTransform3DButton().addActionListener(e -> {
             canvas.getLayer2D().cleanLayer();
             tool.setHandler(new Transform3DHandler());
+        });
+
+        bottomToolbar.getReflectHButton().addActionListener(e -> {
+            CanvasState state = canvas.getLayer2D().getState();
+            state.setReflectX(!state.isReflectX());
+            canvas.getLayer2D().cleanLayer();
+            canvas.getLayer2D().renderAndRepaint();
+        });
+
+        bottomToolbar.getReflectVButton().addActionListener(e -> {
+            CanvasState state = canvas.getLayer2D().getState();
+            state.setReflectY(!state.isReflectY());
+            canvas.getLayer2D().cleanLayer();
+            canvas.getLayer2D().renderAndRepaint();
         });
     }
 }

@@ -22,12 +22,9 @@ public final class BottomToolbar {
 
     private volatile boolean itemClicked = false;
 
-    private JTextField translateX, translateY;
-    private JTextField scaleX, scaleY;
-    private JTextField angleField;
-    private JButton translateApply, scaleApply;
-    private JButton rotateApply, rotateAroundPoint;
     private JButton transform3DButton;
+    private JButton reflectHButton;
+    private JButton reflectVButton;
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
@@ -144,56 +141,23 @@ public final class BottomToolbar {
     private void setupTransformPopup() {
         transformPopup = new JPopupMenu();
 
-        JPanel translatePanel = new JPanel(new BorderLayout(5, 5));
-        translatePanel.add(new JLabel("Translation:"), BorderLayout.NORTH);
-        JPanel translateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        translateX = new JTextField(5);
-        translateY = new JTextField(5);
-        translateFields.add(new JLabel("X:"));
-        translateFields.add(translateX);
-        translateFields.add(new JLabel("Y:"));
-        translateFields.add(translateY);
-        translatePanel.add(translateFields, BorderLayout.CENTER);
-        translateApply = new JButton("Apply");
-        translatePanel.add(translateApply, BorderLayout.SOUTH);
-
-        JPanel scalePanel = new JPanel(new BorderLayout(5, 5));
-        scalePanel.add(new JLabel("Scaling:"), BorderLayout.NORTH);
-        JPanel scaleFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        scaleX = new JTextField(5);
-        scaleY = new JTextField(5);
-        scaleFields.add(new JLabel("X:"));
-        scaleFields.add(scaleX);
-        scaleFields.add(new JLabel("Y:"));
-        scaleFields.add(scaleY);
-        scalePanel.add(scaleFields, BorderLayout.CENTER);
-        scaleApply = new JButton("Apply");
-        scalePanel.add(scaleApply, BorderLayout.SOUTH);
-
-        JPanel rotatePanel = new JPanel(new BorderLayout(5, 5));
-        rotatePanel.add(new JLabel("Rotation:"), BorderLayout.NORTH);
-        JPanel rotateFields = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        angleField = new JTextField(8);
-        rotateFields.add(new JLabel("°:"));
-        rotateFields.add(angleField);
-        rotatePanel.add(rotateFields, BorderLayout.CENTER);
-        JPanel rotateButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
-        rotateApply = new JButton("Apply");
-        rotateAroundPoint = new JButton("Around Point");
-        rotateButtons.add(rotateApply);
-        rotateButtons.add(rotateAroundPoint);
-        rotatePanel.add(rotateButtons, BorderLayout.SOUTH);
-
         JPanel transform3DPanel = new JPanel(new BorderLayout(5, 5));
         transform3DPanel.add(new JLabel("3D Transform:"), BorderLayout.NORTH);
         transform3DButton = new JButton("Enable 3D Mode");
         transform3DPanel.add(transform3DButton, BorderLayout.CENTER);
 
-        transformPopup.add(translatePanel);
-        transformPopup.add(scalePanel);
-        transformPopup.add(rotatePanel);
-        transformPopup.add(new JSeparator());
+        JPanel reflectPanel = new JPanel(new BorderLayout(5, 5));
+        reflectPanel.add(new JLabel("Reflect:"), BorderLayout.NORTH);
+        JPanel reflectButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        reflectHButton = new JButton("H");
+        reflectVButton = new JButton("V");
+        reflectButtons.add(reflectHButton);
+        reflectButtons.add(reflectVButton);
+        reflectPanel.add(reflectButtons, BorderLayout.CENTER);
+
         transformPopup.add(transform3DPanel);
+        transformPopup.add(new JSeparator());
+        transformPopup.add(reflectPanel);
 
         transformButton.addActionListener(e -> {
             Component button = (Component) e.getSource();
@@ -240,43 +204,15 @@ public final class BottomToolbar {
         return coordinates;
     }
 
-    public JTextField getTranslateX() {
-        return translateX;
-    }
-
-    public JTextField getTranslateY() {
-        return translateY;
-    }
-
-    public JTextField getScaleX() {
-        return scaleX;
-    }
-
-    public JTextField getScaleY() {
-        return scaleY;
-    }
-
-    public JTextField getAngleField() {
-        return angleField;
-    }
-
-    public JButton getTranslateApply() {
-        return translateApply;
-    }
-
-    public JButton getScaleApply() {
-        return scaleApply;
-    }
-
-    public JButton getRotateApply() {
-        return rotateApply;
-    }
-
-    public JButton getRotateAroundPoint() {
-        return rotateAroundPoint;
-    }
-
     public JButton getTransform3DButton() {
         return transform3DButton;
+    }
+
+    public JButton getReflectHButton() {
+        return reflectHButton;
+    }
+
+    public JButton getReflectVButton() {
+        return reflectVButton;
     }
 }

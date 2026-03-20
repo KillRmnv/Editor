@@ -52,14 +52,18 @@ public class Model3DDrawable implements Drawable {
         double scaleFactor = canvas.getState().getScaleFactor();
         double translateX = canvas.getState().getTranslateX();
         double translateY = canvas.getState().getTranslateY();
+        boolean reflectX = canvas.getState().isReflectX();
+        boolean reflectY = canvas.getState().isReflectY();
 
         double[][] centerMatrix = MatrixUtils.translate3D(-cx, -cy, -cz);
         double[][] normalizeMatrix = MatrixUtils.scale3D(normScale, normScale, normScale);
+        double[][] reflectMatrix = MatrixUtils.scale3D(reflectX ? -1.0 : 1.0, reflectY ? -1.0 : 1.0, 1.0);
         double screenScale = 400 * scaleFactor;
         double[][] screenScaleMatrix = MatrixUtils.scale3D(screenScale, screenScale, screenScale);
         double[][] translationMatrix = MatrixUtils.translate3D(translateX, translateY, FOCAL_LENGTH + 200);
 
         double[][] tm = MatrixUtils.multiply(centerMatrix, normalizeMatrix);
+        tm = MatrixUtils.multiply(reflectMatrix, tm);
         tm = MatrixUtils.multiply(rotationMatrix, tm);
         tm = MatrixUtils.multiply(screenScaleMatrix, tm);
         tm = MatrixUtils.multiply(translationMatrix, tm);

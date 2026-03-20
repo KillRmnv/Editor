@@ -28,6 +28,8 @@ public class CanvasState {
     private double translateX = 0;
     private double translateY = 0;
     private double scaleFactor = 1.0;
+    private boolean reflectX = false;
+    private boolean reflectY = false;
 
     public CanvasState(int width, int height) {
         this.width = width;
@@ -208,6 +210,8 @@ public class CanvasState {
         this.translateX = 0;
         this.translateY = 0;
         this.scaleFactor = 1.0;
+        this.reflectX = false;
+        this.reflectY = false;
     }
 
     public Model3DParameters getModelParameters() {
@@ -240,6 +244,22 @@ public class CanvasState {
 
     public void setScaleFactor(double scaleFactor) {
         this.scaleFactor = scaleFactor;
+    }
+
+    public boolean isReflectX() {
+        return reflectX;
+    }
+
+    public void setReflectX(boolean reflectX) {
+        this.reflectX = reflectX;
+    }
+
+    public boolean isReflectY() {
+        return reflectY;
+    }
+
+    public void setReflectY(boolean reflectY) {
+        this.reflectY = reflectY;
     }
 
     public void clear() {
