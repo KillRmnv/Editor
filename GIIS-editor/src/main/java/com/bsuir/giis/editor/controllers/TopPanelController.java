@@ -1,8 +1,10 @@
 package com.bsuir.giis.editor.controllers;
 
+import com.bsuir.giis.editor.controllers.handlers.ConvexHullHandler;
 import com.bsuir.giis.editor.controllers.handlers.DrawableHandler;
 import com.bsuir.giis.editor.controllers.handlers.ParametersCurveHandler;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
+import com.bsuir.giis.editor.controllers.handlers.SimplePolygonHandler;
 import com.bsuir.giis.editor.controllers.handlers.StraightLineHandler;
 import com.bsuir.giis.editor.controllers.handlers.curves.Curve2PointsHandler;
 import com.bsuir.giis.editor.controllers.handlers.curves.CurveEllipseHandler;
@@ -17,6 +19,9 @@ import com.bsuir.giis.editor.service.parameterCurves.BSplineAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.BezierAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.HermiteAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.ParameterCurveAlgorithm;
+import com.bsuir.giis.editor.service.polygons.GrahamScanAlgorithm;
+import com.bsuir.giis.editor.service.polygons.JarvisMarchAlgorithm;
+import com.bsuir.giis.editor.service.polygons.SimplePolygonAlgorithm;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -41,6 +46,7 @@ public final class TopPanelController {
         setupLineMenu();
         setupCurveMenu();
         setupParametersCurveMenu();
+        setupPolygonsMenu();
     }
 
     private void setupLineMenu() {
@@ -88,6 +94,25 @@ public final class TopPanelController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setupPolygonsMenu() {
+        JMenuItem simpleItem = top.getPolygonsMenu().getItem(0);
+        JMenuItem grahamItem = top.getPolygonsMenu().getItem(1);
+        JMenuItem jarvisItem = top.getPolygonsMenu().getItem(2);
+
+        simpleItem.addActionListener(e -> {
+            tool.setTool(new SimplePolygonAlgorithm());
+            tool.setHandler(new SimplePolygonHandler());
+        });
+        grahamItem.addActionListener(e -> {
+            tool.setTool(new GrahamScanAlgorithm());
+            tool.setHandler(new ConvexHullHandler());
+        });
+        jarvisItem.addActionListener(e -> {
+            tool.setTool(new JarvisMarchAlgorithm());
+            tool.setHandler(new ConvexHullHandler());
+        });
     }
 
     private class LineMenuListener implements ActionListener {

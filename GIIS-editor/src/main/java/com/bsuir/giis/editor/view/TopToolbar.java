@@ -14,6 +14,7 @@ public final class TopToolbar {
     private final JMenu fileMenu;
     private final JMenu curveMenu;
     private final JMenu parameterCurvesMenu;
+    private final JMenu polygonsMenu;
 
     public TopToolbar() {
 
@@ -23,6 +24,7 @@ public final class TopToolbar {
         lineMenu = getLineJMenu();
         curveMenu = getCurvesJMenu();
         parameterCurvesMenu = getParameterCurvesJMenu();
+        polygonsMenu = getPolygonsJMenu();
         penButton = new JButton();
         penButton.setIcon(loadAnyIcon("pen-tool.png"));
         
@@ -30,6 +32,7 @@ public final class TopToolbar {
         toolsMenuBar.add(lineMenu);
         toolsMenuBar.add(curveMenu);
         toolsMenuBar.add(parameterCurvesMenu);
+        toolsMenuBar.add(polygonsMenu);
 
         icons.add(penButton, BorderLayout.WEST);
         icons.add(toolsMenuBar, BorderLayout.CENTER);
@@ -99,6 +102,16 @@ public final class TopToolbar {
         parameterCurvesMenu.add(createItem("Bezier", "ParametricCurves.svg"));
         parameterCurvesMenu.add(createItem("B Spline", "ParametricCurves.svg"));
         return parameterCurvesMenu;
+    }
+
+    private JMenu getPolygonsJMenu() {
+        JMenu polygonsMenu = new JMenu();
+        polygonsMenu.setIcon(loadAnyIcon("polygon.png"));
+        polygonsMenu.setToolTipText("Polygons");
+        polygonsMenu.add(createItem("Simple", "polygon.png"));
+        polygonsMenu.add(createItem("Graham Scan", "polygon.png"));
+        polygonsMenu.add(createItem("Jarvis March", "polygon.png"));
+        return polygonsMenu;
     }
 
     private JMenuItem createItem(String text, String iconFile) {
@@ -207,6 +220,10 @@ public final class TopToolbar {
 
     public JMenu getParameterCurvesMenu() {
         return parameterCurvesMenu;
+    }
+
+    public JMenu getPolygonsMenu() {
+        return polygonsMenu;
     }
 
 }

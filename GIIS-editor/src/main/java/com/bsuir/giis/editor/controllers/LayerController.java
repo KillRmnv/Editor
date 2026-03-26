@@ -5,7 +5,7 @@ import com.bsuir.giis.editor.view.LayerPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-
+//TODO:fix 3D model update after loading and transforming
 public class LayerController {
 
     private final LayerPanel layerPanel;

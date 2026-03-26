@@ -13,6 +13,12 @@ import java.util.Stack;
 
 public class GrahamScanAlgorithm implements PolygonsAlgorithm {
 
+    private List<Point> computedHull;
+
+    public List<Point> getComputedHull() {
+        return computedHull;
+    }
+
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         PointShapeParameters params = (PointShapeParameters) parameters;
@@ -72,6 +78,7 @@ public class GrahamScanAlgorithm implements PolygonsAlgorithm {
         }
 
         List<Point> hull = new ArrayList<>(stack);
+        computedHull = new ArrayList<>(hull);
         drawPolygonFromList(canvas, hull, mode);
     }
 

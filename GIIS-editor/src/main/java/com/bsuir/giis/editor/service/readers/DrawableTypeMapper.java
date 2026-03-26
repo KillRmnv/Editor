@@ -12,6 +12,9 @@ import com.bsuir.giis.editor.service.lines.CDAAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.BSplineAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.BezierAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.HermiteAlgorithm;
+import com.bsuir.giis.editor.service.polygons.GrahamScanAlgorithm;
+import com.bsuir.giis.editor.service.polygons.JarvisMarchAlgorithm;
+import com.bsuir.giis.editor.service.polygons.SimplePolygonAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,9 @@ public class DrawableTypeMapper {
         registry.put("BezierAlgorithm", BezierAlgorithm::new);
         registry.put("BSplineAlgorithm", BSplineAlgorithm::new);
         registry.put("Pen", Pen::new);
+        registry.put("SimplePolygonAlgorithm", SimplePolygonAlgorithm::new);
+        registry.put("GrahamScanAlgorithm", GrahamScanAlgorithm::new);
+        registry.put("JarvisMarchAlgorithm", JarvisMarchAlgorithm::new);
     }
 
     public static String getTypeName(Drawable drawable) {

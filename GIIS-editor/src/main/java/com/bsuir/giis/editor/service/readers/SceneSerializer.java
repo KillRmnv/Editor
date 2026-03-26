@@ -2,7 +2,6 @@ package com.bsuir.giis.editor.service.readers;
 
 import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.model.Model3DInstance;
-import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.shapes.Drawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.model.shapes.Shape;

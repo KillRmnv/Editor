@@ -37,7 +37,7 @@ public final class BottomToolbar {
 
         bottom = new JPanel(new BorderLayout());
 
-        morphButton = createIconButton("Morph.svg");
+        morphButton = createIconButton("Morph.png");
         regularModeButton = createIconButton("Regular.svg");
         debugButton = createIconButton("Debug.svg");
         transformButton = createIconButton("3DTransform.svg");

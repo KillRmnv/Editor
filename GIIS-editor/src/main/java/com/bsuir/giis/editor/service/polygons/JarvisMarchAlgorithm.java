@@ -12,6 +12,12 @@ import java.util.List;
 
 public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
 
+    private List<Point> computedHull;
+
+    public List<Point> getComputedHull() {
+        return computedHull;
+    }
+
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         PointShapeParameters params = (PointShapeParameters) parameters;
@@ -69,6 +75,7 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
 
         } while (!samePoint(current, start));
 
+        computedHull = new ArrayList<>(hull);
         drawPolygonFromList(canvas, hull, mode);
     }
 

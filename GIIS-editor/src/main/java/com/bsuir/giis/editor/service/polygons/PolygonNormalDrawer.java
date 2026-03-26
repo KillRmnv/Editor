@@ -5,7 +5,6 @@ import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointShapeParameters;
 import com.bsuir.giis.editor.rendering.BaseLayer;
 import com.bsuir.giis.editor.service.flow.Mode;
-import com.bsuir.giis.editor.utils.PenStep;
 
 import java.awt.*;
 import java.util.List;
