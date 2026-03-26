@@ -88,6 +88,40 @@ public class Antialiasing implements StraightLineAlgorithm {
         }
     }
 
+    public void drawLine(BaseLayer canvas, Point p1, Point p2, Color color) {
+        int pixelSize = canvas.getPixelSize();
+        int x1 = p1.getX() / pixelSize;
+        int y1 = p1.getY() / pixelSize;
+        int x2 = p2.getX() / pixelSize;
+        int y2 = p2.getY() / pixelSize;
+
+        boolean steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
+
+        if (steep) {
+            int temp = x1; x1 = y1; y1 = temp;
+            temp = x2; x2 = y2; y2 = temp;
+        }
+        if (x1 > x2) {
+            int temp = x1; x1 = x2; x2 = temp;
+            temp = y1; y1 = y2; y2 = temp;
+        }
+
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        double gradient = (dx == 0) ? 1.0 : dy / dx;
+
+        double intery = y1 + gradient;
+
+        drawPixel(canvas, x1, y1, 1.0, steep, pixelSize);
+        drawPixel(canvas, x2, y2, 1.0, steep, pixelSize);
+
+        for (int x = x1 + 1; x < x2; x++) {
+            drawPixel(canvas, x, (int) intery, 1.0 - (intery - (int) intery), steep, pixelSize);
+            drawPixel(canvas, x, (int) intery + 1, intery - (int) intery, steep, pixelSize);
+            intery += gradient;
+        }
+    }
+
     @Override
     public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         draw(canvas, parameters, mode);
