@@ -24,46 +24,50 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
 
         List<Point> hull = new ArrayList<>();
 
-        // 1. Находим самую левую точку (старт)
+        // Находим самую левую точку (при равенстве X — самую нижнюю по экрану, т.е. max Y)
         Point start = inputPoints.stream()
-                .min(Comparator.comparingInt(Point::getX))
+                .min(Comparator.comparingInt(Point::getX)
+                        .thenComparingInt(Point::getY))
                 .orElse(inputPoints.get(0));
-        
+
         Point current = start;
-        hull.add(current);
 
         do {
+            hull.add(current);
             Point next = null;
-            
+
             for (Point candidate : inputPoints) {
-                if (candidate.equals(current)) continue;
-                
+                // FIX: сравниваем по значению координат, а не по ссылке.
+                // Это защищает от зависания, если Point не переопределяет equals(),
+                // либо если объекты были пересозданы (десериализация и т.п.).
+                if (samePoint(candidate, current)) continue;
+
                 if (next == null) {
                     next = candidate;
                     continue;
                 }
-                
 
                 double cross = crossProduct(current, next, candidate);
-                
+
+                // Экранные координаты: Y растёт вниз.
+                // cross > 0 → правый поворот (по часовой) → обход CW.
                 if (cross > 0) {
                     next = candidate;
                 } else if (cross == 0) {
-                    double distNext = distSq(current, next);
-                    double distCand = distSq(current, candidate);
-                    if (distCand > distNext) {
+                    // Коллинеарные: берём ближайшую, чтобы не пропускать
+                    // промежуточные точки, лежащие на рёбрах оболочки.
+                    // Если промежуточные точки не нужны — замените на дальнюю:
+                    //   if (distSq(current, candidate) > distSq(current, next)) next = candidate;
+                    if (distSq(current, candidate) < distSq(current, next)) {
                         next = candidate;
                     }
                 }
             }
 
-            if (next != null && !next.equals(start)) {
-                hull.add(next);
-            }
-            
+            if (next == null) break;
             current = next;
-            
-        } while (current != null && !current.equals(start));
+
+        } while (!samePoint(current, start));
 
         drawPolygonFromList(canvas, hull, mode);
     }
@@ -73,12 +77,28 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
         helper.draw(canvas, new PointShapeParameters(points), mode);
     }
 
+    /**
+     * Сравнение точек по значению координат.
+     * Не зависит от того, переопределён ли equals() в Point.
+     */
+    private boolean samePoint(Point a, Point b) {
+        return a.getX() == b.getX() && a.getY() == b.getY();
+    }
+
+    /**
+     * Псевдоскалярное произведение (a→b) × (a→c).
+     * > 0: правый поворот (CW) в экранных координатах (Y↓)
+     * < 0: левый поворот (CCW)
+     * = 0: коллинеарно
+     */
     private double crossProduct(Point a, Point b, Point c) {
-        return (double) (b.getX() - a.getX()) * (c.getY() - a.getY()) -
-               (double) (b.getY() - a.getY()) * (c.getX() - a.getX());
+        return (double) (b.getX() - a.getX()) * (c.getY() - a.getY())
+             - (double) (b.getY() - a.getY()) * (c.getX() - a.getX());
     }
 
     private double distSq(Point a, Point b) {
-        return Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2);
+        double dx = a.getX() - b.getX();
+        double dy = a.getY() - b.getY();
+        return dx * dx + dy * dy;
     }
 }

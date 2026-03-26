@@ -18,6 +18,7 @@ public class Transform3DHandler implements DrawableHandler {
     private Point lastMousePos;
     private int activeButton = MouseEvent.NOBUTTON;
     private int savedModelIndex = -1;
+    private boolean isWheeling = false;
 
     private void moveToMoveable(Canvas canvas) {
         CanvasState srcState = canvas.getLayer().getState();
@@ -51,6 +52,7 @@ public class Transform3DHandler implements DrawableHandler {
         lastMousePos = mouseEvent.getPoint();
         activeButton = mouseEvent.getButton();
         moveToMoveable(canvas);
+        isWheeling = false;
     }
 
     @Override
@@ -138,15 +140,22 @@ public class Transform3DHandler implements DrawableHandler {
     ) {
         if (!modifierState.isCtrlPressed()) return;
 
-        CanvasState state = canvas.getLayer().getState();
-        Model3DInstance instance = state.getActiveModel();
+        Model3DInstance instance = canvas
+            .getLayer()
+            .getState()
+            .getActiveModel();
         if (instance == null) return;
 
         double delta = -mouseWheelEvent.getWheelRotation() * ZOOM_SENSITIVITY;
-        double newScale = instance.getScaleFactor() * (1.0 + delta);
-        newScale = Math.max(MIN_SCALE, newScale);
+        double newScale = Math.max(
+            MIN_SCALE,
+            instance.getScaleFactor() * (1.0 + delta)
+        );
         instance.setScaleFactor(newScale);
-
+        canvas.getLayer().clearImage();
+        if (isWheeling)
+            canvas.getLayerMoveable().cleanLayer();
+        isWheeling = true;
         canvas.getLayer().repaintAll();
     }
 }

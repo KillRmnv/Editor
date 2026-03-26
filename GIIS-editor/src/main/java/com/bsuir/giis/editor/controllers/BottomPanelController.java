@@ -111,7 +111,7 @@ public final class BottomPanelController {
 
     private void setupTransformPopup(BottomToolbar bottomToolbar, Canvas canvas, ToolContainer tool) {
         bottomToolbar.getTransform3DButton().addActionListener(e -> {
-            canvas.getLayer().cleanLayer();
+            canvas.getLayer().clearImage();
             tool.setHandler(new Transform3DHandler());
         });
 

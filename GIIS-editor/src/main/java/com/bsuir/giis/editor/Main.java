@@ -53,10 +53,11 @@ public class Main {
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool);
-        FileMenuController fileMenuController = new FileMenuController(top.getFileMenuBar(), regularCanvas, bottom);
 
         LayerPanel layerPanel = new LayerPanel();
         LayerController layerController = new LayerController(layerPanel, regularCanvas);
+
+        FileMenuController fileMenuController = new FileMenuController(top.getFileMenuBar(), regularCanvas, bottom, layerController);
 
         mainPanel.add(regularCanvas, BorderLayout.CENTER);
         mainPanel.add(bottom.getBottom(), BorderLayout.SOUTH);

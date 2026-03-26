@@ -1,11 +1,13 @@
 package com.bsuir.giis.editor.model.shapes;
 
 import com.bsuir.giis.editor.model.AlgorithmParameters;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.awt.*;
 
 public class Shape<Draw extends Drawable> {
     protected AlgorithmParameters parameters;
+    @JsonIgnore
     protected Draw drawable;
     protected boolean isVisible=true;
 

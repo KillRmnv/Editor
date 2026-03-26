@@ -86,4 +86,21 @@ public class LayerController {
                 attachLayerButtonListener(newButton);
             });
     }
+
+    public void syncPanel() {
+        int canvasCount = canvas.getUserLayerCount();
+
+        while (layerPanel.getLayerButtons().size() < canvasCount) {
+            int layerNumber = layerPanel.getLayerButtons().size() + 1;
+            layerPanel.addLayerButton(layerNumber);
+
+            JToggleButton newButton = layerPanel
+                .getLayerButtons()
+                .get(layerNumber - 1);
+            attachLayerButtonListener(newButton);
+        }
+
+        int active = canvas.getActiveLayerIndex();
+        layerPanel.setActiveIndex(active);
+    }
 }

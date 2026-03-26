@@ -1,15 +1,22 @@
 package com.bsuir.giis.editor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Point {
+
     private int x;
     private int y;
+
+    public Point() {
+        this.x = 0;
+        this.y = 0;
+    }
 
     public Point(final int x, final int y) {
         if (x >= 0 && y >= 0) {
             this.x = x;
             this.y = y;
-        } else
-            throw new IllegalArgumentException("Point is invalid");
+        } else throw new IllegalArgumentException("Point is invalid");
     }
 
     public int getX() {
@@ -28,6 +35,7 @@ public class Point {
         this.y = y;
     }
 
+    @JsonIgnore
     public boolean isValid() {
         return x >= 0 && y >= 0;
     }
@@ -39,10 +47,8 @@ public class Point {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
         return x == point.x && y == point.y;
     }
