@@ -30,6 +30,7 @@ public final class BottomToolbar {
     private JButton reflectHButton;
     private JButton reflectVButton;
     private JCheckBox perspectiveCheckBox;
+    private JComboBox<String> modelSelector;
 
     public BottomToolbar() {
         coordinates = new JLabel("x:0 y:0");
@@ -186,7 +187,15 @@ public final class BottomToolbar {
 
         perspectiveCheckBox = new JCheckBox("Perspective", true);
 
+        modelSelector = new JComboBox<>();
+        modelSelector.setMaximumRowCount(10);
+        JPanel modelPanel = new JPanel(new BorderLayout(5, 5));
+        modelPanel.add(new JLabel("Model:"), BorderLayout.NORTH);
+        modelPanel.add(modelSelector, BorderLayout.CENTER);
+
         transformPopup.add(transform3DPanel);
+        transformPopup.add(new JSeparator());
+        transformPopup.add(modelPanel);
         transformPopup.add(new JSeparator());
         transformPopup.add(reflectPanel);
         transformPopup.add(new JSeparator());
@@ -251,5 +260,9 @@ public final class BottomToolbar {
 
     public JCheckBox getPerspectiveCheckBox() {
         return perspectiveCheckBox;
+    }
+
+    public JComboBox<String> getModelSelector() {
+        return modelSelector;
     }
 }

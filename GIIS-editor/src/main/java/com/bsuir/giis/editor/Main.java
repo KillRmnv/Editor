@@ -3,6 +3,7 @@ package com.bsuir.giis.editor;
 import com.bsuir.giis.editor.controllers.BottomPanelController;
 import com.bsuir.giis.editor.controllers.CanvasController;
 import com.bsuir.giis.editor.controllers.FileMenuController;
+import com.bsuir.giis.editor.controllers.LayerController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
@@ -13,6 +14,7 @@ import com.bsuir.giis.editor.service.flow.Regular;
 import com.bsuir.giis.editor.utils.*;
 
 import com.bsuir.giis.editor.view.BottomToolbar;
+import com.bsuir.giis.editor.view.LayerPanel;
 import com.bsuir.giis.editor.view.TopToolbar;
 
 import javax.swing.*;
@@ -43,19 +45,23 @@ public class Main {
 
         BottomToolbar bottom=new BottomToolbar();
         Canvas regularCanvas = new Canvas(bounds.width,bounds.height-100,bottom.getCoordinates(),bottom.getField());
-        regularCanvas.getLayer2D().setDefaultPixelSize();
-        regularCanvas.getLayer2DMoveable().setDefaultPixelSize();
-        regularCanvas.getLayer2DMorphable().setDefaultPixelSize();
+        regularCanvas.getLayer().setDefaultPixelSize();
+        regularCanvas.getLayerMoveable().setDefaultPixelSize();
+        regularCanvas.getLayerMorphable().setDefaultPixelSize();
         CanvasController canvasController = new CanvasController(regularCanvas,tool,mode);
         BottomPanelController bottomPanelController=new BottomPanelController(bottom,mode,debugFrame,regularCanvas,tool);
 
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool);
-        FileMenuController fileMenuController = new FileMenuController(top.getFileMenuBar(), regularCanvas);
+        FileMenuController fileMenuController = new FileMenuController(top.getFileMenuBar(), regularCanvas, bottom);
+
+        LayerPanel layerPanel = new LayerPanel();
+        LayerController layerController = new LayerController(layerPanel, regularCanvas);
 
         mainPanel.add(regularCanvas, BorderLayout.CENTER);
         mainPanel.add(bottom.getBottom(), BorderLayout.SOUTH);
         mainPanel.add(top.getUpperPanel(), BorderLayout.NORTH);
+        mainPanel.add(layerPanel, BorderLayout.WEST);
 
         frame.add(mainPanel);
         frame.setVisible(true);

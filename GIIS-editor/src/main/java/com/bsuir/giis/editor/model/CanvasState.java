@@ -22,20 +22,15 @@ public class CanvasState {
 
     private List<Shape<?>> shapes;
 
-    private Model3D currentModel;
-    private Rotation3D currentRotation;
+    private final List<Model3DInstance> models;
+    private int activeModelIndex = -1;
     private PerspectiveTransformation perspectiveProjection;
-    private double translateX = 0;
-    private double translateY = 0;
-    private double scaleFactor = 1.0;
-    private boolean reflectX = false;
-    private boolean reflectY = false;
     private boolean perspectiveEnabled = true;
 
     public CanvasState(int width, int height) {
         this.width = width;
         this.height = height;
-        this.currentRotation = new Rotation3D();
+        this.models = new ArrayList<>();
         this.perspectiveProjection = new PerspectiveTransformation(
             width,
             height
@@ -185,83 +180,8 @@ public class CanvasState {
         return layersMap;
     }
 
-    public void setCurrentModel(Model3D model) {
-        this.currentModel = model;
-    }
-
-    public Model3D getCurrentModel() {
-        return currentModel;
-    }
-
-    public Rotation3D getCurrentRotation() {
-        return currentRotation;
-    }
-
-    public void setCurrentRotation(Rotation3D rotation) {
-        this.currentRotation = rotation;
-    }
-
     public PerspectiveTransformation getPerspectiveProjection() {
         return perspectiveProjection;
-    }
-
-    public void clearCurrentModel() {
-        this.currentModel = null;
-        this.currentRotation.reset();
-        this.translateX = 0;
-        this.translateY = 0;
-        this.scaleFactor = 1.0;
-        this.reflectX = false;
-        this.reflectY = false;
-        this.perspectiveEnabled = true;
-    }
-
-    public Model3DParameters getModelParameters() {
-        return new Model3DParameters(
-            currentModel,
-            currentRotation,
-            perspectiveProjection
-        );
-    }
-
-    public double getTranslateX() {
-        return translateX;
-    }
-
-    public void setTranslateX(double translateX) {
-        this.translateX = translateX;
-    }
-
-    public double getTranslateY() {
-        return translateY;
-    }
-
-    public void setTranslateY(double translateY) {
-        this.translateY = translateY;
-    }
-
-    public double getScaleFactor() {
-        return scaleFactor;
-    }
-
-    public void setScaleFactor(double scaleFactor) {
-        this.scaleFactor = scaleFactor;
-    }
-
-    public boolean isReflectX() {
-        return reflectX;
-    }
-
-    public void setReflectX(boolean reflectX) {
-        this.reflectX = reflectX;
-    }
-
-    public boolean isReflectY() {
-        return reflectY;
-    }
-
-    public void setReflectY(boolean reflectY) {
-        this.reflectY = reflectY;
     }
 
     public boolean isPerspectiveEnabled() {
@@ -270,6 +190,46 @@ public class CanvasState {
 
     public void setPerspectiveEnabled(boolean perspectiveEnabled) {
         this.perspectiveEnabled = perspectiveEnabled;
+    }
+
+
+    public List<Model3DInstance> getModels() {
+        return models;
+    }
+
+    public void addModel(Model3DInstance model) {
+        models.add(model);
+        activeModelIndex = models.size() - 1;
+    }
+
+    public void removeModel(int index) {
+        if (index >= 0 && index < models.size()) {
+            models.remove(index);
+            if (activeModelIndex >= models.size()) {
+                activeModelIndex = models.size() - 1;
+            }
+        }
+    }
+
+    public Model3DInstance getActiveModel() {
+        if (activeModelIndex >= 0 && activeModelIndex < models.size()) {
+            return models.get(activeModelIndex);
+        }
+        return null;
+    }
+
+    public void setActiveModelIndex(int index) {
+        if (index >= -1 && index < models.size()) {
+            this.activeModelIndex = index;
+        }
+    }
+
+    public int getActiveModelIndex() {
+        return activeModelIndex;
+    }
+
+    public int getModelCount() {
+        return models.size();
     }
 
     public void clear() {

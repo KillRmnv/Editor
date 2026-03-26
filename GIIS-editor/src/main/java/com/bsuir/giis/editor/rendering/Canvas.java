@@ -3,64 +3,105 @@ package com.bsuir.giis.editor.rendering;
 import com.bsuir.giis.editor.model.CanvasState;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Canvas extends JPanel {
 
     private JLabel coordinates;
-    private TwoDimensionLayer layer2D;
-    private BaseLayer layer3D;
-    private TwoDimensionLayer layer2DMoveable;
-    private BaseLayer layer3DMoveable;
-    private TwoDimensionLayer layer2DMorphable;
-
+    private final JFormattedTextField pixelField;
+    private final List<TwoDimensionLayer> userLayers;
+    private int activeLayerIndex;
+    private TwoDimensionLayer layerMoveable;
+    private TwoDimensionLayer layerMorphable;
 
     public Canvas(int width, int height, JLabel coordinates, JFormattedTextField pixelField) {
         this.coordinates = coordinates;
+        this.pixelField = pixelField;
+        this.userLayers = new ArrayList<>();
+        this.activeLayerIndex = 0;
 
         setLayout(new OverlayLayout(this));
 
+        TwoDimensionLayer firstLayer = new TwoDimensionLayer(width, height, pixelField);
+        userLayers.add(firstLayer);
 
-        layer2D = new TwoDimensionLayer(width, height, pixelField);
+        layerMoveable = new TwoDimensionLayer(width, height, pixelField);
+        layerMoveable.setOpaque(false);
 
-        layer2DMoveable = new TwoDimensionLayer(width, height, pixelField);
-        layer2DMoveable.setOpaque(false);
-
-        layer2DMorphable = new TwoDimensionLayer(width, height, pixelField);
-        layer2DMorphable.setOpaque(false);
+        layerMorphable = new TwoDimensionLayer(width, height, pixelField);
+        layerMorphable.setOpaque(false);
         //don't change order of layers
-        add(layer2DMorphable);
-        add(layer2DMoveable);
-        add(layer2D);          
+        add(layerMorphable);
+        add(layerMoveable);
+        add(firstLayer);
     }
 
-    public TwoDimensionLayer getLayer2D() {
-        return layer2D;
+    public TwoDimensionLayer getLayer() {
+        return userLayers.get(activeLayerIndex);
     }
 
-    public BaseLayer getLayer3D() {
-        return layer3D;
+    public TwoDimensionLayer getUserLayer(int index) {
+        return userLayers.get(index);
     }
 
-    public TwoDimensionLayer getLayer2DMoveable() {
-        return layer2DMoveable;
+    public List<TwoDimensionLayer> getUserLayers() {
+        return userLayers;
     }
 
-    public BaseLayer getLayer3DMoveable() {
-        return layer3DMoveable;
+    public int getUserLayerCount() {
+        return userLayers.size();
     }
 
-    public TwoDimensionLayer getLayer2DMorphable() {
-        return layer2DMorphable;
+    public int getActiveLayerIndex() {
+        return activeLayerIndex;
     }
 
+    public void setActiveLayerIndex(int index) {
+        if (index >= 0 && index < userLayers.size()) {
+            this.activeLayerIndex = index;
+        }
+    }
+
+    public TwoDimensionLayer addUserLayer() {
+        int width = getLayer().getLayerWidth();
+        int height = getLayer().getLayerHeight();
+        TwoDimensionLayer newLayer = new TwoDimensionLayer(width, height, pixelField);
+        newLayer.setOpaque(false);
+        newLayer.setDefaultPixelSize();
+        userLayers.add(newLayer);
+
+        int overlayIndex = getComponentZOrder(layerMoveable);
+        add(newLayer, overlayIndex + 1);
+        setComponentZOrder(newLayer, overlayIndex + 1);
+
+        return newLayer;
+    }
+
+    public void removeUserLayer(int index) {
+        if (userLayers.size() <= 1) return;
+        TwoDimensionLayer removed = userLayers.remove(index);
+        remove(removed);
+        if (activeLayerIndex >= userLayers.size()) {
+            activeLayerIndex = userLayers.size() - 1;
+        }
+    }
+
+    public TwoDimensionLayer getLayerMoveable() {
+        return layerMoveable;
+    }
+
+    public TwoDimensionLayer getLayerMorphable() {
+        return layerMorphable;
+    }
 
     public JLabel getCoordinates() {
         return coordinates;
     }
 
     public CanvasState getState() {
-        return layer2D.getState();
+        return getLayer().getState();
     }
 
 }

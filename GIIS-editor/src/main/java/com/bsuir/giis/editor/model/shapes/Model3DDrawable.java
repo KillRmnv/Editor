@@ -51,12 +51,12 @@ public class Model3DDrawable implements Drawable {
         double cz = model.getCenterZ();
 
         //  Пользовательские трансформации 
-        double scaleFactor = canvas.getState().getScaleFactor();
-        double translateX = canvas.getState().getTranslateX();
-        double translateY = canvas.getState().getTranslateY();
-        boolean reflectX = canvas.getState().isReflectX();
-        boolean reflectY = canvas.getState().isReflectY();
-        boolean perspective = canvas.getState().isPerspectiveEnabled();
+        double scaleFactor = params.getScaleFactor();
+        double translateX = params.getTranslateX();
+        double translateY = params.getTranslateY();
+        boolean reflectX = params.isReflectX();
+        boolean reflectY = params.isReflectY();
+        boolean perspective = params.isPerspectiveEnabled();
 
         //  Шаг 1: центрирование модели в начало координат 
         double[][] centerMatrix = MatrixUtils.translate3D(-cx, -cy, -cz);

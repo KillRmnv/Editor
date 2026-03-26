@@ -1,5 +1,9 @@
 package com.bsuir.giis.editor.controllers.handlers;
 
+import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Optional;
+
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.Point;
 import com.bsuir.giis.editor.model.PointArea;
@@ -8,14 +12,12 @@ import com.bsuir.giis.editor.model.shapes.Drawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
 import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Regular;
-import com.bsuir.giis.editor.utils.*;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Robot;
-import java.awt.event.MouseEvent;
-import java.util.List;
-import java.util.Optional;
+import com.bsuir.giis.editor.utils.ModeContainer;
+import com.bsuir.giis.editor.utils.ModifierState;
+import com.bsuir.giis.editor.utils.MultiStep;
+import com.bsuir.giis.editor.utils.PenStep;
+import com.bsuir.giis.editor.utils.Step;
+import com.bsuir.giis.editor.utils.ToolContainer;
 
 public class ParametersCurveHandler implements DrawableHandler {
 
@@ -43,13 +45,13 @@ public class ParametersCurveHandler implements DrawableHandler {
         if (multiStep.isReady()) {
             AlgorithmParameters parameters = new PointShapeParameters(multiStep);
 
-            canvas.getLayer2DMoveable().cleanLayer();
+            canvas.getLayerMoveable().cleanLayer();
 
             new Thread(() -> {
-                ((Drawable) tool.getTool()).draw(canvas.getLayer2D(), parameters, mode.getMode());
-                javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2D().repaint());
+                ((Drawable) tool.getTool()).draw(canvas.getLayer(), parameters, mode.getMode());
+                
             }).start();
-            addToLayer(canvas.getLayer2D(), tool, parameters, mouseEvent);
+            addToLayer(canvas.getLayer(), tool, parameters, mouseEvent);
             multiStep.clean();
         }
     }
@@ -91,14 +93,13 @@ public class ParametersCurveHandler implements DrawableHandler {
         }
         if (fakeMultistep != null) {
 
-            canvas.getLayer2DMoveable().cleanLayer();
+            canvas.getLayerMoveable().cleanLayer();
             
 
             
             AlgorithmParameters parameters = new PointShapeParameters(fakeMultistep);
             new Thread(() -> {
-                ((Drawable) tool.getTool()).draw(canvas.getLayer2DMoveable(), parameters, new Regular());
-                javax.swing.SwingUtilities.invokeLater(() -> canvas.getLayer2DMoveable().repaint());
+                ((Drawable) tool.getTool()).draw(canvas.getLayerMoveable(), parameters, new Regular());
             }).start();
         }
         
@@ -130,15 +131,15 @@ public class ParametersCurveHandler implements DrawableHandler {
             return new Point(screenX, screenY);
         }
 
-        int pixelSize = canvas.getLayer2D().getPixelSize();
+        int pixelSize = canvas.getLayer().getPixelSize();
 
         int gridX = screenX / pixelSize;
         int gridY = screenY / pixelSize;
         Point currentGridPoint = new Point(gridX, gridY);
 
-        PointArea area = new PointArea(new Point(screenX, screenY), pixelSize, canvas.getLayer2D().getHitTestPolicy().calculateTolerance(pixelSize));
+        PointArea area = new PointArea(new Point(screenX, screenY), pixelSize, canvas.getLayer().getHitTestPolicy().calculateTolerance(pixelSize));
 
-        List<MorphableShape<?>> shapes = canvas.getLayer2D().getState()
+        List<MorphableShape<?>> shapes = canvas.getLayer().getState()
                 .getMorphShapesInArea(area, pixelSize);
 
 

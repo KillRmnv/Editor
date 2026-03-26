@@ -1,6 +1,7 @@
 package com.bsuir.giis.editor.rendering;
 
 import com.bsuir.giis.editor.model.CanvasState;
+import com.bsuir.giis.editor.model.Model3DInstance;
 import com.bsuir.giis.editor.model.Model3DParameters;
 import com.bsuir.giis.editor.model.shapes.Model3DDrawable;
 import com.bsuir.giis.editor.model.shapes.MorphableShape;
@@ -43,10 +44,22 @@ public class CanvasRenderer {
             }
         }
 
-        if (state.getCurrentModel() != null) {
-            Model3DDrawable modelDrawable = new Model3DDrawable();
-            Model3DParameters params = state.getModelParameters();
-            modelDrawable.draw(layer, params, mode);
+        for (Model3DInstance instance : state.getModels()) {
+            if (instance.getModel() != null) {
+                Model3DDrawable modelDrawable = new Model3DDrawable();
+                Model3DParameters params = new Model3DParameters(
+                    instance.getModel(),
+                    instance.getRotation(),
+                    state.getPerspectiveProjection(),
+                    instance.getTranslateX(),
+                    instance.getTranslateY(),
+                    instance.getScaleFactor(),
+                    instance.isReflectX(),
+                    instance.isReflectY(),
+                    state.isPerspectiveEnabled()
+                );
+                modelDrawable.draw(layer, params, mode);
+            }
         }
     }
 

@@ -73,7 +73,7 @@ public class BaseLayer extends JPanel {
         state.setupWithStateSave(isTransparentLayer);
         baseRepaintSetup(width, height);
         renderer.renderAll(state, this);
-        super.repaint();
+        repaintLayer();
     }
 
     private void baseRepaintSetup(int width, int height) {
@@ -84,7 +84,13 @@ public class BaseLayer extends JPanel {
         if (!isTransparentLayer) {
             setBackground(Color.WHITE);
         }
+    }
+
+    private void repaintLayer() {
         super.repaint();
+        if (getParent() != null) {
+            getParent().repaint();
+        }
     }
 
     @Override
@@ -92,7 +98,7 @@ public class BaseLayer extends JPanel {
         if (renderer == null || state == null) {
             return;
         }
-        super.repaint();
+        repaintLayer();
     }
 
     public void renderAndRepaint() {
@@ -100,7 +106,7 @@ public class BaseLayer extends JPanel {
             return;
         }
         renderer.renderAll(state, this);
-        super.repaint();
+        repaintLayer();
     }
 
     protected void setupCanvas(int width, int height) {
@@ -128,6 +134,11 @@ public class BaseLayer extends JPanel {
 
     public void cleanLayer() {
         setupCanvas(width, height);
+    }
+
+    public void clearImage() {
+        state.setupWithStateSave(true);
+        renderer.invalidateBuffer();
     }
 
     public BufferedImage getCanvasImage() {

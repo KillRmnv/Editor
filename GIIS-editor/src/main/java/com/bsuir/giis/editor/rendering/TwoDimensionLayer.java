@@ -23,7 +23,9 @@ public class TwoDimensionLayer extends BaseLayer {
 
     }
     public void setDefaultPixelSize() {
-        pixelSize=1;
-        setupCanvas(width, height);
+        if(pixelSize != 1) {
+            pixelSize=1;
+            setupCanvas(width, height);
+        }
     }
 }
