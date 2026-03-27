@@ -30,7 +30,7 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
 
         List<Point> hull = new ArrayList<>();
 
-        // Находим самую левую точку (при равенстве X — самую нижнюю по экрану, т.е. max Y)
+     
         Point start = inputPoints.stream()
                 .min(Comparator.comparingInt(Point::getX)
                         .thenComparingInt(Point::getY))
@@ -43,9 +43,7 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
             Point next = null;
 
             for (Point candidate : inputPoints) {
-                // FIX: сравниваем по значению координат, а не по ссылке.
-                // Это защищает от зависания, если Point не переопределяет equals(),
-                // либо если объекты были пересозданы (десериализация и т.п.).
+                
                 if (samePoint(candidate, current)) continue;
 
                 if (next == null) {
@@ -55,15 +53,11 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
 
                 double cross = crossProduct(current, next, candidate);
 
-                // Экранные координаты: Y растёт вниз.
-                // cross > 0 → правый поворот (по часовой) → обход CW.
+
                 if (cross > 0) {
                     next = candidate;
                 } else if (cross == 0) {
-                    // Коллинеарные: берём ближайшую, чтобы не пропускать
-                    // промежуточные точки, лежащие на рёбрах оболочки.
-                    // Если промежуточные точки не нужны — замените на дальнюю:
-                    //   if (distSq(current, candidate) > distSq(current, next)) next = candidate;
+                    
                     if (distSq(current, candidate) < distSq(current, next)) {
                         next = candidate;
                     }
@@ -84,20 +78,12 @@ public class JarvisMarchAlgorithm implements PolygonsAlgorithm {
         helper.draw(canvas, new PointShapeParameters(points), mode);
     }
 
-    /**
-     * Сравнение точек по значению координат.
-     * Не зависит от того, переопределён ли equals() в Point.
-     */
+
     private boolean samePoint(Point a, Point b) {
         return a.getX() == b.getX() && a.getY() == b.getY();
     }
 
-    /**
-     * Псевдоскалярное произведение (a→b) × (a→c).
-     * > 0: правый поворот (CW) в экранных координатах (Y↓)
-     * < 0: левый поворот (CCW)
-     * = 0: коллинеарно
-     */
+
     private double crossProduct(Point a, Point b, Point c) {
         return (double) (b.getX() - a.getX()) * (c.getY() - a.getY())
              - (double) (b.getY() - a.getY()) * (c.getX() - a.getX());

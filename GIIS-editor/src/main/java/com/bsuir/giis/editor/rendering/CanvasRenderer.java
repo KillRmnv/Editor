@@ -62,7 +62,20 @@ public class CanvasRenderer {
             }
         }
     }
-
+    public Color getPixelColor(BaseLayer layer, int x, int y) {
+        if (pixelBuffer == null) {
+            refreshBuffer(layer);
+        }
+        int pixelSize = layer.getPixelSize();
+        int px = x / pixelSize;
+        int py = y / pixelSize;
+    
+        if (px >= 0 && px < bufferWidth && py >= 0 && py < bufferHeight) {
+            int argb = pixelBuffer[py * bufferWidth + px];
+            return new Color(argb, true); // true = учитывать alpha-канал
+        }
+        return Color.WHITE; // пиксель вне границ — считаем фоном
+    }
     public void renderShape(MorphableShape<?> shape, BaseLayer layer) {
         refreshBuffer(layer);
         shape.getDrawable().morph(layer, shape.getParameters(), mode);

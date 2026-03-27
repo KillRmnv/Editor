@@ -4,6 +4,7 @@ import com.bsuir.giis.editor.controllers.BottomPanelController;
 import com.bsuir.giis.editor.controllers.CanvasController;
 import com.bsuir.giis.editor.controllers.FileMenuController;
 import com.bsuir.giis.editor.controllers.LayerController;
+import com.bsuir.giis.editor.controllers.RightPanelController;
 import com.bsuir.giis.editor.controllers.TopPanelController;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.model.Pen;
@@ -15,6 +16,7 @@ import com.bsuir.giis.editor.utils.*;
 
 import com.bsuir.giis.editor.view.BottomToolbar;
 import com.bsuir.giis.editor.view.LayerPanel;
+import com.bsuir.giis.editor.view.RightToolbar;
 import com.bsuir.giis.editor.view.TopToolbar;
 
 import javax.swing.*;
@@ -54,6 +56,9 @@ public class Main {
         TopToolbar top=new TopToolbar();
         TopPanelController topPanelController=new TopPanelController(top,tool);
 
+        RightToolbar right=new RightToolbar();
+        RightPanelController rightPanelController=new RightPanelController(right,tool);
+
         LayerPanel layerPanel = new LayerPanel();
         LayerController layerController = new LayerController(layerPanel, regularCanvas);
 
@@ -63,6 +68,7 @@ public class Main {
         mainPanel.add(bottom.getBottom(), BorderLayout.SOUTH);
         mainPanel.add(top.getUpperPanel(), BorderLayout.NORTH);
         mainPanel.add(layerPanel, BorderLayout.WEST);
+        mainPanel.add(right.getRightPanel(), BorderLayout.EAST);
 
         frame.add(mainPanel);
         frame.setVisible(true);

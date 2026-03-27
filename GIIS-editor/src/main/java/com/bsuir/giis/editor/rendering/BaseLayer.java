@@ -38,7 +38,23 @@ public class BaseLayer extends JPanel {
     protected boolean isTransparentLayer;
     protected CanvasState state;
     protected CanvasRenderer renderer;
-    protected HitTestPolicy hitTestPolicy = new HitTestPolicy();
+    public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public boolean isTransparentLayer() {
+		return isTransparentLayer;
+	}
+
+	public CanvasRenderer getRenderer() {
+		return renderer;
+	}
+
+	protected HitTestPolicy hitTestPolicy = new HitTestPolicy();
 
     /**
      * Creates a new layer. Calls {@link #setupCanvas} internally, which
