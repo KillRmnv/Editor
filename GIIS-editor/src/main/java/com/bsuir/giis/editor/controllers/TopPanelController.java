@@ -5,8 +5,7 @@ import com.bsuir.giis.editor.controllers.handlers.DrawableHandler;
 import com.bsuir.giis.editor.controllers.handlers.ParametersCurveHandler;
 import com.bsuir.giis.editor.controllers.handlers.PenHandler;
 import com.bsuir.giis.editor.controllers.handlers.SimplePolygonHandler;
-import com.bsuir.giis.editor.controllers.handlers.StraightLineHandler;
-import com.bsuir.giis.editor.controllers.handlers.curves.Curve2PointsHandler;
+import com.bsuir.giis.editor.controllers.handlers.TwoPointHandler;
 import com.bsuir.giis.editor.controllers.handlers.curves.CurveEllipseHandler;
 import com.bsuir.giis.editor.controllers.handlers.curves.CurveHyperbolaHandler;
 import com.bsuir.giis.editor.model.Pen;
@@ -19,9 +18,7 @@ import com.bsuir.giis.editor.service.parameterCurves.BSplineAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.BezierAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.HermiteAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.ParameterCurveAlgorithm;
-import com.bsuir.giis.editor.service.polygons.GrahamScanAlgorithm;
-import com.bsuir.giis.editor.service.polygons.JarvisMarchAlgorithm;
-import com.bsuir.giis.editor.service.polygons.SimplePolygonAlgorithm;
+import com.bsuir.giis.editor.service.polygons.*;
 import com.bsuir.giis.editor.utils.MultiStep;
 import com.bsuir.giis.editor.utils.PenStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -47,6 +44,7 @@ public final class TopPanelController {
         setupCurveMenu();
         setupParametersCurveMenu();
         setupPolygonsMenu();
+        setupReadyMadeMenu();
     }
 
     private void setupLineMenu() {
@@ -69,9 +67,9 @@ public final class TopPanelController {
             ellipseItem.addActionListener(new CurveMenuListener(new EllipseAlgorithm(),
                     new CurveEllipseHandler(new MultiStep(3, PenStep.class))));
             circleItem.addActionListener(new CurveMenuListener(new CircleAlgorithm(), 
-                    new Curve2PointsHandler(new MultiStep(2, PenStep.class))));
+                    new TwoPointHandler(new MultiStep(2, PenStep.class))));
             parabolaItem.addActionListener(new CurveMenuListener(new ParabolaAlgorithm(), 
-                    new Curve2PointsHandler(new MultiStep(2, PenStep.class))));
+                    new TwoPointHandler(new MultiStep(2, PenStep.class))));
             hyperbolaItem.addActionListener(new CurveMenuListener(new HyperbolaAlgorithm(),
                     new CurveHyperbolaHandler(new MultiStep(3, PenStep.class))));
         } catch (Exception e) {
@@ -115,6 +113,51 @@ public final class TopPanelController {
         });
     }
 
+    private void setupReadyMadeMenu() {
+        JMenuItem regularItem = top.getReadyMadeMenu().getItem(0);
+        JMenuItem rightTriItem = top.getReadyMadeMenu().getItem(1);
+        JMenuItem isoscelesItem = top.getReadyMadeMenu().getItem(2);
+        JMenuItem rectangleItem = top.getReadyMadeMenu().getItem(3);
+
+        regularItem.addActionListener(e -> {
+            top.getSidesSpinner().setVisible(true);
+            int sides = (int) top.getSidesSpinner().getValue();
+            tool.setTool(new RegularPolygonAlgorithm(sides));
+            try {
+                tool.setHandler(new TwoPointHandler(new MultiStep(2, PenStep.class)));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        rightTriItem.addActionListener(e -> {
+            top.getSidesSpinner().setVisible(false);
+            tool.setTool(new RightTriangleAlgorithm());
+            try {
+                tool.setHandler(new TwoPointHandler(new MultiStep(2, PenStep.class)));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        isoscelesItem.addActionListener(e -> {
+            top.getSidesSpinner().setVisible(false);
+            tool.setTool(new IsoscelesTriangleAlgorithm());
+            try {
+                tool.setHandler(new TwoPointHandler(new MultiStep(2, PenStep.class)));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        rectangleItem.addActionListener(e -> {
+            top.getSidesSpinner().setVisible(false);
+            tool.setTool(new RectangleAlgorithm());
+            try {
+                tool.setHandler(new TwoPointHandler(new MultiStep(2, PenStep.class)));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
     private class LineMenuListener implements ActionListener {
         private StraightLineAlgorithm algorithm;
 
@@ -132,7 +175,7 @@ public final class TopPanelController {
                      InvocationTargetException ex) {
                 throw new RuntimeException(ex);
             }
-            tool.setHandler(new StraightLineHandler(Step));
+            tool.setHandler(new TwoPointHandler(Step));
 
         }
     }

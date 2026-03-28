@@ -8,39 +8,43 @@ import com.bsuir.giis.editor.rendering.BaseLayer;
 import com.bsuir.giis.editor.service.curves.CircleAlgorithm;
 import com.bsuir.giis.editor.service.flow.HitTestPolicy;
 import com.bsuir.giis.editor.service.flow.Mode;
-import com.bsuir.giis.editor.service.lines.BresenhamAlgorithm;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SimplePolygonAlgorithm implements PolygonsAlgorithm, Morphable {
-    private final BresenhamAlgorithm straightLineAlgorithm = new BresenhamAlgorithm();
+/**
+ * Прямоугольник по 2 точкам (диагональ AB).
+ * Вершины: A, (B.x, A.y), B, (A.x, B.y).
+ */
+public class RectangleAlgorithm implements PolygonsAlgorithm, Morphable {
+    private final SimplePolygonAlgorithm polygonAlgorithm = new SimplePolygonAlgorithm();
     private final CircleAlgorithm circleAlgorithm = new CircleAlgorithm();
     private final HitTestPolicy hitTestPolicy = new HitTestPolicy();
 
     @Override
     public void draw(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
-        PointShapeParameters polygonParams = (PointShapeParameters) parameters;
-        List<Point> points = polygonParams.getPoints();
+        PointShapeParameters params = (PointShapeParameters) parameters;
+        List<Point> input = params.getPoints();
+        if (input.size() < 2) return;
 
-        if (points.size() < 2) return;
+        Point a = input.get(0);
+        Point b = input.get(1);
 
-        for (int i = 0; i < points.size(); i++) {
-            Point p1 = points.get(i);
-            Point p2 = points.get((i + 1) % points.size());
-            straightLineAlgorithm.drawLine(canvas, p1.getX(), p1.getY(), p2.getX(), p2.getY(), Color.BLACK);
-        }
-        canvas.repaint();
-        mode.onFinish();
+        List<Point> vertices = new ArrayList<>(4);
+        vertices.add(a);
+        vertices.add(new Point(b.getX(), a.getY()));
+        vertices.add(b);
+        vertices.add(new Point(a.getX(), b.getY()));
+
+        polygonAlgorithm.draw(canvas, new PointShapeParameters(vertices), mode);
     }
 
     @Override
     public void morph(BaseLayer canvas, AlgorithmParameters parameters, Mode mode) {
         draw(canvas, parameters, mode);
-        PointShapeParameters polygonParams = (PointShapeParameters) parameters;
-        List<Point> points = polygonParams.getPoints();
+        PointShapeParameters params = (PointShapeParameters) parameters;
         int radius = hitTestPolicy.calculateTolerance(canvas.getPixelSize());
-        for (Point p : points) {
+        for (Point p : params.getPoints()) {
             circleAlgorithm.draw(canvas, new PointShapeParameters(List.of(p,
                     new Point(p.getX() + radius, p.getY() + radius))), mode);
         }

@@ -1,6 +1,5 @@
-package com.bsuir.giis.editor.controllers.handlers.curves;
+package com.bsuir.giis.editor.controllers.handlers;
 
-import com.bsuir.giis.editor.controllers.handlers.DrawableHandler;
 import com.bsuir.giis.editor.model.AlgorithmParameters;
 import com.bsuir.giis.editor.model.shapes.Drawable;
 import com.bsuir.giis.editor.rendering.Canvas;
@@ -10,33 +9,30 @@ import com.bsuir.giis.editor.utils.*;
 
 import java.awt.event.MouseEvent;
 
-//TODO:add debug points
-public class Curve2PointsHandler implements DrawableHandler {
-    private Step Step;
+public class TwoPointHandler implements DrawableHandler {
+    private final Step step;
 
-    public Curve2PointsHandler(Step Step) {
-
-        this.Step = Step;
+    public TwoPointHandler(Step step) {
+        this.step = step;
     }
 
     @Override
     public void handlePress(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
-        MultiStep multiStep = (MultiStep) Step;
+        MultiStep multiStep = (MultiStep) step;
 
         multiStep.setStep(new PenStep(x, y));
 
-
         if (multiStep.isReady()) {
-            AlgorithmParameters parameters = new PointShapeParameters(Step);
+            AlgorithmParameters parameters = new PointShapeParameters(step);
 
             canvas.getLayerMoveable().cleanLayer();
 
             new Thread(() -> {
                 ((Drawable) tool.getTool()).draw(canvas.getLayer(), parameters, mode.getMode());
             }).start();
-            addToLayer(canvas.getLayer(),tool,parameters,mouseEvent);
+            addToLayer(canvas.getLayer(), tool, parameters, mouseEvent);
             multiStep.clean();
         }
     }
@@ -45,8 +41,7 @@ public class Curve2PointsHandler implements DrawableHandler {
     public void handleMove(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
-        MultiStep multiStep = (MultiStep) Step;
-
+        MultiStep multiStep = (MultiStep) step;
 
         if (multiStep.getStep(0).isReady() && !multiStep.getStep(1).isReady()) {
             canvas.getLayerMoveable().cleanLayer();
@@ -59,14 +54,12 @@ public class Curve2PointsHandler implements DrawableHandler {
         }
     }
 
-
     @Override
     public void handleDrag(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
         handleMove(canvas, mouseEvent, tool, mode, modifierState);
     }
 
     @Override
-    public void handleRelease(Canvas canvas,MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
-
+    public void handleRelease(Canvas canvas, MouseEvent mouseEvent, ToolContainer tool, ModeContainer mode, ModifierState modifierState) {
     }
 }

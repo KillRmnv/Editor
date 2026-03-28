@@ -13,8 +13,14 @@ import com.bsuir.giis.editor.service.parameterCurves.BSplineAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.BezierAlgorithm;
 import com.bsuir.giis.editor.service.parameterCurves.HermiteAlgorithm;
 import com.bsuir.giis.editor.service.polygons.GrahamScanAlgorithm;
+import com.bsuir.giis.editor.service.polygons.IsoscelesTriangleAlgorithm;
 import com.bsuir.giis.editor.service.polygons.JarvisMarchAlgorithm;
+import com.bsuir.giis.editor.service.polygons.RectangleAlgorithm;
+import com.bsuir.giis.editor.service.polygons.RegularPolygonAlgorithm;
+import com.bsuir.giis.editor.service.polygons.RightTriangleAlgorithm;
 import com.bsuir.giis.editor.service.polygons.SimplePolygonAlgorithm;
+import com.bsuir.giis.editor.service.triangulation.DeloneAlgorithm;
+import com.bsuir.giis.editor.service.triangulation.VoronoiAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +45,12 @@ public class DrawableTypeMapper {
         registry.put("SimplePolygonAlgorithm", SimplePolygonAlgorithm::new);
         registry.put("GrahamScanAlgorithm", GrahamScanAlgorithm::new);
         registry.put("JarvisMarchAlgorithm", JarvisMarchAlgorithm::new);
+        registry.put("RegularPolygonAlgorithm", () -> new RegularPolygonAlgorithm(5));
+        registry.put("RightTriangleAlgorithm", RightTriangleAlgorithm::new);
+        registry.put("IsoscelesTriangleAlgorithm", IsoscelesTriangleAlgorithm::new);
+        registry.put("RectangleAlgorithm", RectangleAlgorithm::new);
+        registry.put("DeloneAlgorithm", DeloneAlgorithm::new);
+        registry.put("VoronoiAlgorithm", VoronoiAlgorithm::new);
     }
 
     public static String getTypeName(Drawable drawable) {

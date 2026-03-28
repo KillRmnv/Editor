@@ -15,6 +15,8 @@ public final class TopToolbar {
     private final JMenu curveMenu;
     private final JMenu parameterCurvesMenu;
     private final JMenu polygonsMenu;
+    private final JMenu readyMadeMenu;
+    private final JSpinner sidesSpinner;
 
     public TopToolbar() {
 
@@ -25,6 +27,13 @@ public final class TopToolbar {
         curveMenu = getCurvesJMenu();
         parameterCurvesMenu = getParameterCurvesJMenu();
         polygonsMenu = getPolygonsJMenu();
+        readyMadeMenu = getReadyMadeJMenu();
+        polygonsMenu.add(readyMadeMenu);
+
+        sidesSpinner = new JSpinner(new SpinnerNumberModel(5, 3, 20, 1));
+        sidesSpinner.setToolTipText("Number of sides");
+        sidesSpinner.setMaximumSize(new Dimension(50, 24));
+        sidesSpinner.setVisible(false);
         penButton = new JButton();
         penButton.setIcon(loadAnyIcon("pen-tool.png"));
         
@@ -36,6 +45,7 @@ public final class TopToolbar {
 
         icons.add(penButton, BorderLayout.WEST);
         icons.add(toolsMenuBar, BorderLayout.CENTER);
+        icons.add(sidesSpinner, BorderLayout.EAST);
         
         upperPanel.add(icons, BorderLayout.WEST);
 
@@ -112,6 +122,17 @@ public final class TopToolbar {
         polygonsMenu.add(createItem("Graham Scan", "polygon.png"));
         polygonsMenu.add(createItem("Jarvis March", "polygon.png"));
         return polygonsMenu;
+    }
+
+    private JMenu getReadyMadeJMenu() {
+        JMenu menu = new JMenu();
+        menu.setIcon(loadAnyIcon("polygon.png"));
+        menu.setToolTipText("Ready-Made Shapes");
+        menu.add(createItem("Regular Polygon", "polygon.png"));
+        menu.add(createItem("Right Triangle", "right-triangle.png"));
+        menu.add(createItem("Isosceles Triangle", "isoscelesTriangle.png"));
+        menu.add(createItem("Rectangle", "rectangle.png"));
+        return menu;
     }
 
     private JMenuItem createItem(String text, String iconFile) {
@@ -224,6 +245,14 @@ public final class TopToolbar {
 
     public JMenu getPolygonsMenu() {
         return polygonsMenu;
+    }
+
+    public JMenu getReadyMadeMenu() {
+        return readyMadeMenu;
+    }
+
+    public JSpinner getSidesSpinner() {
+        return sidesSpinner;
     }
 
 }

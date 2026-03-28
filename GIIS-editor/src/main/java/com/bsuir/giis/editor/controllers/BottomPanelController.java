@@ -2,11 +2,14 @@ package com.bsuir.giis.editor.controllers;
 
 import com.bsuir.giis.editor.controllers.handlers.MorphHandler;
 import com.bsuir.giis.editor.controllers.handlers.Transform3DHandler;
+import com.bsuir.giis.editor.controllers.handlers.TriangulationHandler;
 import com.bsuir.giis.editor.model.CanvasState;
 import com.bsuir.giis.editor.model.Model3DInstance;
 import com.bsuir.giis.editor.rendering.Canvas;
 import com.bsuir.giis.editor.service.flow.Debug;
 import com.bsuir.giis.editor.service.flow.Regular;
+import com.bsuir.giis.editor.service.triangulation.DeloneAlgorithm;
+import com.bsuir.giis.editor.service.triangulation.VoronoiAlgorithm;
 import com.bsuir.giis.editor.utils.ModeContainer;
 import com.bsuir.giis.editor.utils.MorphStep;
 import com.bsuir.giis.editor.utils.ToolContainer;
@@ -34,6 +37,16 @@ public final class BottomPanelController {
         setupDebugPopup(bottomToolbar, mode, debugFrame, canvas, tool);
         
         setupTransformPopup(bottomToolbar, canvas, tool);
+
+        bottomToolbar.getDeloneButton().addActionListener(e -> {
+            tool.setTool(new DeloneAlgorithm());
+            tool.setHandler(new TriangulationHandler());
+        });
+
+        bottomToolbar.getVoronoiButton().addActionListener(e -> {
+            tool.setTool(new VoronoiAlgorithm());
+            tool.setHandler(new TriangulationHandler());
+        });
 
         bottomToolbar
             .getRegularModeButton()

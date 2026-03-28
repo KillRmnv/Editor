@@ -63,7 +63,6 @@ public class CircleAlgorithm implements CurvesAlgorithm {
             throw new RuntimeException(e);
         }
         while (x <= y) {
-            //inside
             if (d < 0) {
                 d = d + 4 * x + 6;
             } else {

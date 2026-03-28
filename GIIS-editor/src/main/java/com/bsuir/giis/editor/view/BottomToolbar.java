@@ -19,6 +19,8 @@ public final class BottomToolbar {
     private final JButton regularModeButton;
     private JButton debugButton;
     private JButton transformButton;
+    private JButton deloneButton;
+    private JButton voronoiButton;
     private JPopupMenu debugPopup;
     private JPopupMenu transformPopup;
     private final JFormattedTextField field;
@@ -41,6 +43,10 @@ public final class BottomToolbar {
         regularModeButton = createIconButton("Regular.svg");
         debugButton = createIconButton("Debug.svg");
         transformButton = createIconButton("3DTransform.svg");
+        deloneButton = createIconButton("delone.png");
+        deloneButton.setToolTipText("Delaunay Triangulation");
+        voronoiButton = createIconButton("voronoi.png");
+        voronoiButton.setToolTipText("Voronoi Diagram");
 
         setupDebugPopup();
         setupTransformPopup();
@@ -59,6 +65,8 @@ public final class BottomToolbar {
         bottomWestFlow.add(regularModeButton);
         bottomWestFlow.add(debugButton);
         bottomWestFlow.add(transformButton);
+        bottomWestFlow.add(deloneButton);
+        bottomWestFlow.add(voronoiButton);
 
         JPanel bottomEastFlow = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         bottomEastFlow.add(iterationsLabel);
@@ -224,6 +232,14 @@ public final class BottomToolbar {
 
     public JButton getTransformButton() {
         return transformButton;
+    }
+
+    public JButton getDeloneButton() {
+        return deloneButton;
+    }
+
+    public JButton getVoronoiButton() {
+        return voronoiButton;
     }
 
     public JPopupMenu getDebugPopup() {
