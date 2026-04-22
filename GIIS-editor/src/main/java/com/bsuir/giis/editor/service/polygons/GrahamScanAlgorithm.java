@@ -50,20 +50,20 @@ public class GrahamScanAlgorithm implements PolygonsAlgorithm {
                 return Double.compare(angleA, angleB);
             }
 
-            // Коллинеарные точки — по расстоянию (ближние первыми).
+            
             double distA = distSq(start, a);
             double distB = distSq(start, b);
             return Double.compare(distA, distB);
         });
 
-        // FIX: стартуем с sorted[0] (= start) и итерируемся с sorted[1].
+        //  стартуем с sorted[0] (= start) и итерируемся с sorted[1].
         // В оригинале start пушился до цикла, а затем sorted[0] == start
         // пушился ещё раз, давая дубликат в начале hull.
         Stack<Point> stack = new Stack<>();
         stack.push(sorted.get(0)); // start
         stack.push(sorted.get(1));
 
-        // FIX: цикл начинается с индекса 2, а не с 0.
+        //  цикл начинается с индекса 2, а не с 0.
         for (int i = 2; i < sorted.size(); i++) {
             Point point = sorted.get(i);
 

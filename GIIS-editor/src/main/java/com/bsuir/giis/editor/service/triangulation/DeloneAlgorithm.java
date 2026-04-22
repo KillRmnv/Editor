@@ -28,7 +28,7 @@ public class DeloneAlgorithm implements TriangulationAlgorithm {
     private final BresenhamAlgorithm lineAlgorithm = new BresenhamAlgorithm();
 
     static class Triangle {
-        double[] ax, bx, cx; // вершины как double[]{x, y}
+        double[] ax, bx, cx; 
 
         Triangle(double[] a, double[] b, double[] c) {
             ax = a; bx = b; cx = c;
